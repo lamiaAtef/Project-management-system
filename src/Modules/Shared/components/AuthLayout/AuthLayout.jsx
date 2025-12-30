@@ -8,6 +8,7 @@ import resetImg1 from "../../../../assets/images/reset-1.png";
 import resetImg2 from "../../../../assets/images/reset-2.png";
 import changeImg1 from "../../../../assets/images/change-1.png";
 import changeImg2 from "../../../../assets/images/change-2.png";
+import logo from "../../../../assets/images/logo.png";
 import styles from "./AuthLayout.module.css";
 import { Container, Row ,Col} from 'react-bootstrap';
 
@@ -40,8 +41,8 @@ export default function AuthLayout() {
        <img src={images.img2} alt="auth visual 2" className={styles.position_img2_authLayout} />
 
       {/* wrapper content */}
-      <Row className="d-flex justify-content-center align-items-center h-100 " style={{ zIndex: 10 }}>
-        
+      <Row className="d-flex justify-content-center align-items-center h-100 flex-column  " style={{ zIndex: 10 }}>
+         <img src={logo} alt="" className='w-25 mb-3' />
           <Outlet />
         
       </Row>

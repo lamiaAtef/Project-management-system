@@ -9,8 +9,8 @@ export default function Login() {
   return (
     <>
      <Col {...colProps} className=" p-3 rounded-3 formBg text-white">
-       <h2>Loginnnnn</h2>
-     
+       <h2>Loginnnnn</h2> 
+           
     </Col>
     </>
   )

@@ -1,9 +1,9 @@
 import axios from 'axios'
-
 import AuthService from '../AuthService'
+import { baseURL } from './apiURLs'
 
 const axiosInstance=axios.create({
-    baseURL:"https://upskilling-egypt.com:3003",
+    baseURL:baseURL,
     timeout:5000,
 })
 axiosInstance.interceptors.request.use(
