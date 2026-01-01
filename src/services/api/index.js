@@ -1,4 +1,8 @@
 import axios from 'axios'
+<<<<<<< HEAD
+=======
+// import AuthService from '../AuthService'
+>>>>>>> 163c19a270b14bfb3327618e0c6382f76dcbb835
 import { baseURL } from './apiURLs'
 
 const axiosInstance=axios.create({
