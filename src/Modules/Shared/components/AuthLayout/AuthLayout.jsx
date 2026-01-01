@@ -41,8 +41,8 @@ export default function AuthLayout() {
        <img src={images.img2} alt="auth visual 2" className={styles.position_img2_authLayout} />
 
       {/* wrapper content */}
-      <Row className="d-flex justify-content-center align-items-center h-100 flex-column  " style={{ zIndex: 10 }}>
-         <img src={logo} alt="" className='w-25 mb-3' />
+      <Row className="d-flex justify-content-center align-items-center  flex-column  " style={{ zIndex: 10 }}>
+         <img src={logo} alt="" className='w-25 m-5 d-block' />
           <Outlet />
         
       </Row>

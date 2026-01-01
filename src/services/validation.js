@@ -49,4 +49,13 @@ export const PHONE_VALIDATION={
         message:"please enter valid phone number "
      }
 }
+export const CONFIRMPASSWORD_VALIDATION={
+     required:getRequiredMessage("confirm password"),
+         pattern:{
+       validate: (value) =>
+              value === password ,
+      message:'dosent equal password'
+
+    }
+    }
 export const REQUIRED_VALIDATION = (fieldName) => ({ required: getRequiredMessage(fieldName) })

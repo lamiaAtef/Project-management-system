@@ -10,6 +10,8 @@ import ResetPassword from './Modules/AuthModule/Components/ResetPassword/ResetPa
 import ChangePassword from './Modules/AuthModule/Components/ChangePassword/ChangePassword';
 import Verify from './Modules/AuthModule/Components/Verify/Verify';
 import { ToastContainer } from 'react-toastify';
+import MasterLayout from './Modules/Shared/components/MasterLayout/MasterLayout';
+import Dashboard from './Modules/DashboardModule/components/Dashboard/Dashboard';
 
 
 function App() {
@@ -28,6 +30,15 @@ function App() {
           {path:"reset-pass",element:<ResetPassword/>},
           {path:"verify-account",element:<Verify/>},
           {path:"change-pass",element:<ChangePassword/>}
+        ]
+      },
+      {
+        path:"dashboard",
+        element:<MasterLayout/>,
+        errorElement:<NotFound/>,
+        children:[
+          {index:true, element:<Dashboard/>},
+          
         ]
       }
 
