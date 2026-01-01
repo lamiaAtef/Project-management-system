@@ -24,7 +24,7 @@ export default function Login() {
 
  const {saveUserData} = useContext(AuthContext);
 
- const{register, formState:{errors}, handleSubmit}= useForm();
+ const{register, formState:{errors,isSubmitting}, handleSubmit}= useForm();
  let navigate = useNavigate();
 
  const onSubmit=async(data)=>{
@@ -83,7 +83,14 @@ export default function Login() {
         <Link className='text-decoration-none text-white' to="/forget-pass">Forget Password?</Link>
       </div>
 
-      <Button type='submit' className='w-100 mt-4 Auth-btn'>Login</Button>
+      <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
+      {isSubmitting ?(
+          <>
+          Login
+          <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+          </>
+        ):('Login')}
+      </Button>
     </Form>
            
     </Col>

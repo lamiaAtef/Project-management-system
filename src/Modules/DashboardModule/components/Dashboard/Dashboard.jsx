@@ -18,7 +18,6 @@ export default function Dashboard() {
     <>
     <h2 className='mb-3'> Welcome <span className="fw-bold">{userData?.userName}</span></h2>
     <Button type="submit" variant="success" onClick={handleLogOut}>Log Out</Button>
-    
     </>
       
     
