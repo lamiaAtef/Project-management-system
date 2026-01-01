@@ -32,12 +32,12 @@ export default function AuthLayout() {
          : "login";
 
    const images = imagesMap[page];
-   const defaultCol = `md={8} lg={6} xl={5}`;
+
 
    return (
      <Container fluid className={`${styles.authLayout} authOverlay `}>
       {/* الصور الخلفية */}
-      <img src={images.img1} alt="auth visual 1" className={styles.position_img1_authLayout} /> 
+      <img src={images.img1} alt="auth visual 1" className={styles.position_img1_authLayout} />
        <img src={images.img2} alt="auth visual 2" className={styles.position_img2_authLayout} />
 
       {/* wrapper content */}
@@ -45,7 +45,7 @@ export default function AuthLayout() {
       <Row className={` ${styles.content_authLayout} d-flex  justify-content-center align-items-center flex-column `}>
          <img src={logo} alt="" className='w-25 mb-3' />
           <Outlet />
-        
+
       </Row>
     </Container>
    )

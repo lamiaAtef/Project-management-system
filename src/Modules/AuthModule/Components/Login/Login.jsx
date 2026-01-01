@@ -57,7 +57,7 @@ export default function Login() {
 
      <AuthHeader subtitle={'welcome to PMS'} title={'Login'}/>  
 
-     <Form onSubmit={handleSubmit(onSubmit)} className='m-5'>
+     <Form onSubmit={handleSubmit(onSubmit)} className='mx-5 my-3'>
       <Form.Group className="custom-input mb-3" controlId="exampleForm.ControlInput1">
         <Form.Label className='textHeader'>E-mail</Form.Label>
         <Form.Control type="email" placeholder="Enter your E-mail" 
