@@ -5,7 +5,7 @@
   font-weight: 400;
   --mainColor:rgba(239, 155, 40, 1);
   --bgColor:rgb(14, 56, 47);
-  --secondaryColor:rgba(49, 89, 81, 0.898); 
+  --secondaryColor:rgba(49, 89, 81, 0.898);
   --activeBtnColor:rgba(0, 146, 71, 1);
   --notActiveBtColor:rgba(146, 46, 37, 0.7);
   --toDoBtnColor:rgba(228, 225, 245, 1);
@@ -14,7 +14,7 @@
 
 }
 * {
-    font-family: var(--main-font); 
+    font-family: var(--main-font);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -22,7 +22,7 @@
 }
 .overlayReg{
   background-color: rgba(49, 74, 89, 0.902);
- 
+
 }
 .activeSidebar{
   background-color: rgba(239, 155, 40, 0.3);
@@ -59,4 +59,81 @@
 
 
 /* end general  */
+/* btn form  styling*/
+.custom-input .form-control {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0;
+  color: #fff;
+  padding-left: 0;
 
+}
+.custom-input .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.custom-input .form-control:focus {
+  background-color: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid #f4c27a;
+  color: #fff;
+}
+
+
+.Auth-btn{
+  background-color: var(--mainColor) !important;
+  border:none !important;
+  color:#fff !important;
+  border-radius: 30px !important;
+  padding: 6px  12px !important;
+}
+
+/* btn form  styling*/
+.password-wrapper {
+  position: relative;
+}
+.bg-label{
+  color:var(--mainColor);
+}
+
+.password-wrapper .form-control {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  padding-right: 35px;
+}
+
+.password-wrapper:focus-within .form-control {
+  border-bottom: 1px solid #f4c27a;
+}
+.eye-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  outline: none !important;
+  border: none !important;
+
+}
+/* changepass */
+.eyeicon {
+  position: absolute;
+  right: 0;
+  top: 90%;
+  transform: translateY(-90%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+  outline: none !important;
+  border: none !important;
+
+}
+.auth-header h3::after{
+  content:"";
+  border:2px solid var(--mainColor);
+  display: block;
+  width:15px;
+}
