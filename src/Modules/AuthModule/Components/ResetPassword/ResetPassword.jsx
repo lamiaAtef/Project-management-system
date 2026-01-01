@@ -43,11 +43,9 @@ export default function ResetPassword() {
   return (
     <>
       <Col {...colProps} className=" p-3 rounded-3 formBg text-white">
-
-
-     <AuthHeader subtitle={'welcome to PMS'} title={'Reset Password'}/>  
-
      <Form onSubmit={handleSubmit(onSubmit)} className='mx-5 my-3'>
+        <AuthHeader subtitle={'welcome to PMS'} title={'Reset Password'}/>  
+
       <Form.Group className="custom-input mb-3" controlId="exampleForm.Email">
         <Form.Label className='textHeader'>E-mail</Form.Label>
         <Form.Control type="email" placeholder="Enter your E-mail" 

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function Authheader({subtitle,title}) {
+export default function AuthHeader({subtitle,title}) {
   return (
     <>
        <div className='auth-header my-4 '>

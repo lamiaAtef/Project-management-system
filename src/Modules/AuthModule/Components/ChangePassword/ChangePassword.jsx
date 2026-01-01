@@ -3,12 +3,12 @@ import useToggle from '../../../../hooks/useToggle';
 import { Col, InputGroup } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import Authheader from '../../../Shared/components/AuthHeader/Authheader';
 import { useForm } from 'react-hook-form';
 import { PASSWORD_VALIDATION } from '../../../../services/validation';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
 import { baseURL, USER_URLS } from '../../../../services/api/apiURLs';
+import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 
 
 
@@ -30,9 +30,9 @@ const[secondPass,toggleSecondPass]=useToggle();
 const[thirdPass,toggleThirdPass]=useToggle();
   return (
     <>
-<Col {...colProps} className=" p-1 rounded-3 formBg text-white " >
+<Col {...colProps} className=" p-1 rounded-3 formBg text-white" >
    <Form onSubmit={handleSubmit(onSubmit)} className="mx-5 my-3">
-     <Authheader subtitle={'welcome to PMS'} title={'Change Password'}/>
+     <AuthHeader subtitle={'welcome to PMS'} title={'Change Password'}/>
         <Form.Group className="custom-input mb-2" controlId="formBasicPassword">
        <div className='password-wrapper'>
         <Form.Label className='bg-label my-0'>old password</Form.Label>
