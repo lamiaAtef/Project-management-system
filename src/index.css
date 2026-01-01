@@ -53,8 +53,63 @@
 }
 
 
+/*----Auth------*/
+
+.Auth-btn{
+  background-color: var(--mainColor) !important;
+  border:none !important;
+  color:#fff !important;
+  border-radius: 30px !important;
+  padding: 12px !important;
+}
+
+.custom-input .form-control {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 0;
+  color: #fff;
+  padding-left: 0;
+}
+
+.custom-input .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.custom-input .form-control:focus {
+  background-color: transparent;
+  box-shadow: none;
+  border-bottom: 1px solid #f4c27a;
+  color: #fff;
+}
 
 
+
+/* show &hide password */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper .form-control {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  color: #fff;
+  padding-right: 35px;
+}
+
+.password-wrapper:focus-within .form-control {
+  border-bottom: 1px solid #f4c27a;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.7);
+}
 
 
 
