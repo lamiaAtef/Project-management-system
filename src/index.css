@@ -52,11 +52,40 @@
   color: var(--textColorTable);
 }
 
-
-
-
-
-
-
 /* end general  */
+/* Chrome Autofill fix */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+  -webkit-text-fill-color: #fff !important;
+  transition: background-color 9999s ease-in-out 0s;
+}
+.create-title {
+  color: var(--mainColor);
+  font-weight: 700;
+}
+.c-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.c-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 18px;
+  height: 3px;
+  background-color: var(--mainColor);
+  border-radius: 2px;
+}
+
+.formBg {
+ 
+  position: relative;   
+  z-index: 5;           
+}
 
