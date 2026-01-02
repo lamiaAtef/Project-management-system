@@ -12,6 +12,7 @@ import Verify from './Modules/AuthModule/Components/Verify/Verify';
 import { ToastContainer } from 'react-toastify';
 import MasterLayout from './Modules/Shared/components/MasterLayout/MasterLayout';
 import Dashboard from './Modules/DashboardModule/components/Dashboard/Dashboard';
+import ProtectedRoute from './Modules/Shared/components/ProtectedRoute/ProtectedRoute';
 
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
       },
       {
         path:"dashboard",
-        element:<MasterLayout/>,
+        element:<ProtectedRoute><MasterLayout/></ProtectedRoute>,
         errorElement:<NotFound/>,
         children:[
           {index:true, element:<Dashboard/>},
