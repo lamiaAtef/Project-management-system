@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {  useNavigate } from 'react-router-dom';
 import { USER_URLS } from '../../../../services/api/apiURLs.js';
-import axiosInstance from '../../../../services/api';
+import axiosInstance from '../../../../services/api/index.js';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Button, Col ,Form} from 'react-bootstrap';
@@ -21,7 +21,7 @@ export default function ForgetPassword() {
  const onSubmit=async(data)=>{
 
   try {
-    let response= await axiosInstance.post(`${USER_URLS.RESET_REQUEST}`,data);
+    let response= await axiosInstance.post(USER_URLS.RESET_REQUEST,data);
     console.log(response);
     toast.success('Welcome to PMS!',
     {
@@ -31,10 +31,12 @@ export default function ForgetPassword() {
 
     
   } catch (error) {
-    toast.error('failed to send reset email',
-    {
-      autoClose: 3000,
-    });
+    const userMessage = error?.response?.data?.additionalInfo?.response
+      ? "Cannot send reset email: please contact support."
+      : error?.response?.data?.message || "Failed to send request";
+
+    toast.error(userMessage, { autoClose: 5000 });
+
     
   }
  }

@@ -35,7 +35,11 @@ export default function ResetPassword() {
 
     
   } catch (error) {
-    toast.error('failed to reset password',);
+    toast.error(error.response.data.message || 'Failed to reset password',
+    {
+      autoClose: 3000,
+    })
+    // console.error('There was an error!', error);
     
   }
  }
