@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react'
 import { Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
-import { CONFIRMPASSWORD_VALIDATION, EMAIL_VALIDATION, NAME_VALIDATION, PASSWORD_VALIDATION, PHONE_VALIDATION } from '../../../../services/validation';
+import {EMAIL_VALIDATION, NAME_VALIDATION, PASSWORD_VALIDATION, PHONE_VALIDATION } from '../../../../services/validation';
 import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
@@ -10,9 +10,9 @@ import {FaEye, FaEyeSlash} from 'react-icons/fa';
 import Button from 'react-bootstrap/Button';
 import { USER_URLS, baseURL } from '../../../../services/api/apiURLs';
 import { useNavigate } from 'react-router-dom';
-import profileImg from "../../../../assets/images/profileImg.png"
+import profileImg from "../../../../assets/images/profileImg.png";
 export default function Register() {
-   const colProps = { md: 8, lg: 6, xl: 5 };
+   const colProps = { md: 12, lg: 10, xl: 8};
     const[showPassword, setShowPassword] = useState(false);
     
 const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -20,7 +20,7 @@ const [profileImage, setProfileImage] = useState(null);
 const [profileImageError, setProfileImageError] = useState(false);
 
    
-    const{register, formState:{errors}, handleSubmit,setValue}= useForm();
+    const{register, formState:{errors}, handleSubmit,setValue,watch}= useForm();
     const navigate = useNavigate();
     const handleProfileImageChange = (e) => {
   const file = e.target.files[0];
@@ -66,11 +66,12 @@ const [profileImageError, setProfileImageError] = useState(false);
     <>
          <Col {...colProps} className=" p-3 rounded-3 formBg text-white">
     
-       <AuthHeader subtitle={'welcome to PMS'} title={   <>
+     
+    
+         <Form onSubmit={handleSubmit(onSubmit)} className='mx-5 my-3'>
+            <AuthHeader subtitle={'welcome to PMS'} title={   <>
       <span className="c-underline">C</span>reate New Account
     </>}/>  
-    
-         <Form onSubmit={handleSubmit(onSubmit)}>
          
 <div className="text-center ">
   <Form.Label htmlFor="profileImage">
@@ -161,7 +162,7 @@ const [profileImageError, setProfileImageError] = useState(false);
     
             <div className='password-wrapper'>
             <Form.Control  type={showConfirmPassword ? 'text':'password'} placeholder="Confirm New Password"
-            {...register('confirmPassword',CONFIRMPASSWORD_VALIDATION)} />
+            {...register('confirmPassword',{...PASSWORD_VALIDATION,validate :value=> value === watch('password')||"Confirm password must match the password."})} />
             <span className='eye-icon' onClick={()=> setShowConfirmPassword(!showConfirmPassword)}>
               {showConfirmPassword ? <FaEyeSlash/> : <FaEye/>}
             </span>

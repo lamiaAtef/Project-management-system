@@ -42,7 +42,7 @@ const[thirdPass,toggleThirdPass]=useToggle();
 
         onClick={toggleFirstPass}
         >
-          {firstPass?<FaEye/>:<FaEyeSlash/>}
+          {firstPass?<FaEyeSlash/>:<FaEye/>}
         </InputGroup.Text>
        </div>
 
@@ -57,7 +57,7 @@ const[thirdPass,toggleThirdPass]=useToggle();
 
         onClick={toggleSecondPass}
         >
-          {secondPass?<FaEye/>:<FaEyeSlash/>}
+          {secondPass?<FaEyeSlash/>:<FaEye/>}
         </InputGroup.Text>
        </div>
 
@@ -73,7 +73,7 @@ const[thirdPass,toggleThirdPass]=useToggle();
 
         onClick={toggleThirdPass}
         >
-          {thirdPass?<FaEye/>:<FaEyeSlash/>}
+          {thirdPass?<FaEyeSlash/>:<FaEye/>}
         </InputGroup.Text>
        </div>
 

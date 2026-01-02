@@ -42,10 +42,11 @@ export default function Verify() {
     <>
           <Col {...colProps} className=" p-3 rounded-3 formBg text-white">
     
-       <AuthHeader subtitle={'welcome to PMS'} title={ <>
-      <span className="c-underline">V</span>erify Account
-    </>}/>  
-          <Form onSubmit={handleSubmit(onSubmit)} className='m-5'>
+     
+          <Form onSubmit={handleSubmit(onSubmit)} className='mx-5 my-3'>
+              <AuthHeader subtitle={'welcome to PMS'} title={ <>
+              <span className="c-underline">V</span>erify Account
+            </>}/>  
           <Form.Group className="custom-input mb-3" controlId="exampleForm.ControlInput1">
         
          

@@ -84,8 +84,7 @@
   border-bottom: 1px solid #f4c27a;
   color: #fff;
 }
-
-<<<<<<< HEAD
+/* start conflict */
 
 
 /* show &hide password */
@@ -128,27 +127,6 @@
   padding: 12px !important;
 }
 
-.custom-input .form-control {
-  background-color: transparent;
-  border: none;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 0;
-  color: #fff;
-  padding-left: 0;
-}
-
-.custom-input .form-control::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
-
-.custom-input .form-control:focus {
-  background-color: transparent;
-  box-shadow: none;
-  border-bottom: 1px solid #f4c27a;
-  color: #fff;
-}
-
-
 
 /* show &hide password */
 .password-wrapper {
@@ -182,12 +160,7 @@
   color: rgba(255, 255, 255, 0.6);
 }
 
-.custom-input .form-control:focus {
-  background-color: transparent;
-  box-shadow: none;
-  border-bottom: 1px solid #f4c27a;
-  color: #fff;
-}
+
 
 
 .Auth-btn{
@@ -231,7 +204,7 @@
 /* end general  */
   /* outline: none !important;
   border: none !important;
-=======
+/* end 1 conflict */
 /* end general  */
 /* Chrome Autofill fix */
 input:-webkit-autofill,
@@ -247,12 +220,12 @@ select:-webkit-autofill {
   color: var(--mainColor);
   font-weight: 700;
 }
-.c-underline {
+/* .c-underline {
   position: relative;
   display: inline-block;
-}
+} */
 
-.c-underline::after {
+/* .c-underline::after {
   content: "";
   position: absolute;
   left: 0;
@@ -261,16 +234,15 @@ select:-webkit-autofill {
   height: 3px;
   background-color: var(--mainColor);
   border-radius: 2px;
-}
+} */
 
 .formBg {
  
   position: relative;   
   z-index: 5;           
 }
->>>>>>> c79f21b2c2b64bc6abcd2d2c50fdeab6205a4f86
-
-} */
+/* end conflict */
+/* } */
 /* changepass */
 .eyeicon {
   position: absolute;
