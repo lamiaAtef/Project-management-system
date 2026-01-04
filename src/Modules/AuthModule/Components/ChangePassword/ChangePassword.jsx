@@ -14,7 +14,7 @@ import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 
 
 export default function ChangePassword() {
-  let{register,handleSubmit,formState:{errors},watch}=useForm();
+  let{register,handleSubmit,formState:{errors,isSubmitting},watch}=useForm();
   const passwordValue= watch("newPassword");
   const onSubmit= async(data)=>{
 
@@ -25,9 +25,9 @@ export default function ChangePassword() {
 
   }
    const colProps = { md: 8, lg: 6, xl: 5 };
-const[firstPass,toggleFirstPass]=useToggle();
-const[secondPass,toggleSecondPass]=useToggle();
-const[thirdPass,toggleThirdPass]=useToggle();
+  const[firstPass,toggleFirstPass]=useToggle();
+  const[secondPass,toggleSecondPass]=useToggle();
+  const[thirdPass,toggleThirdPass]=useToggle();
   return (
     <>
 <Col {...colProps} className=" p-1 rounded-3 formBg text-white" >
@@ -82,10 +82,17 @@ const[thirdPass,toggleThirdPass]=useToggle();
 
 
 
-      <Button type='submit' className='w-100 mt-3 Auth-btn'>
-      Save
+     
+        <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
+      {isSubmitting ?(
+          <>
+          Save
+          <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+          </>
+        ):('Save')}
       </Button>
     </Form>
+
 
 </Col>
 

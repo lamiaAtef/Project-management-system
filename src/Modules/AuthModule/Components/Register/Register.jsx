@@ -20,7 +20,7 @@ const [profileImage, setProfileImage] = useState(null);
 const [profileImageError, setProfileImageError] = useState(false);
 
    
-    const{register, formState:{errors}, handleSubmit,setValue,watch}= useForm();
+    const{register, formState:{errors,isSubmitting}, handleSubmit,setValue,watch}= useForm();
     const navigate = useNavigate();
     const handleProfileImageChange = (e) => {
   const file = e.target.files[0];
@@ -172,9 +172,15 @@ const [profileImageError, setProfileImageError] = useState(false);
           </div>
           </Form.Group>
     
-          
+            <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
+           {isSubmitting ?(
+          <>
+          Save
+          <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+          </>
+            ):('Save')}
+          </Button>
     
-          <Button type='submit' className='w-100 mt-4 Auth-btn'>save</Button>
         </Form>
       
        
