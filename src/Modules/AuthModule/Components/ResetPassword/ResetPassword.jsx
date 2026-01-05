@@ -19,7 +19,7 @@ export default function ResetPassword() {
 
  const[showPassword, setShowPassword] = useState(false);
 
- const{register, formState:{errors}, handleSubmit,watch}= useForm();
+ const{register, formState:{errors,isSubmitting}, handleSubmit,watch}= useForm();
  
  let navigate = useNavigate();
   const onSubmit=async(data)=>{
@@ -89,9 +89,16 @@ export default function ResetPassword() {
         </div>
         {errors.confirmPassword && <small className='text-danger d-block mt-1'>{errors.confirmPassword.message}</small>}
       </Form.Group>
-
+         
+            <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
+           {isSubmitting ?(
+          <>
+          Save
+          <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+          </>
+            ):('Save')}
+          </Button>
    
-      <Button type='submit' className='w-100 mt-4 Auth-btn'>Save</Button>
     </Form>
            
     </Col>
