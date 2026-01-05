@@ -9,6 +9,8 @@ import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import axios from 'axios';
 import { baseURL, USER_URLS } from '../../../../services/api/apiURLs';
 import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
+import { toast } from 'react-toastify';
+import axiosInstance from '../../../../services/api';
 
 
 
@@ -17,13 +19,17 @@ export default function ChangePassword() {
   let{register,handleSubmit,formState:{errors,isSubmitting},watch}=useForm();
   const passwordValue= watch("newPassword");
   const onSubmit= async(data)=>{
-
-    let response=await axios(`${baseURL}${USER_URLS.ChangePassword}`,data);
-    console.log(response);
-
+    try{
+    let response= await axiosInstance.post(USER_URLS.CHANGE_PASSWORD,data);
+      console.log(response);
+    }
+    catch(err){
+   
+      toast.error(err.response?.data.message||"there is an error")
 
 
   }
+}
    const colProps = { md: 8, lg: 6, xl: 5 };
   const[firstPass,toggleFirstPass]=useToggle();
   const[secondPass,toggleSecondPass]=useToggle();
