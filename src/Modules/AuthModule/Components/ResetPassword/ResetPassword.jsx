@@ -81,7 +81,7 @@ export default function ResetPassword() {
         <Form.Label className='textHeader'>Confirm Password</Form.Label>
 
         <div className='password-wrapper'>
-        <Form.Control  type={showPassword ? 'text':'password'} placeholder="Confirm your password"
+        <Form.Control  type={showConfirmPassword ? 'text':'password'} placeholder="Confirm your password"
         {...register('confirmPassword',{...PASSWORD_VALIDATION,validate :value=> value === watch('password')||"Confirm password must match the password."} )} />
         <span className='eye-icon' onClick={()=> setShowConfirmPassword(!showConfirmPassword)}>
           {showConfirmPassword ? <FaEyeSlash/> : <FaEye/>}
