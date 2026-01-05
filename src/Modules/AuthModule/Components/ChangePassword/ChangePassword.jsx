@@ -6,20 +6,36 @@ import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import { PASSWORD_VALIDATION } from '../../../../services/validation';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import axios from 'axios';
-import { baseURL, USER_URLS } from '../../../../services/api/apiURLs';
-import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
+
+import {  USER_URLS } from '../../../../services/api/apiURLs';
+
+import axiosInstance from '../../../../services/api';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import AuthHeader from '../../../Shared/components/AuthHeader/Authheader';
 
 
 
 
 export default function ChangePassword() {
-  let{register,handleSubmit,formState:{errors},watch}=useForm();
+  let{register,handleSubmit,formState:{errors},watch,isSubmitting}=useForm();
+  const navigate=useNavigate();
   const passwordValue= watch("newPassword");
   const onSubmit= async(data)=>{
 
-    let response=await axios(`${baseURL}${USER_URLS.ChangePassword}`,data);
+  try {
+      let response=await axiosInstance(USER_URLS.CHANGE_PASSWORD,data);
+     toast.success('password change successfuly',
+        {
+          autoClose: 3000,
+        })
+        navigate('/login');
     console.log(response);
+
+  } catch (error) {
+    console.log(error);
+  navigate('/login');
+  }
 
 
 
@@ -35,37 +51,37 @@ const[thirdPass,toggleThirdPass]=useToggle();
      <AuthHeader subtitle={'welcome to PMS'} title={'Change Password'}/>
         <Form.Group className="custom-input mb-2" controlId="formBasicPassword">
        <div className='password-wrapper'>
-        <Form.Label className='bg-label my-0'>old password</Form.Label>
+        <Form.Label className='textHeader my-1'>old password</Form.Label>
          <Form.Control type={firstPass ? 'text':'password'} placeholder="Enter your Old Password"
         {...register("oldPassword",PASSWORD_VALIDATION)} />
           <InputGroup.Text className ="eyeicon text-white bg-transparent"
 
         onClick={toggleFirstPass}
         >
-          {firstPass?<FaEyeSlash/>:<FaEye/>}
+          {firstPass? <FaEye/>:<FaEyeSlash/>}
         </InputGroup.Text>
        </div>
 
       </Form.Group>
        {errors.oldPassword && <small className='text-danger d-block '>{errors.oldPassword.message}</small>}
-         <Form.Group className="custom-input mb-1" controlId="formBasicPassword">
+         <Form.Group className="custom-input mb-2" controlId="formBasicPassword">
        <div className='password-wrapper'>
-        <Form.Label className='bg-label mb-0'>New Password</Form.Label>
+        <Form.Label className='textHeader my-1'>New Password</Form.Label>
          <Form.Control type={secondPass ? "text":"password"} placeholder="Enter your New Password"
         {...register("newPassword",PASSWORD_VALIDATION)} />
          <InputGroup.Text className="eyeicon text-white bg-transparent"
 
         onClick={toggleSecondPass}
         >
-          {secondPass?<FaEyeSlash/>:<FaEye/>}
+          {secondPass?<FaEye/>:<FaEyeSlash/>}
         </InputGroup.Text>
        </div>
 
       </Form.Group>
        {errors.newPassword && <small className='text-danger d-block '>{errors.newPassword.message}</small>}
-          <Form.Group className="custom-input mb-1" controlId="formBasicPassword">
+          <Form.Group className="custom-input mb-2" controlId="formBasicPassword">
        <div className='password-wrapper'>
-        <Form.Label className='bg-label mb-0'> Confirm New Password</Form.Label>
+        <Form.Label className='textHeader  my-1'> Confirm New Password</Form.Label>
          <Form.Control type={thirdPass? "text":"password"} placeholder="Confirm New password"
         {...register("confirmNewPassword",{...PASSWORD_VALIDATION,validate:(value)=>value === passwordValue||"not the same password"})} />
 
@@ -73,7 +89,7 @@ const[thirdPass,toggleThirdPass]=useToggle();
 
         onClick={toggleThirdPass}
         >
-          {thirdPass?<FaEyeSlash/>:<FaEye/>}
+          {thirdPass? <FaEye/>:<FaEyeSlash/>}
         </InputGroup.Text>
        </div>
 
@@ -82,8 +98,9 @@ const[thirdPass,toggleThirdPass]=useToggle();
 
 
 
-      <Button type='submit' className='w-100 mt-3 Auth-btn'>
-      Save
+      <Button disabled={isSubmitting}  type='submit' className='w-100 mt-4 Auth-btn'>
+  save
+
       </Button>
     </Form>
 
