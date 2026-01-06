@@ -20,29 +20,29 @@ export default function ChangePassword() {
   const passwordValue= watch("newPassword");
   const onSubmit= async(data)=>{
     try{
-    let response= await axiosInstance.post(USER_URLS.CHANGE_PASSWORD,data);
-      console.log(response);
+        let response= await axiosInstance.put(USER_URLS.CHANGE_PASSWORD,data);
+          console.log(response);
+        }
+        catch(err){
+      
+          toast.error(err.response?.data.message||"there is an error")
+
+
+      }
     }
-    catch(err){
-   
-      toast.error(err.response?.data.message||"there is an error")
-
-
-  }
-}
-   const colProps = { md: 8, lg: 6, xl: 5 };
-  const[firstPass,toggleFirstPass]=useToggle();
-  const[secondPass,toggleSecondPass]=useToggle();
-  const[thirdPass,toggleThirdPass]=useToggle();
-  return (
-    <>
-<Col {...colProps} className=" p-1 rounded-3 formBg text-white" >
-   <Form onSubmit={handleSubmit(onSubmit)} className="mx-5 my-3">
-     <AuthHeader subtitle={'welcome to PMS'} title={'Change Password'}/>
-        <Form.Group className="custom-input mb-2" controlId="formBasicPassword">
-       <div className='password-wrapper'>
-        <Form.Label className='bg-label my-0'>old password</Form.Label>
-         <Form.Control type={firstPass ? 'text':'password'} placeholder="Enter your Old Password"
+      const colProps = { md: 8, lg: 6, xl: 5 };
+      const[firstPass,toggleFirstPass]=useToggle();
+      const[secondPass,toggleSecondPass]=useToggle();
+      const[thirdPass,toggleThirdPass]=useToggle();
+      return (
+        <>
+    <Col {...colProps} className=" p-1 rounded-3 formBg text-white" >
+      <Form onSubmit={handleSubmit(onSubmit)} className="mx-5 my-3">
+        <AuthHeader subtitle={'welcome to PMS'} title={'Change Password'}/>
+            <Form.Group className="custom-input mb-2" controlId="formBasicPassword">
+          <div className='password-wrapper'>
+            <Form.Label className='bg-label my-0'>old password</Form.Label>
+            <Form.Control type={firstPass ? 'text':'password'} placeholder="Enter your Old Password"
         {...register("oldPassword",PASSWORD_VALIDATION)} />
           <InputGroup.Text className ="eyeicon text-white bg-transparent"
 

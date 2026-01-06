@@ -58,7 +58,7 @@ export default function ForgetPassword() {
                 <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
                 </>
               ):('Verify')}
-            </Button>
+        </Button>
     </Form>
      </Col>
       
