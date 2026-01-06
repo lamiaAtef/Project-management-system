@@ -1,5 +1,5 @@
 import React from 'react'
-import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
+import { Sidebar, Menu, MenuItem} from 'react-pro-sidebar';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { ImUsers } from "react-icons/im";
 import { RiQrCodeFill } from "react-icons/ri";
@@ -11,10 +11,10 @@ import { AuthContext } from '../../../../context/AuthContext';
 import { useState } from 'react';
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
-export default function SideBar() {
+export default function SideBar({collapsed, setCollapsed}) {
   const{logoutUser}=useContext(AuthContext);
   const navigate = useNavigate();
-  const [collapsed, setCollapsed]= useState(false);
+  // const [collapsed, setCollapsed]= useState(false);
 
   // add active to sidebar links
   const {pathname}=useLocation();

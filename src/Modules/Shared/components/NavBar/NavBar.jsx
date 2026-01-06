@@ -8,7 +8,7 @@ import {AuthContext} from '../../../../context/AuthContext';
 export default function NavBar() {
   const {userData}= useContext(AuthContext);
   return (
-    <div className='d-flex justify-content-between p-2'>
+    <div className='navbar-normal d-flex justify-content-between p-2'>
       <div>
         <img src={logo} alt="img"/>
       </div>

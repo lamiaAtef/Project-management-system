@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Outlet} from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,25 +8,22 @@ import SideBar from '../../../Shared/components/SideBar/SideBar';
 
 
 export default function MasterLayout() {
+  const [collapsed, setCollapsed]= useState(false);
 
   return (
 
-    <Container fluid className='p-0'>
-      <Row className='g-0'>
-        <Col>
-         <NavBar/>
-        </Col>
-      </Row>
-
-      <Row className='g-0'>
-        <Col xs="auto">
-         <SideBar/>
-        </Col>
-        <Col className='main-content'>
-         <Outlet/>
-        </Col>
-      </Row>
-    </Container>
+    <>
+      {/* Navbar */}
+       <NavBar/>
+      {/* Sidebar */}
+        <SideBar collapsed={collapsed} setCollapsed={setCollapsed}/>
+       
+       {/* Main Content */}
+      <div className={`main-content ${collapsed ? 'collapsed' :""}`}>
+       <Outlet/>
+       </div>
+     
+    </>
 
   )
 }
