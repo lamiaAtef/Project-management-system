@@ -1,6 +1,8 @@
+
+
 import React from 'react'
 
-export default function SideBar() {
+export default function ProjectsList() {
   return (
     <div>
 

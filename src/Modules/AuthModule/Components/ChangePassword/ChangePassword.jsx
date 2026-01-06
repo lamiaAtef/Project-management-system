@@ -15,16 +15,21 @@ import { useNavigate } from 'react-router-dom';
 import AuthHeader from '../../../Shared/components/AuthHeader/Authheader';
 
 
-
-
 export default function ChangePassword() {
   let{register,handleSubmit,formState:{errors},watch,isSubmitting}=useForm();
   const navigate=useNavigate();
   const passwordValue= watch("newPassword");
-  const onSubmit= async(data)=>{
+
+
+   const colProps = { md: 8, lg: 6, xl: 5 };
+  const[firstPass,toggleFirstPass]=useToggle();
+  const[secondPass,toggleSecondPass]=useToggle();
+  const[thirdPass,toggleThirdPass]=useToggle();
+
+      const onSubmit= async(data)=>{
 
   try {
-      let response=await axiosInstance(USER_URLS.CHANGE_PASSWORD,data);
+      let response=await axiosInstance.put(USER_URLS.CHANGE_PASSWORD,data);
      toast.success('password change successfuly',
         {
           autoClose: 3000,
@@ -33,18 +38,9 @@ export default function ChangePassword() {
     console.log(response);
 
   } catch (error) {
-    console.log(error);
-  navigate('/login');
-  }
-
-
-
-  }
-   const colProps = { md: 8, lg: 6, xl: 5 };
-const[firstPass,toggleFirstPass]=useToggle();
-const[secondPass,toggleSecondPass]=useToggle();
-const[thirdPass,toggleThirdPass]=useToggle();
-  return (
+   toast.error(error.response?.data.message||"there is an error")
+  }}
+return(
     <>
 <Col {...colProps} className=" p-1 rounded-3 formBg text-white" >
    <Form onSubmit={handleSubmit(onSubmit)} className="mx-5 my-3">
@@ -98,14 +94,22 @@ const[thirdPass,toggleThirdPass]=useToggle();
 
 
 
-      <Button disabled={isSubmitting}  type='submit' className='w-100 mt-4 Auth-btn'>
-  save
+
+
+        <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
+      {isSubmitting ?(
+          <>
+          Save
+          <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+          </>
+        ):('Save')}
 
       </Button>
     </Form>
+
 
 </Col>
 
     </>
   )
-}
+      }

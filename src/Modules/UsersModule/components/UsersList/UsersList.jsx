@@ -1,9 +1,10 @@
 import React from 'react'
 
-export default function SideBar() {
+export default function UsersList() {
   return (
     <div>
-
+      UsersList
     </div>
   )
 }
+

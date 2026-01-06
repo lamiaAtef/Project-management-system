@@ -1,9 +1,9 @@
 import React from 'react'
 
-export default function SideBar() {
+export default function TasksList() {
   return (
     <div>
-
+      TasksList
     </div>
   )
 }
