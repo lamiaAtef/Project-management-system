@@ -46,7 +46,7 @@ function App() {
           {index:true, element:<Dashboard/>},
           {path:"home", element:<Dashboard/>},
           {path:"projects", element:<ProjectsList/>},
-          {path:"Project-data", element:<ProjectData/>},
+          {path:"project-data", element:<ProjectData/>},
           {path:"tasks", element:<TasksList/>},
           {path:"tasks-data", element:<TasksData/>},
           {path:"users", element:<UsersList/>},

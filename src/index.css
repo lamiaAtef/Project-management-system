@@ -10,8 +10,8 @@
   --notActiveBtColor:rgba(146, 46, 37, 0.7);
   --toDoBtnColor:rgba(228, 225, 245, 1);
   --textColorTable:rgba(79, 79, 79, 1);
-
-
+  --grayColor:rgba(154, 154, 154, 0.4);
+  --actveSidebar:rgba(239, 155, 40, 0.3);
 }
 * {
     font-family: var(--main-font);
@@ -261,3 +261,5 @@ select:-webkit-autofill {
   display: block;
   width:15px;
 }
+
+
