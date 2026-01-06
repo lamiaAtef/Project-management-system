@@ -10,6 +10,14 @@ export const USER_URLS={
      VERIFY:`/Users/verify`,
      REST:`/Users/Reset`,
      GET_CURRENT_USER:`/Users/currentUser`,
+     CREATE_AN_MANAGER:`/Users/Create`,
+     GET_USER_BYID:(userId)=>`/Users/${userId}`,
+     TOGGLE_ACTIVATED_EMPLOYEE:(userId)=>`/Users/${userId}`,
+     GET_USERS_COUNT_BY_MANAGER:`/Users/count`,
+     GET_USERS_BY_MANAGER:`/Users/manager`,
+     GET_FILTER_USERS_LOGGED_IN_USER:`/Users/`,
+     UPDATE_MY_CURRENT_PROFILE:`/Users/`
+
 
 }
 export const PROJECT_URLS={
@@ -25,13 +33,16 @@ export const PROJECT_URLS={
 }
 export const TASK_URLS={
 
-    GET_ALL_TASKS:`/task/`,
-      CREATE_TASK:`/task`,
-   UPDATE_PROJECT: (taskId)=>`/Project/${taskId}`,
-   DELETE_PROJECT: (taskId)=>`/Project/${taskId}`,
+    CREATE_TASK:`/task`,
+    GET_ALL_MY_ASIGGNED_TASK:`/task`,
+    GET_ALL_MY_TASKS_FOR_MANAGER:`/task/manager`,
+  GET_TASK_BY_ID:(taskId)=>`/task/${taskId}`,
+   UPDATE_TASK: (taskId)=>`/Project/${taskId}`,
+   DELETE_TASK: (taskId)=>`/Project/${taskId}`,
    CONUT_TASKS_FOR_MANAGER_EMPLOYEE:`/Task/count`,
    CHANGE_STATUS:(taskId)=>`/Task/${taskId}/change-status`,
-   GET_ALLTASKS_INproject=`/task/project/${taskId}`,
+   GET_ALLTASKS_IN_PROJECT:(projectId)=>`/task/project/${projectId}`
+
 
 
 }
