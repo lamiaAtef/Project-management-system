@@ -40,7 +40,7 @@ function App() {
       },
       {
         path:"dashboard",
-        element:<MasterLayout/>,
+        element:<ProtectedRoute><MasterLayout/></ProtectedRoute>,
         errorElement:<NotFound/>,
         children:[
           {index:true, element:<Dashboard/>},
