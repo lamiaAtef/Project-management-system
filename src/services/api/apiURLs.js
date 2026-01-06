@@ -31,6 +31,7 @@ export const TASK_URLS={
    DELETE_PROJECT: (taskId)=>`/Project/${taskId}`,
    CONUT_TASKS_FOR_MANAGER_EMPLOYEE:`/Task/count`,
    CHANGE_STATUS:(taskId)=>`/Task/${taskId}/change-status`,
+   GET_ALLTASKS_INproject=`/task/project/${taskId}`,
 
 
 }
