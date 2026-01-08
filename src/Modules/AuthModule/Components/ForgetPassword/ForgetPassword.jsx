@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { Button, Col ,Form} from 'react-bootstrap';
 import { EMAIL_VALIDATION} from '../../../../services/validation';
 import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader.jsx';
+import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader.jsx';
 
 
 
@@ -14,6 +15,7 @@ import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader.jsx';
 export default function ForgetPassword() {
    const colProps = { md: 8, lg: 6, xl: 5 };
 
+ const{register, formState:{errors,isSubmitting}, handleSubmit}= useForm();
  const{register, formState:{errors,isSubmitting}, handleSubmit}= useForm();
  let navigate = useNavigate();
 

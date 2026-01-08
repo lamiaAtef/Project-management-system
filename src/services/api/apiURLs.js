@@ -10,6 +10,10 @@ export const USER_URLS={
      VERIFY:`/Users/verify`,
      REST:`/Users/Reset`,
      GET_CURRENT_USER:`/Users/currentUser`,
+     GET_ALLUSERS_Users:`/Users/Manager`,
+     TOGGLE_USER:`/Users`,
+     GET_USER_BY_ID: "/Users",
+     GET_USER_COINT:`/Users/count`
 
 }
 export const USERS_URLS={
@@ -31,8 +35,11 @@ export const TASKS_URLS={
      GET_SINGLE_TASK:(id)=>`/Task/${id}`,
      UPDATE_TASK:(id)=>`/Task/${id}`, 
      DELETE_TASK:(id)=>`/Task/${id}`,
-     COUNT_TASKS : `/Task/count`, 
+     TASKS_COUNT : `/Task/count`, 
      CHANGE_TASK_STATUS:(id)=>`/Task/${id}/change-status/`,  
      GET_PROJECT_TASKS :(id) => `/Task/Project${id}/`,
 
 }
+    
+
+
