@@ -48,7 +48,7 @@ function App() {
           {path:"projects", element:<ProjectsList/>},
           {path:"project-data", element:<ProjectData/>},
           {path:"tasks", element:<TasksList/>},
-          {path:"tasks-data", element:<TasksData/>},
+          {path:"tasks-data/:id?", element:<TasksData/>},
           {path:"users", element:<UsersList/>},
         ]
       },

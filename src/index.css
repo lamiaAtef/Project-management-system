@@ -262,13 +262,7 @@ select:-webkit-autofill {
   width:15px;
 }
 /* start general Admin css */
-.header{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-block: 10px;
-  background-color: #fff;
-}
+
 .title{
   font-family: var(--font-family);
   font-weight: 500;
@@ -280,40 +274,27 @@ select:-webkit-autofill {
   color: var(--bgColor);
   text-decoration: none;
 }
-/* start table css */
-table{
-  width: 100%;
-  overflow-x: auto;
-  
-}
 
-th,td{
-  padding: 10px;
-}
-tr:nth-child(odd){
-  background-color: #fff;
-}
-tr:nth-child(even){
-  background-color: rgba(245, 245, 245, 1);
-}
 th {
   background-color: var(--secondaryColor) !important;
   border: 1px solid var(--secondaryColor) !important;
-  color: #fff;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
 
 }
-/* start form  */
-.formContainer{
-  display: flex;
-  justify-content: center;
-  align-items: center;
+td{
+  border:none !important;
+  padding: 5px !important;
 }
+
+
 .form-admin{
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
   padding: 20px;
   border-radius: 8px;
   background-color: #fff;
-  width: 80%;
+  /* width: 80%; */
   margin-block: 20px;
 }
 .form-admin label{
@@ -328,11 +309,55 @@ th {
   border:1px solid #000;
   color:#000;
   border-radius: 30px;
-  padding: 15px 25px;
+  padding: 10px 20px;
   transition: all 0.3s ease;
 }
 .form-admin .cancelBtn:hover{
   background-color: var(--mainColor);
   color:#fff; 
   border:none;
+}
+/* Drop down button styles */
+.dropDownMenu{
+    background-color: #fff ; 
+    box-shadow: 0px 0px 16px 0px #0000001A;
+    border-radius: 15px;
+    /* list-style: none; */
+    padding: 0;
+    /* position: relative; */
+    border:0
+    
+}
+.list_item:nth-child(0){
+    /* cursor: pointer; */
+    /* transition: .2s; */
+    border-radius: 15px;
+    padding: 5px;
+
+   
+}
+.dropdown-toggle::after{
+    display: none ;
+}
+.list_item:hover{
+    background: #F8F9FB;
+
+}
+/* start tasks css */
+.status{
+  border-radius: 20px;
+}
+.bg-active{
+  background-color: var(--activeBtnColor);
+ 
+}
+
+.bg-notActive{
+  background-color:var(--notActiveBtColor);  
+
+  
+}
+.bg-progress{
+  background-color: var(--mainColor);
+ 
 }

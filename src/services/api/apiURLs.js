@@ -12,6 +12,9 @@ export const USER_URLS={
      GET_CURRENT_USER:`/Users/currentUser`,
 
 }
+export const USERS_URLS={
+     GET_ALL_USERS:`/Users/Manager`,
+}
 export const PROJECTS_URLS={
     GET_ALL_PROJECTS:`/Project/`,
     GET_SINGLE_PROJECT:(id)=>`/Project/${id}`,
