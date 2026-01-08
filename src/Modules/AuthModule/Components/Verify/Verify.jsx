@@ -71,8 +71,14 @@ export default function Verify() {
     
            
           </Form.Group>
-                    <Button type='submit' className='w-100 mt-4 Auth-btn'>save</Button>
-
+              <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
+           {isSubmitting ?(
+          <>
+          Save
+          <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+          </>
+            ):('Save')}
+          </Button>
           </Form>
        </Col>
     </>

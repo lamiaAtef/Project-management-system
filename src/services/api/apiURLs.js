@@ -10,5 +10,11 @@ export const USER_URLS={
      VERIFY:`/Users/verify`,
      REST:`/Users/Reset`,
      GET_CURRENT_USER:`/Users/currentUser`,
+     GET_ALLUSERS_Users:`/Users/Manager`,
+     TOGGLE_USER:`/Users`
+    
 
+}
+export const Tasks_URLS={
+    TASKS_COUNT:`/Task/count`
 }

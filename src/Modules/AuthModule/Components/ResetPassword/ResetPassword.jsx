@@ -18,15 +18,16 @@ export default function ResetPassword() {
   const colProps = { md: 8, lg: 6, xl: 5 };
 
  const[showPassword, setShowPassword] = useState(false);
+ const[showConfirmPassword, setShowConfirmPassword] = useState(false);
 
  const{register, formState:{errors,isSubmitting}, handleSubmit,watch}= useForm();
  
  let navigate = useNavigate();
   const onSubmit=async(data)=>{
+    console.log(data);
 
   try {
     let response= await axiosInstance.post(`${USER_URLS.REST}`,data);
-    console.log(response);
     toast.success('success to reset password!',
     {
       autoClose: 3000,
@@ -35,11 +36,10 @@ export default function ResetPassword() {
 
     
   } catch (error) {
-    toast.error(error.response.data.message || 'Failed to reset password',
+    toast.error(error?.response?.data?.message || 'Failed to reset password',
     {
       autoClose: 3000,
     })
-    // console.error('There was an error!', error);
     
   }
  }
@@ -81,24 +81,17 @@ export default function ResetPassword() {
         <Form.Label className='textHeader'>Confirm Password</Form.Label>
 
         <div className='password-wrapper'>
-        <Form.Control  type={showPassword ? 'text':'password'} placeholder="Confirm your password"
+        <Form.Control  type={showConfirmPassword ? 'text':'password'} placeholder="Confirm your password"
         {...register('confirmPassword',{...PASSWORD_VALIDATION,validate :value=> value === watch('password')||"Confirm password must match the password."} )} />
-        <span className='eye-icon' onClick={()=> setShowPassword(!showPassword)}>
-          {showPassword ? <FaEyeSlash/> : <FaEye/>}
+        <span className='eye-icon' onClick={()=> setShowConfirmPassword(!showConfirmPassword)}>
+          {showConfirmPassword ? <FaEyeSlash/> : <FaEye/>}
         </span>
         </div>
         {errors.confirmPassword && <small className='text-danger d-block mt-1'>{errors.confirmPassword.message}</small>}
       </Form.Group>
-         
-            <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
-           {isSubmitting ?(
-          <>
-          Save
-          <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
-          </>
-            ):('Save')}
-          </Button>
+
    
+      <Button type='submit' className='w-100 mt-4 Auth-btn'>Save</Button>
     </Form>
            
     </Col>

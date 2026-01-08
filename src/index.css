@@ -10,8 +10,8 @@
   --notActiveBtColor:rgba(146, 46, 37, 0.7);
   --toDoBtnColor:rgba(228, 225, 245, 1);
   --textColorTable:rgba(79, 79, 79, 1);
-
-
+  --grayColor:rgba(154, 154, 154, 0.4);
+  --actveSidebar:rgba(239, 155, 40, 0.3);
 }
 * {
     font-family: var(--main-font);
@@ -260,4 +260,186 @@ select:-webkit-autofill {
   border:2px solid var(--mainColor);
   display: block;
   width:15px;
+}
+.homeImage{
+  background-image: url(../src/assets/images/home-bg.png);
+  height: 313px;
+  border-radius: 15px;
+ 
+}
+table{
+  width: 100%;
+  overflow-x: auto;
+  
+}
+
+th,td{
+  padding: 10px;
+}
+tr:nth-child(odd){
+  background-color: #fff;
+}
+tr:nth-child(even){
+  background-color: rgba(245, 245, 245, 1);
+}
+th {
+  background-color: var(--secondaryColor) !important;
+  border: 1px solid var(--secondaryColor) !important;
+  color: #fff;
+
+}
+.status {
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status.active {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.status.inactive {
+  background-color: #e74c3c;
+  color: white;
+}
+.th-flex {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sort-icons {
+  display: flex;
+  flex-direction: column;
+  font-size: 14px;
+  color: #cfd8d3;
+  line-height: 1;
+}
+
+.sort-icons svg {
+  cursor: pointer;
+}
+.dropdown-toggle::after {
+  display: none !important;
+}
+.status{
+  border-radius: 20px;
+   padding: 4px 12px;
+  border-radius: 5px solid #0e0d0d;
+  font-size: 13px;
+  cursor: pointer;
+}
+.status {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.status.active {
+  background-color:var(--activeBtnColor);
+  
+}
+
+.status.inactive {
+  background-color: var(--notActiveBtColor);
+ 
+}
+.stat-card {
+  border: none;
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+.icon-box {
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: white;
+}
+
+.icon-box.total {
+  background-color: rgba(207, 209, 236, 1)
+}
+
+.icon-box.tasks {
+  background-color:rgba(228, 228, 188, 1)
+}
+
+.icon-box.projects {
+  background-color: rgba(231, 195, 215, 1)
+}
+.progressUser{
+  background-color: rgba(229, 230, 244, 1);
+}
+
+.tasksNumber{
+  background-color: rgba(244, 244, 229, 1)
+}
+.projectNumber{
+  background-color: rgba(244, 229, 237, 1)
+}
+
+.tasks-summary-card {
+  width: 500px;
+  border-radius: 15px;
+  border: none;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+}
+
+.inner-cards-wrapper {
+  display: flex !important;
+  flex-direction: row !important;
+  gap: 12px;
+  width: 100%;
+}
+
+
+.stat-card {
+  flex: 1;
+  min-width: 0;
+  border-radius: 14px;
+  padding: 14px;
+}
+
+
+.icon-box {
+  width: 38px;
+  height: 38px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+
+.progressUser {
+  background-color: #eef0fb;
+}
+
+.tasksNumber {
+  background-color: #f6f7e7;
+}
+
+.projectNumber {
+  background-color: #fdecef;
+}
+.tasks-donut-wrapper {
+  display: flex;
+  align-items: flex-end;
+  gap: 180px;
+  margin-top: 40px;
+}
+
+
+/* donut */
+.donut-wrapper {
+  width: 260px;
 }
