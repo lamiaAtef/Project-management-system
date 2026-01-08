@@ -47,14 +47,15 @@ function App() {
           {index:true, element:<Dashboard/>},
           {path:"home", element:<Dashboard/>},
           {path:"projects", element:<ProjectsList/>},
-          {path:"project-data", element:<ProjectData/>},
+          {path:"project-data/new_project", element:<ProjectData/>},
+           {path:"project-data/:id?",element:<ProjectData/>},
           {path:"tasks", element:<TasksList/>},
           {path:"tasks-data/:id?", element:<TasksData/>},
           {path:"users", element:<UsersList/>},
           {path:"profile", element:<Profile/>}
         ]
       },
-      
+
 
     ]
   )
@@ -62,7 +63,7 @@ function App() {
     <>
     <RouterProvider router={routes}></RouterProvider>
     <ToastContainer/>
-     
+
     </>
   )
 }

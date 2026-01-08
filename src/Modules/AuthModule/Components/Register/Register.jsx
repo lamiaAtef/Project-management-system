@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import {EMAIL_VALIDATION, NAME_VALIDATION, PASSWORD_VALIDATION, PHONE_VALIDATION } from '../../../../services/validation';
-import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
@@ -11,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { USER_URLS, baseURL } from '../../../../services/api/apiURLs';
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../../../../assets/images/profileImg.png";
+import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 export default function Register() {
    const colProps = { md: 12, lg: 10, xl: 8};
     const[showPassword, setShowPassword] = useState(false);

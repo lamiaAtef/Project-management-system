@@ -42,4 +42,3 @@ export default function SideBar({collapsed, setCollapsed}) {
     </>
   )
 }
-

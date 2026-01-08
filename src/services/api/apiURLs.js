@@ -10,36 +10,38 @@ export const USER_URLS={
      VERIFY:`/Users/verify`,
      REST:`/Users/Reset`,
      GET_CURRENT_USER:`/Users/currentUser`,
-     GET_ALLUSERS_Users:`/Users/Manager`,
-     TOGGLE_USER:`/Users`,
-     GET_USER_BY_ID: "/Users",
-     GET_USER_COINT:`/Users/count`
+     CREATE_AN_MANAGER:`/Users/Create`,
+     GET_USER_BYID:(userId)=>`/Users/${userId}`,
+     TOGGLE_ACTIVATED_EMPLOYEE:(userId)=>`/Users/${userId}`,
+     GET_USERS_COUNT_BY_MANAGER:`/Users/count`,
+     GET_USERS_BY_MANAGER:`/Users/manager`,
+     GET_FILTER_USERS_LOGGED_IN_USER:`/Users/`,
+     UPDATE_MY_CURRENT_PROFILE:`/Users/`
+
 
 }
-export const USERS_URLS={
-     GET_ALL_USERS:`/Users/Manager`,
-}
-export const PROJECTS_URLS={
-    GET_ALL_PROJECTS:`/Project/`,
-    GET_SINGLE_PROJECT:(id)=>`/Project/${id}`,
-    CREATE_PROJECT:`/Project`,
-    UPDATE_PROJECT:(id)=>`/Project/${id}`,
-    DELETE_PROJECT:`/Project/`,  
-    GET_PROJECTS_MANAGER:`Project/manager` ,
-    GET_PROJECTS_EMPLOYEE:`Project/employee` ,
-}
-export const TASKS_URLS={
-     CREATE_TASK:`/Task`,
-     GET_MY_ASSIGNED_TASKS:`/Task/`,
-     GET_All_TASKS : `/Task/manager`,
-     GET_SINGLE_TASK:(id)=>`/Task/${id}`,
-     UPDATE_TASK:(id)=>`/Task/${id}`, 
-     DELETE_TASK:(id)=>`/Task/${id}`,
-     TASKS_COUNT : `/Task/count`, 
-     CHANGE_TASK_STATUS:(id)=>`/Task/${id}/change-status/`,  
-     GET_PROJECT_TASKS :(id) => `/Task/Project${id}/`,
+export const PROJECT_URLS={
+    GET_ALL_PROJECTS:`/project/`,
+    CREATE_PROJECT:`/project`,
+   GET_PROJECT:(projectId)=>`/Project/${projectId}`,
+   UPDATE_PROJECT: (projectId)=>`/Project/${projectId}`,
+   DELETE_PROJECT: (projectId)=>`/Project/${projectId}`,
+   PROJECTS_MANGER:`/Project/manager`,
+   PROJECTS_EMPLOYEE:`/Project/employee`,
+
 
 }
-    
+export const TASK_URLS={
 
+     CREATE_TASK:`/task`,
+     GET_ALL_MY_ASIGGNED_TASK:`/task`,
+     GET_ALL_MY_TASKS_FOR_MANAGER:`/task/manager`,
+     GET_TASK_BY_ID:(taskId)=>`/task/${taskId}`,
+     UPDATE_TASK: (taskId)=>`/Project/${taskId}`,
+     DELETE_TASK: (taskId)=>`/Project/${taskId}`,
+     CONUT_TASKS_FOR_MANAGER_EMPLOYEE:`/Task/count`,
+     CHANGE_STATUS:(taskId)=>`/Task/${taskId}/change-status`,
+     GET_ALLTASKS_IN_PROJECT:(projectId)=>`/task/project/${projectId}`
+
+}
 
