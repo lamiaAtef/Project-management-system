@@ -274,8 +274,11 @@ select:-webkit-autofill {
   color: var(--bgColor);
   text-decoration: none;
 }
-
-th {
+/* table */
+table,.sc-dlMBXc{
+  min-height:  50vh !important;
+}
+th ,.rdt_TableHeadRow{
   background-color: var(--secondaryColor) !important;
   border: 1px solid var(--secondaryColor) !important;
   color: #fff !important;

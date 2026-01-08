@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 const useTasks = () => {
     console.log("useTasks Hook Initialized");
     const [tasks,setTasks] = useState([]);
+    const [organicTasks,setOrganicTasks] = useState([]);
+
     const[singleTask,setSingleTask]=useState()
     const [loading,setLoading] = useState(true);
     const [error,setError] = useState(null);
@@ -19,6 +21,7 @@ const useTasks = () => {
             const response = await axiosInstance.get(TASKS_URLS.GET_All_TASKS);
             console.log(response?.data?.data);
             setTasks(response?.data?.data);
+            setOrganicTasks(response?.data?.data)
         } catch (err) {
             setError(err);
         } finally {
@@ -85,8 +88,9 @@ const useTasks = () => {
             setLoading(false);
         }
     }
+   
 
   
-   return {tasks,loading,error,fetchTasks,deleteTask,addTask,fetchOneTaskById,singleTask,updateTasks};
+   return {tasks,organicTasks,loading,error,fetchTasks,deleteTask,addTask,fetchOneTaskById,singleTask,updateTasks};
 }
 export default useTasks;

@@ -10,12 +10,14 @@ import { RiDeleteBin6Line } from 'react-icons/ri';
 import Confirmation from '../../../../components/Confirmation/Confirmation';
 import { BeatLoader } from 'react-spinners';
 import Search from '../../../../components/Search/Search';
+import DataTable from 'react-data-table-component';
+
 
 
 
 export default function TasksList() {
   let navigate = useNavigate();
-  let {tasks,loading,error,fetchTasks,deleteTask}= useTasks()
+  let {tasks,loading,error,fetchTasks,deleteTask,organicTasks}= useTasks()
   let [showModal, setShowModal] = useState(false);
   let [selectedId, setSelectedId] = useState(null);
   let [selectedName, setSelectedName] = useState(null);
@@ -34,7 +36,7 @@ export default function TasksList() {
     setSelectedName(null)
   } 
   const handleView = (id) =>{
-    
+
   }
   useEffect(() => {
     fetchTasks();
@@ -47,11 +49,80 @@ export default function TasksList() {
   }, [tasks]);
   if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div> 
   // filter tasks
-  const filteredTasks = tasks.filter(
+   tasks = organicTasks.filter(
     (u) =>
       u.title.toLowerCase().includes(query.toLowerCase()) 
-      // u.email.toLowerCase().includes(query.toLowerCase())
   );
+  const columns = [
+	{
+		name: 'Title',
+		selector: row => row.title,
+    sortable: true,
+	},
+  {
+  name: 'Status',
+  selector: row => row.status,   // للـ sorting
+  cell: (row) => (
+    row.status === "ToDo" ? 
+      <span className="bg-notActive status text-white px-3 py-1">
+        ToDo
+      </span>
+    : row.status === "In Progress" ?
+      <span className="bg-progress status text-white px-3 py-1">
+        In Progress
+      </span>
+    :
+      <span className="bg-active status text-white px-3 py-1">
+        Done
+      </span>
+  ),
+  sortable: true,
+},
+
+  {
+		name: 'User',
+		selector: row => row.employee.userName,
+    sortable: true,
+	},
+  {
+		name: 'Project',
+		selector: row => row.project.title,
+    sortable: true,
+	},
+    {
+		name: 'Date',
+		selector: row => row.creationDate,
+    sortable: true,
+	},
+  {
+  name: 'Action',
+  cell: (row) => (
+    <DropdownButton
+      actions={{
+        view: {
+          label: "View",
+          icon: <FaEye color="rgba(0, 146, 71, 1)" />,
+          onClick: () => handleView(row.id),
+        },
+        edit: {
+          label: "Edit",
+          icon: <FaEdit color="rgba(0, 146, 71, 1)" />,
+          onClick: () => navigate(`/dashboard/tasks-data/${row.id}`),
+        },
+        delete: {
+          label: "Delete",
+          icon: <RiDeleteBin6Line color="rgba(255, 0, 0, 1)" />,
+          onClick: () => openConfirmationModal(row.id, row.title),
+          class: "text-danger",
+        },
+      }}
+    />
+  ),
+
+}
+
+];
+
   return (
     <>
       <header className='bg-white container-fluid m-0 p-2'>
@@ -65,7 +136,7 @@ export default function TasksList() {
       {/* TODO TABLE */}
       
     
-    <table  responsive striped bordered >
+    {/* <table  responsive striped bordered >
       <thead>
         <tr>
           <th>Title <LuChevronsUpDown /></th>
@@ -119,7 +190,21 @@ export default function TasksList() {
 
       :<tr><td>No tasks available</td></tr>}
       </tbody>
-    </table>
+    </table> */}
+    <Search
+        value={query}
+        onChange={setQuery}
+        placeholder="Search users..."
+      />
+    <DataTable
+			columns={columns}
+			data={tasks}
+      pagination
+      paginationPerPage={5}
+      responsive striped bordered 
+		/>
+
+
     <Confirmation
        show={showModal}
                   deletedElement=""
