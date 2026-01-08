@@ -11,7 +11,10 @@ export const USER_URLS={
      REST:`/Users/Reset`,
      GET_CURRENT_USER:`/Users/currentUser`,
      GET_ALLUSERS_Users:`/Users/Manager`,
-     TOGGLE_USER:`/Users`
+     TOGGLE_USER:`/Users`,
+     GET_USER_BY_ID: "/Users",
+     GET_USER_COINT:`/Users/count`
+
     
 
 }

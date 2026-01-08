@@ -407,6 +407,11 @@ th {
   padding: 14px;
 }
 
+.userCard{
+  
+  border-radius: 14px;
+  padding: 14px;
+}
 
 .icon-box {
   width: 38px;
@@ -439,7 +444,13 @@ th {
 }
 
 
-/* donut */
+
 .donut-wrapper {
   width: 260px;
 }
+.dashboard-cards-wrapper {
+  display: flex;
+  gap: 20px;
+  margin-top: 20px;
+}
+

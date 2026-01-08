@@ -8,9 +8,16 @@ import NoData from '../../../Shared/components/NoData/NoData';
 import { LuChevronsUpDown  } from "react-icons/lu";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FiEye } from "react-icons/fi";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
 export default function UsersList() {
   const [usersList, setUsersList] = useState([])
   const { userData } = useContext(AuthContext);
+  const [selectedUser, setSelectedUser] = useState(null);
+const [showUser, setShowUser] = useState(false);
+const [blockedUIUsers, setBlockedUIUsers] = useState([]);
+
 
   const getAllUsers = async () => {
     try {
@@ -49,6 +56,34 @@ export default function UsersList() {
   } catch (error) {
     toast.error(error.response?.data?.message || "Error updating status");
   }
+};
+const viewUser = async (userId) => {
+  try {
+    const response = await axiosInstance.get(
+      `${USER_URLS.GET_USER_BY_ID}/${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+   
+    setSelectedUser(response.data);
+    setShowUser(true);
+  } catch (error) {
+    toast.error("Failed to load user data");
+  }
+};
+
+const toggleBlockUI = (id) => {
+  setBlockedUIUsers(prev =>
+    prev.includes(id)
+      ? prev.filter(userId => userId !== id)
+      : [...prev, id]
+  );
+
+  toast.info("Bloced successfully");
 };
 
  useEffect(() => {
@@ -90,14 +125,32 @@ export default function UsersList() {
         <td>{user.userName}</td>
 
         <td>
-         <button
-    className={`status ${
-      user.isActivated ? "active" : "inactive"
-    }`}
-    onClick={() => toggleUserStatus(user.id)}
-  >
-    {user.isActivated ? "Active" : "Not Active"}
-  </button>
+         <td>
+ <button
+  className={`status ${
+    blockedUIUsers.includes(user.id)
+      ? "inactive"
+      : user.isActivated
+      ? "active"
+      : "inactive"
+  }`}
+  disabled={blockedUIUsers.includes(user.id)}
+  onClick={() => {
+    if (!blockedUIUsers.includes(user.id)) {
+      toggleUserStatus(user.id); 
+    }
+  }}
+>
+  {blockedUIUsers.includes(user.id)
+    ? "Blocked"
+    : user.isActivated
+    ? "Active"
+    : "Not Active"}
+</button>
+
+</td>
+
+
         </td>
 
         <td>{user.phoneNumber}</td>
@@ -115,11 +168,14 @@ export default function UsersList() {
   </Dropdown.Toggle>
 
   <Dropdown.Menu className="py-1">
-    <Dropdown.Item className="d-flex align-items-center">
-      Block
-    </Dropdown.Item>
+  <Dropdown.Item
+  className="d-flex align-items-center"
+  onClick={() => toggleBlockUI(user.id)}
+>
+  {blockedUIUsers.includes(user.id) ? "Unblock" : "Block"}
+</Dropdown.Item>
 
-    <Dropdown.Item className="d-flex align-items-center">
+    <Dropdown.Item className="d-flex align-items-center"  onClick={() => viewUser(user.id)}>
        <FiEye className="me-2" />
   View
     </Dropdown.Item>
@@ -139,6 +195,46 @@ export default function UsersList() {
 </tbody>
 
       </table>
+<Modal
+  show={showUser}
+  onHide={() => setShowUser(false)}
+  centered
+>
+  <Modal.Header closeButton>
+    <Modal.Title>User Details</Modal.Title>
+  </Modal.Header>
+
+  <Modal.Body>
+    {selectedUser && (
+      <>
+        <p><b>Name:</b> {selectedUser.userName}</p>
+        <p><b>Email:</b> {selectedUser.email}</p>
+        <p><b>Phone:</b> {selectedUser.phoneNumber}</p>
+        <p><b>Country:</b> {selectedUser.country}</p>
+        <p>
+          <b>Status:</b>{" "}
+          <span
+            className={
+              selectedUser.isActivated
+                ? "text-success fw-bold"
+                : "text-danger fw-bold"
+            }
+          >
+            {selectedUser.isActivated ? "Active" : "Not Active"}
+          </span>
+        </p>
+        <p><b>Group:</b> {selectedUser.group?.name}</p>
+      </>
+    )}
+  </Modal.Body>
+
+  <Modal.Footer>
+    <Button variant="secondary" onClick={() => setShowUser(false)}>
+      Close
+    </Button>
+  </Modal.Footer>
+</Modal>
+
     </div>
   )
 }

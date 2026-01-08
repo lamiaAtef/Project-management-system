@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Card } from "react-bootstrap";
 import { AuthContext } from "../../../../context/AuthContext";
 import axiosInstance from "../../../../services/api";
-import { Tasks_URLS } from "../../../../services/api/apiURLs";
+import { Tasks_URLS, USER_URLS } from "../../../../services/api/apiURLs";
 import { LuChartNoAxesCombined } from "react-icons/lu";
 import { GoChecklist } from "react-icons/go";
 import { TbBusinessplan } from "react-icons/tb";
@@ -13,14 +13,18 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 export default function Dashboard() {
   const { userData } = useContext(AuthContext);
-
+  
   const [counts, setCounts] = useState({
     toDo: 0,
     inProgress: 0,
     done: 0,
   });
+   const [countsUser, setCountsUser] = useState({
+    activatedEmployeeCount: 0,
+  deactivatedEmployeeCount: 0
+  });
 
-  const getUsersCount = async () => {
+  const getTaskssCount = async () => {
     try {
       const response = await axiosInstance.get(Tasks_URLS.TASKS_COUNT, {
         headers: {
@@ -28,6 +32,18 @@ export default function Dashboard() {
         },
       });
       setCounts(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const getUsersCount = async () => {
+    try {
+      const response = await axiosInstance.get(USER_URLS.GET_USER_COINT, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCountsUser(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +60,7 @@ const donutData = {
     {
       data: [ counts.inProgress,
         counts.toDo,
-        counts.done,],
+        counts.done],
       backgroundColor: [
         donutColors.progress,
         donutColors.tasks,
@@ -78,6 +94,7 @@ const donutOptions = {
 
 
   useEffect(() => {
+    getTaskssCount()
     getUsersCount();
   }, []);
 
@@ -92,11 +109,8 @@ const donutOptions = {
           You can add project and assign tasks to your team
         </p>
       </div>
-
-    
-<div className="tasks-donut-wrapper">
-
-  <Card className="tasks-summary-card pt-3">
+<div className="dashboard-cards-wrapper">
+      <Card className="tasks-summary-card pt-3">
     <Card.Body>
       <h5 className="mb-1">Tasks</h5>
       <p className="text-muted mb-4">
@@ -129,7 +143,41 @@ const donutOptions = {
         </div>
       </div>
     </Card.Body>
+    
   </Card>
+  <Card  className="tasks-summary-card pt-3">
+   <Card.Body>
+      <h5 className="mb-1">Users</h5>
+      <p className="text-muted mb-4">
+        Lorem ipsum dolor sit amet, consectetur
+      </p>
+
+      <div className="inner-cards-wrapper">
+        <div className="stat-card progressUser">
+          <div className="icon-box total">
+            <LuChartNoAxesCombined />
+          </div>
+          <p className="mb-1 text-muted">active</p>
+          <h5>{`$ ${countsUser.activatedEmployeeCount}`}</h5>
+        </div>
+
+        <div className="stat-card tasksNumber">
+          <div className="icon-box tasks">
+            <GoChecklist />
+          </div>
+          <p className="mb-1 text-muted">inactive</p>
+          <h5>{countsUser.deactivatedEmployeeCount}</h5>
+        </div>
+
+       
+      </div>
+    </Card.Body>
+    </Card>
+  </div>
+ 
+<div className="tasks-donut-wrapper">
+
+
 
  
   <div className="donut-wrapper">
