@@ -1,8 +1,8 @@
 import React, {  useState } from 'react'
-import { TASKS_URLS } from '../services/api/apiURLs';
 import axiosInstance from '../services/api';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { TASKS_URLS } from '../services/api/apiURLs';
 
 
 const useTasks = () => {
@@ -18,7 +18,7 @@ const useTasks = () => {
         console.log("fetchTasks Called");
         setLoading(true);
         try {
-            const response = await axiosInstance.get(TASKS_URLS.GET_All_TASKS);
+            const response = await axiosInstance.get(TASKS_URLS.GET_ALL_MY_TASKS_FOR_MANAGER);
             console.log(response?.data?.data);
             setTasks(response?.data?.data);
             setOrganicTasks(response?.data?.data)
@@ -31,7 +31,7 @@ const useTasks = () => {
      const fetchOneTaskById = async (id) => {
         setLoading(true);
         try {
-            const response = await axiosInstance.get(TASKS_URLS.GET_SINGLE_TASK(id));
+            const response = await axiosInstance.get(TASKS_URLS.GET_TASK_BY_ID(id));
             console.log(response?.data);
             setSingleTask(response?.data);
             // toast.success("task updated")

@@ -1,5 +1,5 @@
 import React, {  useState } from 'react'
-import { TASKS_URLS, USERS_URLS } from '../services/api/apiURLs';
+import { TASKS_URLS, USER_URLS } from '../services/api/apiURLs';
 import axiosInstance from '../services/api';
 const useUsers = () => {
     console.log("useUsers Hook Initialized");
@@ -10,7 +10,7 @@ const useUsers = () => {
         console.log("fetchUsers Called");
         setLoading(true);   
         try {
-            const response = await axiosInstance.get(USERS_URLS.GET_ALL_USERS);
+            const response = await axiosInstance.get(USER_URLS.GET_USERS_BY_MANAGER);
             console.log(response?.data?.data);
             setUsers(response?.data?.data);            
         }   catch (err) { 

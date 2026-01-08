@@ -16,7 +16,12 @@ export const USER_URLS={
      GET_USERS_COUNT_BY_MANAGER:`/Users/count`,
      GET_USERS_BY_MANAGER:`/Users/manager`,
      GET_FILTER_USERS_LOGGED_IN_USER:`/Users/`,
-     UPDATE_MY_CURRENT_PROFILE:`/Users/`
+     UPDATE_MY_CURRENT_PROFILE:`/Users/`,
+      GET_CURRENT_USER:`/Users/currentUser`,
+     // GET_ALLUSERS_Users:`/Users/Manager`,
+     // TOGGLE_USER:`/Users`,
+     // GET_USER_BY_ID: "/Users",
+     // GET_USER_COINT:`/Users/count`
 
 
 }
@@ -31,7 +36,7 @@ export const PROJECT_URLS={
 
 
 }
-export const TASK_URLS={
+export const TASKS_URLS={
 
      CREATE_TASK:`/task`,
      GET_ALL_MY_ASIGGNED_TASK:`/task`,

@@ -1,6 +1,6 @@
 
 import React, {  useState } from 'react'
-import { PROJECTS_URLS, TASKS_URLS } from '../services/api/apiURLs';
+import { PROJECT_URLS, TASKS_URLS } from '../services/api/apiURLs';
 import axiosInstance from '../services/api';
 
 const useProjects = () => {
@@ -12,7 +12,7 @@ const useProjects = () => {
         console.log("fetchProjects Called");
         setLoading(true);
         try {
-            const response = await axiosInstance.get(PROJECTS_URLS.GET_ALL_PROJECTS);
+            const response = await axiosInstance.get(PROJECT_URLS.GET_ALL_PROJECTS);
             console.log(response?.data?.data);
             setProjects(response?.data?.data);
         } catch (err) {

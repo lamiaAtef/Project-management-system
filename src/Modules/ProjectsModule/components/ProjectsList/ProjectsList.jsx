@@ -1,20 +1,7 @@
-<<<<<<< Updated upstream
-
-
-import React from 'react'
-
-export default function ProjectsList() {
-  return (
-    <div>
-
-    </div>
-  )
-}
-=======
 import React, { useEffect, useState } from 'react'
 import { Form, Navigate, useNavigate } from 'react-router-dom'
 import axiosInstance from '../../../../services/api';
-import { PROJECT_URLS, TASK_URLS } from '../../../../services/api/apiURLs';
+import { PROJECT_URLS, TASKS_URLS } from '../../../../services/api/apiURLs';
 import { HiDotsVertical } from 'react-icons/hi';
 import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
 import { FaEye } from 'react-icons/fa6';
@@ -58,7 +45,7 @@ export default function ProjectsList() {
   }
 
   const countTasks=async()=>{
-    let response=await axiosInstance(TASK_URLS.CONUT_TASKS_FOR_MANAGER_EMPLOYEE);
+    let response=await axiosInstance(TASKS_URLS.CONUT_TASKS_FOR_MANAGER_EMPLOYEE);
     console.log("tasks");
 
     console.log(response.data);
@@ -199,4 +186,3 @@ onChange={handelChange}/>
     </>
   )
 }
->>>>>>> Stashed changes

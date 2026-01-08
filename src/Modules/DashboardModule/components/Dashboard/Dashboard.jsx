@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Card } from "react-bootstrap";
 import { AuthContext } from "../../../../context/AuthContext";
 import axiosInstance from "../../../../services/api";
-import { Tasks_URLS, USER_URLS } from "../../../../services/api/apiURLs";
+import { TASKS_URLS, USER_URLS } from "../../../../services/api/apiURLs";
 import { LuChartNoAxesCombined } from "react-icons/lu";
 import { GoChecklist } from "react-icons/go";
 import { TbBusinessplan } from "react-icons/tb";
@@ -26,7 +26,7 @@ export default function Dashboard() {
 
   const getTaskssCount = async () => {
     try {
-      const response = await axiosInstance.get(Tasks_URLS.TASKS_COUNT, {
+      const response = await axiosInstance.get(TASKS_URLS.TASKS_COUNT, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },

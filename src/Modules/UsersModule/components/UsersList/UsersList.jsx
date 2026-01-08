@@ -21,7 +21,7 @@ const [blockedUIUsers, setBlockedUIUsers] = useState([]);
 
   const getAllUsers = async () => {
     try {
-      let response = await axiosInstance.get(`${USER_URLS.GET_ALLUSERS_Users}?pageSize=10&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
+      let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=10&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
       console.log(response.data.data);
       setUsersList(response.data.data);
 
