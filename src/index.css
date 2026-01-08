@@ -3,7 +3,7 @@
 :root {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
-  --mainColor:rgba(239, 155, 40, 1);
+  --mainColor:rgb(239, 155, 40);
   --bgColor:rgb(14, 56, 47);
   --secondaryColor:rgba(49, 89, 81, 0.898);
   --activeBtnColor:rgba(0, 146, 71, 1);

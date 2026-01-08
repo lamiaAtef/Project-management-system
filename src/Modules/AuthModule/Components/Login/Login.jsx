@@ -43,7 +43,7 @@ export default function Login() {
 
     
   } catch (error) {
-    toast.error('failed to login',
+    toast.error(error?.response?.data?.message || "Failed to login",
     { autoClose: 3000
     });
     
