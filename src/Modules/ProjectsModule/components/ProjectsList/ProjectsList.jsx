@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 
 import React from 'react'
@@ -9,3 +10,193 @@ export default function ProjectsList() {
     </div>
   )
 }
+=======
+import React, { useEffect, useState } from 'react'
+import { Form, Navigate, useNavigate } from 'react-router-dom'
+import axiosInstance from '../../../../services/api';
+import { PROJECT_URLS, TASK_URLS } from '../../../../services/api/apiURLs';
+import { HiDotsVertical } from 'react-icons/hi';
+import { FaRegEdit, FaRegTrashAlt } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa6';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import { PiHandEye } from 'react-icons/pi';
+import { ModalHeader, Table } from 'react-bootstrap';
+import ConfirmationDelete from '../../../Shared/components/ConfirmationDelete/ConfirmationDelete';
+import { toast } from 'react-toastify';
+
+import { LuChevronsUpDown } from 'react-icons/lu';
+import { CiSearch } from 'react-icons/ci';
+import { BeatLoader } from 'react-spinners';
+import { set } from 'react-hook-form';
+
+
+
+
+export default function ProjectsList() {
+  const [projectList,setProjectList]=useState([]);
+   const [projectId,setProjectId]=useState(0);
+    const [projectName,setProjectName]=useState('');
+     const navigate= useNavigate();
+     ///////search filteration
+  const [search,setSearch]=useState('');
+  const [loading,setLoading]=useState(true);
+    const handelChange=(e)=>{
+      setSearch(e.target.value);
+    }
+    const filterProjects=projectList.filter((project)=>
+    project.title.toLowerCase().includes(search.toLowerCase())
+    )
+//////////////////end filteration
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = (project) =>{
+    setProjectId(project.id);
+    setProjectName(project.title);
+
+     setShow(true);
+  }
+
+  const countTasks=async()=>{
+    let response=await axiosInstance(TASK_URLS.CONUT_TASKS_FOR_MANAGER_EMPLOYEE);
+    console.log("tasks");
+
+    console.log(response.data);
+
+  }
+
+
+
+ const getAllProject=async()=>{
+
+setLoading(true);
+  try {
+    let response =await axiosInstance.get(PROJECT_URLS.GET_ALL_PROJECTS);
+    console.log(response.data.data);
+    setProjectList(response.data.data);
+
+
+  }
+  catch (error) {
+    console.log(error);
+
+  }
+finally{
+  setLoading(false);
+}
+
+
+ }
+ const deleteProject=async()=>{
+  const response=await axiosInstance.delete(PROJECT_URLS.DELETE_PROJECT(projectId));
+  console.log(response);
+  handleClose();
+  toast.success('delete success');
+  getAllProject();
+
+
+ }
+
+
+ useEffect(()=>{
+  getAllProject();
+  countTasks();
+ },[])
+ if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100 '>
+   <BeatLoader size={20} color='#288131'  />
+ </div>
+  return (
+    <>
+
+    {/* Modal */}
+       <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modal heading</Modal.Title>
+        </Modal.Header>
+       <ConfirmationDelete deleteItem={'project '} name={projectName}/>
+        <Modal.Footer>
+          <Button variant="danger"  onClick={deleteProject}>
+            delete
+          </Button>
+
+        </Modal.Footer>
+      </Modal>
+    {/* end modal */}
+  <header className='header'>
+    <h1 className='title'> Projects</h1>
+    <button className='Auth-btn' onClick={()=>navigate('/dashboard/project-data/new_project')}>
+    + Add New Project
+    </button>
+  </header>
+
+{/* /////search */}
+<div className='input-group w-25 my-3    border   rounded-5   border_color  overflow-hidden'>
+  <span className='input-group-text bg-white border-0'><CiSearch /> </span>
+    <input type="text"
+placeholder='search by title'
+className='form-control  '
+value={search}
+onChange={handelChange}/>
+
+</div>
+{/* /////////////end search */}
+
+
+
+  <table className="table table-striped  table-responsive">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title <LuChevronsUpDown /> </th>
+      <th scope="col">Statues <LuChevronsUpDown /></th>
+      <th scope="col">Num Users <LuChevronsUpDown /></th>
+      <th scope="col">Num Tasks <LuChevronsUpDown /></th>
+       <th scope="col">Date Created <LuChevronsUpDown /></th>
+        <th scope="col">Action </th>
+    </tr>
+  </thead>
+  <tbody>
+
+    {filterProjects?.map((project)=>(
+       <tr key={project.id}>
+        <td>{project?.id}</td>
+      <td >{project?.title}</td>
+      <td> <span className='status_style px-2 py-1 rounded rounded-3'>public</span></td>
+        <td></td>
+          <td></td>
+
+
+      <td>{project.creationDate}</td>
+      <td>
+                 <div className="dropdown">
+      <span
+        data-bs-toggle="dropdown"
+        style={{ cursor: "pointer", fontSize: "20px" }}
+      >
+      <HiDotsVertical  className='icon-color'/>
+      </span>
+
+      <ul className="dropdown-menu ">
+        <li className="dropdown-item"> <FaEye  className='icon-color mx-1'/> View</li>
+        <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-1'/>Edit</li>
+        <li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-1'/>Delete</li>
+      </ul>
+    </div>
+      </td>
+
+
+
+
+    </tr>
+    ))}
+
+
+
+
+  </tbody>
+</table>
+
+    </>
+  )
+}
+>>>>>>> Stashed changes

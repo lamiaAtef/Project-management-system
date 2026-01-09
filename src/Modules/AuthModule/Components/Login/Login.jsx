@@ -17,7 +17,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../../../context/AuthContext';
 
 export default function Login() {
-    
+
  const colProps = { md: 8, lg: 6, xl: 5 };
 
  const[showPassword, setShowPassword] = useState(false);
@@ -41,12 +41,14 @@ export default function Login() {
     })
     navigate('/dashboard');
 
-    
+
   } catch (error) {
-    toast.error('failed to login',
+
+
+    toast.error('login faild',
     { autoClose: 3000
     });
-    
+
   }
  }
 
@@ -57,11 +59,11 @@ export default function Login() {
 
 
      <Form onSubmit={handleSubmit(onSubmit)} className='mx-5 my-3'>
-        <AuthHeader subtitle={'welcome to PMS'} title={'Login'}/>  
+        <AuthHeader subtitle={'welcome to PMS'} title={'Login'}/>
 
       <Form.Group className="custom-input mb-3" controlId="exampleForm.ControlInput1">
         <Form.Label className='textHeader'>E-mail</Form.Label>
-        <Form.Control type="email" placeholder="Enter your E-mail" 
+        <Form.Control type="email" placeholder="Enter your E-mail"
         {...register('email',EMAIL_VALIDATION)} />
         {errors.email && <small className='text-danger d-block mt-1'>{errors.email.message}</small>}
       </Form.Group>
@@ -93,9 +95,8 @@ export default function Login() {
         ):('Login')}
       </Button>
     </Form>
-           
+
     </Col>
     </>
   )
 }
-

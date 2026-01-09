@@ -46,13 +46,18 @@ function App() {
           {index:true, element:<Dashboard/>},
           {path:"home", element:<Dashboard/>},
           {path:"projects", element:<ProjectsList/>},
+<<<<<<< Updated upstream
           {path:"Project-data", element:<ProjectData/>},
+=======
+          {path:"project-data/new_project", element:<ProjectData/>},
+           {path:"project-data/:id?",element:<ProjectData/>},
+>>>>>>> Stashed changes
           {path:"tasks", element:<TasksList/>},
           {path:"tasks-data", element:<TasksData/>},
           {path:"users", element:<UsersList/>},
         ]
       },
-      
+
 
     ]
   )
@@ -60,7 +65,7 @@ function App() {
     <>
     <RouterProvider router={routes}></RouterProvider>
     <ToastContainer/>
-     
+
     </>
   )
 }
