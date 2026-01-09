@@ -9,6 +9,7 @@ import { TbBusinessplan } from "react-icons/tb";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import styles from "./Dashboard.module.css"
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 export default function Dashboard() {
@@ -26,7 +27,7 @@ export default function Dashboard() {
 
   const getTaskssCount = async () => {
     try {
-      const response = await axiosInstance.get(TASKS_URLS.TASKS_COUNT, {
+      const response = await axiosInstance.get(TASKS_URLS.CONUT_TASKS_FOR_MANAGER_EMPLOYEE, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -38,7 +39,7 @@ export default function Dashboard() {
   };
   const getUsersCount = async () => {
     try {
-      const response = await axiosInstance.get(USER_URLS.GET_USER_COINT, {
+      const response = await axiosInstance.get(USER_URLS.GET_USERS_COUNT_BY_MANAGER, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
@@ -61,7 +62,7 @@ const donutData = {
       data: [ counts.inProgress,
         counts.toDo,
         counts.done],
-      backgroundColor: [
+        backgroundColor: [
         donutColors.progress,
         donutColors.tasks,
         donutColors.projects,
@@ -101,7 +102,7 @@ const donutOptions = {
   return (
     <>
       
-      <div className="homeImage d-flex flex-column justify-content-center p-4">
+      <div className={`${styles.homeImage} d-flex flex-column justify-content-center p-4`}>
         <h3 className="text-white">
           Welcome <span className="textHeader fw-bold">{userData?.userName}</span>
         </h3>
@@ -109,24 +110,24 @@ const donutOptions = {
           You can add project and assign tasks to your team
         </p>
       </div>
-<div className="dashboard-cards-wrapper">
-      <Card className="tasks-summary-card pt-3">
+<div className={`${styles.dashboard_cards_wrapper}`}>
+      <Card className={`${styles.tasks_summary_card }pt-3`}>
     <Card.Body>
       <h5 className="mb-1">Tasks</h5>
       <p className="text-muted mb-4">
         Lorem ipsum dolor sit amet, consectetur
       </p>
 
-      <div className="inner-cards-wrapper">
-        <div className="stat-card progressUser">
-          <div className="icon-box total">
+      <div className={`${styles.inner_cards_wrapper}`}>
+        <div className={`${styles.stat_card} ${styles.progressUser}`}>
+          <div className={`${styles.icon_box} ${styles.icon_box_total}`}>
             <LuChartNoAxesCombined />
           </div>
           <p className="mb-1 text-muted">Progress</p>
           <h5>{`$ ${counts.inProgress}`}</h5>
         </div>
 
-        <div className="stat-card tasksNumber">
+        <div className={`${styles.stat_card} ${styles.tasksNumber}`}>
           <div className="icon-box tasks">
             <GoChecklist />
           </div>
@@ -134,8 +135,8 @@ const donutOptions = {
           <h5>{counts.toDo}</h5>
         </div>
 
-        <div className="stat-card projectNumber">
-          <div className="icon-box projects">
+        <div className={`${styles.stat_card} ${styles.projectNumber}`}>
+          <div className={`${styles.projects} ${styles.icon_box}`}>
             <TbBusinessplan />
           </div>
           <p className="mb-1 text-muted">Projects Number</p>
@@ -145,24 +146,24 @@ const donutOptions = {
     </Card.Body>
     
   </Card>
-  <Card  className="tasks-summary-card pt-3">
+  <Card  className={`${styles.tasks_summary_card} pt-3`}>
    <Card.Body>
       <h5 className="mb-1">Users</h5>
       <p className="text-muted mb-4">
         Lorem ipsum dolor sit amet, consectetur
       </p>
 
-      <div className="inner-cards-wrapper">
-        <div className="stat-card progressUser">
-          <div className="icon-box total">
+      <div className={`${styles.inner_cards_wrapper}`}>
+        <div className={`${styles.progressUser} ${styles.stat_card}`}>
+          <div className={`${styles.icon_box} ${styles.icon_box_total}`}>
             <LuChartNoAxesCombined />
           </div>
           <p className="mb-1 text-muted">active</p>
           <h5>{`$ ${countsUser.activatedEmployeeCount}`}</h5>
         </div>
 
-        <div className="stat-card tasksNumber">
-          <div className="icon-box tasks">
+        <div className={`${styles.stat_card} ${styles.tasksNumber}`}>
+          <div className={`${styles.tasks} ${styles.icon_box}`}>
             <GoChecklist />
           </div>
           <p className="mb-1 text-muted">inactive</p>
@@ -175,12 +176,12 @@ const donutOptions = {
     </Card>
   </div>
  
-<div className="tasks-donut-wrapper">
+<div className={`${styles.tasks_donut_wrapper}`}>
 
 
 
  
-  <div className="donut-wrapper">
+  <div className={`${styles.donut_wrapper}`}>
     <Doughnut data={donutData} options={donutOptions} />
   </div>
 

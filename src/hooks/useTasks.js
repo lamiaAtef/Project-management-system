@@ -13,6 +13,7 @@ const useTasks = () => {
     const[singleTask,setSingleTask]=useState()
     const [loading,setLoading] = useState(true);
     const [error,setError] = useState(null);
+    const[taskById,setTaskById]=useState(null)
     let navigate = useNavigate()
     const fetchTasks = async () => {
         console.log("fetchTasks Called");
@@ -89,8 +90,9 @@ const useTasks = () => {
         }
     }
    
+   
 
   
-   return {tasks,organicTasks,loading,error,fetchTasks,deleteTask,addTask,fetchOneTaskById,singleTask,updateTasks};
+   return {tasks,organicTasks,loading,error,fetchTasks,deleteTask,addTask,taskById,fetchOneTaskById,singleTask,updateTasks};
 }
 export default useTasks;

@@ -24,6 +24,7 @@ export default function ProjectsList() {
   const [projectList,setProjectList]=useState([]);
    const [projectId,setProjectId]=useState(0);
     const [projectName,setProjectName]=useState('');
+    const [allProjectsId,setAllProjectsId] = useState([])
      const navigate= useNavigate();
      ///////search filteration
   const [search,setSearch]=useState('');
@@ -43,16 +44,24 @@ export default function ProjectsList() {
 
      setShow(true);
   }
+  let getTasksInProject =async() =>{
+      console.log(arr,"arr")
 
-  const countTasks=async()=>{
-    let response=await axiosInstance(TASKS_URLS.CONUT_TASKS_FOR_MANAGER_EMPLOYEE);
-    console.log("tasks");
+    // console.log("hena",id)
+    // console.log(id)
+    // let response = await axiosInstance.get(PROJECT_URLS.GET_PROJECT(id))
+    // console.log("hena bageb response",response.data)
 
-    console.log(response.data);
 
   }
+  //   let getUsersInProject =async(id) =>{
+    
+  //   console.log(id)
+  //   let response = await axiosInstance.get(PROJECT_URLS.GET_PROJECT(id))
+  //   console.log("hena bageb response")
+    
 
-
+  // }
 
  const getAllProject=async()=>{
 
@@ -87,8 +96,15 @@ finally{
 
  useEffect(()=>{
   getAllProject();
-  countTasks();
+  // getTasksInProject()
+ 
+  // countTasks();
  },[])
+//  useEffect(()=>{
+//  setAllProjectsId( projectList.map(project=>project.id))
+//   console.log(allProjectsId,"all")
+//  },[projectList])
+
  if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100 '>
    <BeatLoader size={20} color='#288131'  />
  </div>
@@ -149,8 +165,9 @@ onChange={handelChange}/>
         <td>{project?.id}</td>
       <td >{project?.title}</td>
       <td> <span className='status_style px-2 py-1 rounded rounded-3'>public</span></td>
-        <td></td>
-          <td></td>
+      {/* <td>{()=>getTasksInProject(project?.id)}</td> */}
+      <td></td>
+      <td></td>
 
 
       <td>{project.creationDate}</td>

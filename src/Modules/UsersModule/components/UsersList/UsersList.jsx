@@ -10,6 +10,9 @@ import { HiOutlineDotsVertical } from "react-icons/hi";
 import { FiEye } from "react-icons/fi";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import Search from '../../../../components/Search/Search';
+import DataTable from 'react-data-table-component';
+
 
 export default function UsersList() {
   const [usersList, setUsersList] = useState([])
@@ -17,6 +20,8 @@ export default function UsersList() {
   const [selectedUser, setSelectedUser] = useState(null);
 const [showUser, setShowUser] = useState(false);
 const [blockedUIUsers, setBlockedUIUsers] = useState([]);
+const [searchTerm, setSearchTerm] = useState('');
+
 
 
   const getAllUsers = async () => {
@@ -60,7 +65,7 @@ const [blockedUIUsers, setBlockedUIUsers] = useState([]);
 const viewUser = async (userId) => {
   try {
     const response = await axiosInstance.get(
-      `${USER_URLS.GET_USER_BY_ID}/${userId}`,
+      `${USER_URLS.GET_USER_BYID(userId)}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -75,6 +80,7 @@ const viewUser = async (userId) => {
     toast.error("Failed to load user data");
   }
 };
+
 
 const toggleBlockUI = (id) => {
   setBlockedUIUsers(prev =>
@@ -93,10 +99,102 @@ const toggleBlockUI = (id) => {
   }
 }, []);
 
+const filteredUsers = searchTerm
+  ? usersList.filter(user =>
+      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
+     
+    )
+  : usersList;
+  const columns = [
+    {
+      name: 'User Name',
+      selector: row => row.userName,
+      sortable: true,
+    },
+    {
+    name: 'Status',
+    selector: row => row.status,   // للـ sorting
+    cell: (row) => (
+     <button
+  className={`status ${
+    blockedUIUsers.includes(row.id)
+      ? "inactive"
+      : row.isActivated
+      ? "active"
+      : "inactive"
+  }`}
+    disabled={blockedUIUsers.includes(row.id)}
+    onClick={() => {
+    if (!blockedUIUsers.includes(row.id)) {
+      toggleUserStatus(row.id); 
+    }
+  }}
+  
+>
+   {blockedUIUsers.includes(row.id)
+    ? "Blocked"
+    : row.isActivated
+    ? "Active"
+    : "Not Active"}
+</button>
+    ),
+    sortable: true,
+  },
+  
+    {
+      name: 'Phone Number',
+      selector: row => row.phoneNumber,
+      sortable: true,
+    },
+    {
+      name: 'Email',
+      selector: row => row.email,
+      sortable: true,
+    },
+      {
+      name: 'Date Created',
+      
+      selector: row => row.task[0].creationDate,
+      sortable: true,
+    },
+    {
+    name: 'Action',
+    cell: (row) => (
+     <Dropdown align="end">
+  <Dropdown.Toggle
+    variant="light"
+    className="border-0 shadow-none p-0"
+    style={{ background: "transparent" }}
+  >
+    <HiOutlineDotsVertical size={22} />
+  </Dropdown.Toggle>
 
+  <Dropdown.Menu className="py-1">
+  <Dropdown.Item
+  className="d-flex align-items-center"
+  onClick={() => toggleBlockUI(row.id)}
+>
+  {blockedUIUsers.includes(row.id) ? "Unblock" : "Block"}
+</Dropdown.Item>
+
+    <Dropdown.Item className="d-flex align-items-center"  onClick={() => viewUser(row.id)}>
+       <FiEye className="me-2" />
+  View
+    </Dropdown.Item>
+  </Dropdown.Menu>
+          </Dropdown>
+     
+    ),
+  
+  }
+  
+  ];
+  
   return (
     <div>
-      <table className="table">
+     <Search placeholder='search user name' onSearch={setSearchTerm}/>
+      
+      {/* <table className="table">
         <thead >
           <tr >
         <th scope="col" className='text-white'>
@@ -119,13 +217,13 @@ const toggleBlockUI = (id) => {
 
         </thead>
        <tbody>
-  {usersList.length > 0 ? (
-    usersList.map(user => (
+  {filteredUsers.length > 0 ? (
+    filteredUsers.length.map(user => (
       <tr key={user.id}>
         <td>{user.userName}</td>
 
         <td>
-         <td>
+         
  <button
   className={`status ${
     blockedUIUsers.includes(user.id)
@@ -151,7 +249,7 @@ const toggleBlockUI = (id) => {
 </td>
 
 
-        </td>
+       
 
         <td>{user.phoneNumber}</td>
         <td>{user.email}</td>
@@ -180,7 +278,7 @@ const toggleBlockUI = (id) => {
   View
     </Dropdown.Item>
   </Dropdown.Menu>
-</Dropdown>
+          </Dropdown>
 
         </td>
       </tr>
@@ -188,13 +286,22 @@ const toggleBlockUI = (id) => {
   ) : (
     <tr>
       
-        <NoData />
+       <td colSpan="6" className="text-end">
+    <NoData />
+  </td>
       
     </tr>
   )}
 </tbody>
 
-      </table>
+      </table> */}
+   <DataTable
+			columns={columns}
+			data={filteredUsers}
+      pagination
+      paginationPerPage={5}
+      responsive striped bordered 
+		/>   
 <Modal
   show={showUser}
   onHide={() => setShowUser(false)}

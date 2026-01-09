@@ -21,8 +21,7 @@ export default function TasksList() {
   let [showModal, setShowModal] = useState(false);
   let [selectedId, setSelectedId] = useState(null);
   let [selectedName, setSelectedName] = useState(null);
-  const [query, setQuery] = useState("");
-
+  const [searchTerm, setSearchTerm] = useState('');
   
 
   const openConfirmationModal = (id,name) => {
@@ -49,10 +48,17 @@ export default function TasksList() {
   }, [tasks]);
   if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div> 
   // filter tasks
-   tasks = organicTasks.filter(
-    (u) =>
-      u.title.toLowerCase().includes(query.toLowerCase()) 
-  );
+const filteredTasks = searchTerm
+  ? tasks.filter(task =>
+      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.employee.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task.project.title.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  : tasks;
+
+
+  
   const columns = [
 	{
 		name: 'Title',
@@ -191,14 +197,16 @@ export default function TasksList() {
       :<tr><td>No tasks available</td></tr>}
       </tbody>
     </table> */}
-    <Search
+    {/* <Search
         value={query}
         onChange={setQuery}
         placeholder="Search users..."
-      />
+      /> */
+      }
+      <Search placeholder='search task' onSearch={setSearchTerm}/>
     <DataTable
 			columns={columns}
-			data={tasks}
+			data={filteredTasks}
       pagination
       paginationPerPage={5}
       responsive striped bordered 

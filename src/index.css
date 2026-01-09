@@ -425,3 +425,26 @@ td{
   box-shadow: none !important;
 }
 
+/* status */
+.status{
+  border-radius: 20px;
+   padding: 4px 12px;
+  border-radius: 5px solid #0e0d0d;
+  font-size: 13px;
+  cursor: pointer;
+}
+.status {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.status.active {
+  background-color:var(--activeBtnColor);
+  
+}
+
+.status.inactive {
+  background-color: var(--notActiveBtColor);
+ 
+}
