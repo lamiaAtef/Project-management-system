@@ -29,6 +29,22 @@ export default function ProjectsList() {
      ///////search filteration
   const [search,setSearch]=useState('');
   const [loading,setLoading]=useState(true);
+  // view modal
+  const [title,setTitle]=useState("");
+  const[tasksNum,setTasksNum]=useState("");
+  const [showView, setShowView] = useState(false);
+  const handleCloseView = () => setShowView(false);
+  const handleShowView = (project) =>{
+
+  setTitle( project?.title);
+  setTasksNum(project?.task?.length);
+
+
+
+
+     setShowView(true);
+  }
+  // end view
     const handelChange=(e)=>{
       setSearch(e.target.value);
     }
@@ -67,7 +83,7 @@ export default function ProjectsList() {
 
 setLoading(true);
   try {
-    let response =await axiosInstance.get(PROJECT_URLS.GET_ALL_PROJECTS);
+    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_MANGER);
     console.log(response.data.data);
     setProjectList(response.data.data);
 
@@ -166,8 +182,8 @@ onChange={handelChange}/>
       <td >{project?.title}</td>
       <td> <span className='status_style px-2 py-1 rounded rounded-3'>public</span></td>
       {/* <td>{()=>getTasksInProject(project?.id)}</td> */}
-      <td></td>
-      <td></td>
+      <td>5</td>
+      <td>{project?.task?.length}</td>
 
 
       <td>{project.creationDate}</td>
@@ -181,7 +197,7 @@ onChange={handelChange}/>
       </span>
 
       <ul className="dropdown-menu ">
-        <li className="dropdown-item"> <FaEye  className='icon-color mx-1'/> View</li>
+        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-1'/> View</li>
         <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-1'/>Edit</li>
         <li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-1'/>Delete</li>
       </ul>
@@ -199,6 +215,19 @@ onChange={handelChange}/>
 
   </tbody>
 </table>
+<Modal show={showView} onHide={handleCloseView}>
+        <Modal.Header closeButton>
+          <Modal.Title >Project Details</Modal.Title>
+        </Modal.Header>
+<h6 className='p-2'>project title:{title}</h6>
+<h6 className='p-2'>tasksNum:{tasksNum}</h6>
+<h6 className='p-2'>Status: {'public'}</h6>
+        <Modal.Footer>
+
+
+        </Modal.Footer>
+      </Modal>
+
 
     </>
   )

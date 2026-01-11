@@ -12,7 +12,7 @@ const useProjects = () => {
         console.log("fetchProjects Called");
         setLoading(true);
         try {
-            const response = await axiosInstance.get(PROJECT_URLS.GET_ALL_PROJECTS);
+            const response = await axiosInstance.get(`${PROJECT_URLS.GET_ALL_PROJECTS}`);
             console.log(response?.data?.data);
             setProjects(response?.data?.data);
         } catch (err) {

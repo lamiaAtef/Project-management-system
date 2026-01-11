@@ -14,7 +14,7 @@ export const USER_URLS={
      GET_USER_BYID:(userId)=>`/Users/${userId}`,
      TOGGLE_ACTIVATED_EMPLOYEE:(userId)=>`/Users/${userId}`,
      GET_USERS_COUNT_BY_MANAGER:`/Users/count`,
-     GET_USERS_BY_MANAGER:`/Users/manager`,
+     GET_USERS_BY_MANAGER:`/Users/Manager`,
      GET_FILTER_USERS_LOGGED_IN_USER:`/Users/`,
      UPDATE_MY_CURRENT_PROFILE:`/Users/`,
      GET_CURRENT_USER:`/Users/currentUser`,
@@ -38,15 +38,15 @@ export const PROJECT_URLS={
 }
 export const TASKS_URLS={
 
-     CREATE_TASK:`/task`,
-     GET_ALL_MY_ASIGGNED_TASK:`/task`,
-     GET_ALL_MY_TASKS_FOR_MANAGER:`/task/manager`,
-     GET_TASK_BY_ID:(taskId)=>`/task/${taskId}`,
-     UPDATE_TASK: (taskId)=>`/Project/${taskId}`,
-     DELETE_TASK: (taskId)=>`/Project/${taskId}`,
+     CREATE_TASK:`/Task`,
+     GET_ALL_MY_ASIGGNED_TASK:`/Task/`,
+     GET_ALL_MY_TASKS_FOR_MANAGER:`/Task/manager`,
+     GET_TASK_BY_ID:(taskId)=>`/Task/${taskId}`,
+     UPDATE_TASK: (taskId)=>`/Task/${taskId}`,
+     DELETE_TASK: (taskId)=>`/Task/${taskId}`,
      CONUT_TASKS_FOR_MANAGER_EMPLOYEE:`/Task/count`,
      CHANGE_STATUS:(taskId)=>`/Task/${taskId}/change-status`,
-     GET_ALLTASKS_IN_PROJECT:(projectId)=>`/task/project/${projectId}`
+     GET_ALLTASKS_IN_PROJECT:(projectId)=>`/Task/project/${projectId}`
 
 }
 

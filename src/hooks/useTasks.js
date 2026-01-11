@@ -8,7 +8,7 @@ import { TASKS_URLS } from '../services/api/apiURLs';
 const useTasks = () => {
     console.log("useTasks Hook Initialized");
     const [tasks,setTasks] = useState([]);
-    const [organicTasks,setOrganicTasks] = useState([]);
+    // const [organicTasks,setOrganicTasks] = useState([]);
 
     const[singleTask,setSingleTask]=useState()
     const [loading,setLoading] = useState(true);
@@ -22,7 +22,7 @@ const useTasks = () => {
             const response = await axiosInstance.get(TASKS_URLS.GET_ALL_MY_TASKS_FOR_MANAGER);
             console.log(response?.data?.data);
             setTasks(response?.data?.data);
-            setOrganicTasks(response?.data?.data)
+            // setOrganicTasks(response?.data?.data)
         } catch (err) {
             setError(err);
         } finally {
@@ -58,9 +58,11 @@ const useTasks = () => {
      const addTask = async (data) => {
         setLoading(true);
         try {
-            const response = await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`, data);
-            console.log("task added");
-            setTasks([...tasks, response.data.data]);
+            //const response = await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`,data);
+            const response =  await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`,data)
+            console.log("task added",response.data);
+            setTasks(prevTasks => [...prevTasks, response.data]);
+            console.log("tasks length" , tasks.length)
             toast.success("Task added successfully");
             navigate("/dashboard/tasks")
         } catch (err) {
@@ -74,10 +76,12 @@ const useTasks = () => {
     }
      const updateTasks = async (id,data) => {
         setLoading(true);
+        console.log(data,"update test")
         try {
             const response = await axiosInstance.put(`${TASKS_URLS.UPDATE_TASK(id)}`,data);
             console.log("task updated");
-            setTasks([...tasks,response.data])
+            // console.log(response.data.data)
+            setTasks(prevTasks =>[...prevTasks,response.data])
             navigate("/dashboard/tasks")
             toast.success("Task updated successfully");
 
@@ -93,6 +97,6 @@ const useTasks = () => {
    
 
   
-   return {tasks,organicTasks,loading,error,fetchTasks,deleteTask,addTask,taskById,fetchOneTaskById,singleTask,updateTasks};
+   return {tasks,loading,error,fetchTasks,deleteTask,addTask,taskById,fetchOneTaskById,singleTask,updateTasks};
 }
 export default useTasks;

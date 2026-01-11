@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Table from 'react-bootstrap/Table';
 import useTasks from '../../../../hooks/useTasks';
-import { Container } from 'react-bootstrap';
+import { Container, Modal } from 'react-bootstrap';
 import { LuChevronsUpDown } from "react-icons/lu";
 import DropdownButton from '../../../../components/DropdownButton/DropdownButton';
 import { FaEdit, FaEye } from 'react-icons/fa';
@@ -17,12 +17,26 @@ import DataTable from 'react-data-table-component';
 
 export default function TasksList() {
   let navigate = useNavigate();
-  let {tasks,loading,error,fetchTasks,deleteTask,organicTasks}= useTasks()
+  let {tasks,loading,error,fetchTasks,deleteTask}= useTasks()
   let [showModal, setShowModal] = useState(false);
   let [selectedId, setSelectedId] = useState(null);
   let [selectedName, setSelectedName] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+   // view modal
+    const [showView, setShowView] = useState(false);
+    const [viewTask, setViewTask] = useState(null);
+    const handleCloseView = () => setShowView(false);
+    // const handleShowView = (project) =>{
   
+    // setTitle( project?.title);
+    // setTasksNum(project?.task?.length);
+  
+  
+  
+  
+    //    setShowView(true);
+    // }
+    // end view
 
   const openConfirmationModal = (id,name) => {
     setSelectedId(id);
@@ -34,26 +48,26 @@ export default function TasksList() {
     setSelectedId(null);
     setSelectedName(null)
   } 
-  const handleView = (id) =>{
+ const handleView = (task) => {
+  console.log(task); 
+  setViewTask(task);
+  setShowView(true); 
+};
 
-  }
   useEffect(() => {
     fetchTasks();
     console.log("TasksList Component Mounted");
 
   }, []);
-   useEffect(() => {
-   console.log(tasks);
-
-  }, [tasks]);
+ 
   if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div> 
   // filter tasks
 const filteredTasks = searchTerm
   ? tasks.filter(task =>
-      task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      task.status.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      task.employee.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      task.project.title.toLowerCase().includes(searchTerm.toLowerCase())
+      task?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task?.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task?.employee?.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      task?.project?.title.toLowerCase().includes(searchTerm.toLowerCase())
     )
   : tasks;
 
@@ -108,7 +122,7 @@ const filteredTasks = searchTerm
         view: {
           label: "View",
           icon: <FaEye color="rgba(0, 146, 71, 1)" />,
-          onClick: () => handleView(row.id),
+          onClick: () => handleView(row),
         },
         edit: {
           label: "Edit",
@@ -225,7 +239,19 @@ const filteredTasks = searchTerm
           
     />
       
-      
+      <Modal show={showView} onHide={handleCloseView}>
+        <Modal.Header closeButton>
+          <Modal.Title >Task Details</Modal.Title>
+        </Modal.Header>
+          <h6 className='p-2'>Task title:{viewTask?.title}</h6>
+          <h6 className='p-2'>Task Status:{viewTask?.status}</h6>
+          <h6 className='p-2'>Task User :{viewTask?.employee.id}</h6>
+          <h6 className='p-2'>Task project :{viewTask?.project.id}</h6>
+        <Modal.Footer>
+
+
+        </Modal.Footer>
+      </Modal>
        
     </>
   )

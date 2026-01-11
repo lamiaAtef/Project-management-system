@@ -17,7 +17,7 @@ export default function TasksData() {
   let{projects,loading,error,fetchProjects} = useProjects();
   let{users,loadingUsers,errorUsers,fetchUsers} = useUsers();
   let navigate = useNavigate();
-    let {addTask,singleTask,fetchOneTaskById,updateTasks}= useTasks()
+  let {addTask,singleTask,fetchOneTaskById,updateTasks}= useTasks()
   let {register,handleSubmit,formState:{errors,isSubmitting},reset} = useForm();
 
 const {id} = useParams()
@@ -56,6 +56,7 @@ const {id} = useParams()
     if(id)
     {
         updateTasks(id,data)
+        
     }
     else{
       console.log("1")
@@ -77,7 +78,7 @@ const {id} = useParams()
             <MdKeyboardArrowLeft />
             View All Tasks
           </Link>
-          <h1 className='title my-3'>Add a New Task</h1>
+          <h1 className='title my-3'>{id?"Update":"Add a New "}  Task</h1>
         </div>      
       </header>
       <Container fluid>

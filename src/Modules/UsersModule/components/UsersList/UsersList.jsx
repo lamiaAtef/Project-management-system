@@ -26,9 +26,10 @@ const [searchTerm, setSearchTerm] = useState('');
 
   const getAllUsers = async () => {
     try {
-      let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=10&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
-      console.log(response.data.data);
+       let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}`)
+      console.log(response.data.data.length);
       setUsersList(response.data.data);
+      console.log("hi",response.data.data )
 
 
 
@@ -99,12 +100,7 @@ const toggleBlockUI = (id) => {
   }
 }, []);
 
-const filteredUsers = searchTerm
-  ? usersList.filter(user =>
-      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
-     
-    )
-  : usersList;
+
   const columns = [
     {
       name: 'User Name',
@@ -189,6 +185,12 @@ const filteredUsers = searchTerm
   }
   
   ];
+  const filteredUsers = searchTerm
+  ? usersList.filter(user =>
+      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
+     
+    )
+  : usersList;
   
   return (
     <div>
