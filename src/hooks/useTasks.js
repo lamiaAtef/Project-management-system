@@ -25,6 +25,7 @@ const useTasks = () => {
             // setOrganicTasks(response?.data?.data)
         } catch (err) {
             setError(err);
+            getErrorMessage(err,"sorry! can't  loaded tasks now")
         } finally {
             setLoading(false);
         }
@@ -35,10 +36,10 @@ const useTasks = () => {
             const response = await axiosInstance.get(TASKS_URLS.GET_TASK_BY_ID(id));
             console.log(response?.data);
             setSingleTask(response?.data);
-            // toast.success("task updated")
-            // navigate("/dashboard/tasks")
+            
         } catch (err) {
             setError(err);
+            getErrorMessage(err,"sorry! can't get this task")
         } finally {
             setLoading(false);
         }
@@ -49,12 +50,17 @@ const useTasks = () => {
             const response = await axiosInstance.delete(`${TASKS_URLS.DELETE_TASK(id)}`);
             console.log("task deleted");
             setTasks(tasks.filter(task => task.id !== id));
+        
         } catch (err) {
             setError(err);
+            getErrorMessage(err,"sorry! can't delete this task")
         } finally {
             setLoading(false);
         }
     }
+    const getErrorMessage = (err, fallback) =>
+   toast.error(err?.response?.data?.message || fallback);
+
      const addTask = async (data) => {
         setLoading(true);
         try {
@@ -68,7 +74,8 @@ const useTasks = () => {
         } catch (err) {
             setError(err);
             console.log(err);
-            toast.error("Task can't added ");
+            // toast.error("Task can't added ");
+            getErrorMessage(err,"sorry! can't add this task")
 
         } finally {
             setLoading(false);
@@ -87,7 +94,7 @@ const useTasks = () => {
 
         } catch (err) {
             setError(err);
-            toast.error("Task  can't updated");
+            getErrorMessage(err,"sorry! can't update this task")
 
         } finally {
             setLoading(false);

@@ -94,10 +94,10 @@ const toggleBlockUI = (id) => {
 };
 
  useEffect(() => {
-  if (userData?.userGroup!="Manager") {
+  // if (userData?.userGroup!="Manager") {
  
   getAllUsers();
-  }
+  // }
 }, []);
 
 
