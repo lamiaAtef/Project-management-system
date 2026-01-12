@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Container, FormLabel } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -11,6 +11,7 @@ import useTasks from '../../../../hooks/useTasks';
 import useProjects from '../../../../hooks/useProject';
 import useUsers from '../../../../hooks/useUsers';
 import { BeatLoader } from 'react-spinners';
+import { AuthContext } from '../../../../context/AuthContext';
 
 export default function TasksData() {
   const [validated, setValidated] = useState(false);
@@ -21,8 +22,14 @@ export default function TasksData() {
   let {register,handleSubmit,formState:{errors,isSubmitting},reset} = useForm();
 
 const {id} = useParams()
+const userData = useContext(AuthContext)
+
+     let role =  userData?.userData?.userGroup;
+     console.log(role,"role")
 
     useEffect(() => {
+    
+
       console.log(id,"idddddddddddddddd")
       if (id) {
         fetchOneTaskById(id);
@@ -65,9 +72,20 @@ const {id} = useParams()
     
   }
   useEffect(()=>{
-    fetchProjects();
-    fetchUsers();
-  },[])
+      console.log(role,"rooooole")
+    if(role === "Employee") {
+      console.log("el mafrood home")
+         navigate("/dashboard/home")
+    }
+    else{
+      fetchProjects();
+      fetchUsers();
+    }
+    
+  },[role])
+
+
+
     if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div> 
 
   return (
