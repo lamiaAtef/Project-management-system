@@ -1,16 +1,3 @@
-<<<<<<< Updated upstream
-
-
-import React from 'react'
-
-export default function ProjectsList() {
-  return (
-    <div>
-
-    </div>
-  )
-}
-=======
 import React, { useEffect, useState } from 'react'
 import { Form, Navigate, useNavigate } from 'react-router-dom'
 import axiosInstance from '../../../../services/api';
@@ -28,7 +15,7 @@ import { toast } from 'react-toastify';
 import { LuChevronsUpDown } from 'react-icons/lu';
 import { CiSearch } from 'react-icons/ci';
 import { BeatLoader } from 'react-spinners';
-import { set } from 'react-hook-form';
+
 
 
 
@@ -199,4 +186,3 @@ onChange={handelChange}/>
     </>
   )
 }
->>>>>>> Stashed changes

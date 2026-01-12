@@ -8,19 +8,6 @@ import { PASSWORD_VALIDATION } from '../../../../services/validation';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 import {  USER_URLS } from '../../../../services/api/apiURLs';
-<<<<<<< Updated upstream
-
-import axiosInstance from '../../../../services/api';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import AuthHeader from '../../../Shared/components/AuthHeader/Authheader';
-
-
-export default function ChangePassword() {
-  let{register,handleSubmit,formState:{errors},watch,isSubmitting}=useForm();
-  const navigate=useNavigate();
-  const passwordValue= watch("newPassword");
-=======
 import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 import { toast } from 'react-toastify';
 import axiosInstance from '../../../../services/api';
@@ -33,18 +20,6 @@ export default function ChangePassword() {
   let{register,handleSubmit,formState:{errors,isSubmitting},watch}=useForm();
  const navigate= useNavigate();
   const passwordValue= watch("newPassword");
-  const onSubmit= async(data)=>{
-    try{
-    let response= await axiosInstance.put(USER_URLS.CHANGE_PASSWORD,data);
-    toast.success('password changed successfuly');
-    navigate("/login");
-
-      console.log(response);
-    }
-    catch(err){
-
-      toast.error(err.response?.data.message||"there is an error")
->>>>>>> Stashed changes
 
 
    const colProps = { md: 8, lg: 6, xl: 5 };
@@ -121,10 +96,7 @@ return(
 
 
 
-<<<<<<< Updated upstream
 
-=======
->>>>>>> Stashed changes
         <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
       {isSubmitting ?(
           <>
