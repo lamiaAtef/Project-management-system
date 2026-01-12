@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Table from 'react-bootstrap/Table';
 import useTasks from '../../../../hooks/useTasks';
-import { Container, Modal } from 'react-bootstrap';
+import { Col, Container, Modal, Row } from 'react-bootstrap';
 import { LuChevronsUpDown } from "react-icons/lu";
 import DropdownButton from '../../../../components/DropdownButton/DropdownButton';
 import { FaEdit, FaEye } from 'react-icons/fa';
@@ -11,13 +11,13 @@ import Confirmation from '../../../../components/Confirmation/Confirmation';
 import { BeatLoader } from 'react-spinners';
 import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
-
-
+import { AuthContext } from '../../../../context/AuthContext';
+import styles from "./TasksList.module.css"
 
 
 export default function TasksList() {
   let navigate = useNavigate();
-  let {tasks,loading,error,fetchTasks,deleteTask}= useTasks()
+  let {tasks,loading,error,fetchTasks,deleteTask,fetchUserTasks}= useTasks()
   let [showModal, setShowModal] = useState(false);
   let [selectedId, setSelectedId] = useState(null);
   let [selectedName, setSelectedName] = useState(null);
@@ -26,17 +26,11 @@ export default function TasksList() {
     const [showView, setShowView] = useState(false);
     const [viewTask, setViewTask] = useState(null);
     const handleCloseView = () => setShowView(false);
-    // const handleShowView = (project) =>{
-  
-    // setTitle( project?.title);
-    // setTasksNum(project?.task?.length);
-  
-  
-  
-  
-    //    setShowView(true);
-    // }
-    // end view
+
+     const userData = useContext(AuthContext)
+
+     let role =  userData?.userData?.userGroup;
+     console.log(role,"role")
 
   const openConfirmationModal = (id,name) => {
     setSelectedId(id);
@@ -53,13 +47,31 @@ export default function TasksList() {
   setViewTask(task);
   setShowView(true); 
 };
+  
 
-  useEffect(() => {
+
+useEffect(() => {
+  if (!role) return;
+
+  if (role === "Manager") {
     fetchTasks();
-    console.log("TasksList Component Mounted");
+  } else {
+    fetchUserTasks();
 
-  }, []);
- 
+  }
+}, [role]);
+
+// Group tasks
+// TODO why i should use useMemo
+ let groupedTasks = tasks.reduce((acc,task)=>{
+  let status = task.status;
+  if (!acc[status]) acc[status] = []
+  acc[status].push(task)
+  return acc
+ },{})
+
+
+// end group tasks 
   if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div> 
   // filter tasks
 const filteredTasks = searchTerm
@@ -147,8 +159,16 @@ const filteredTasks = searchTerm
     <>
       <header className='bgOverlayDark container-fluid m-0 px-2 py-3'>
         <div className="container d-flex justify-content-between align-items-center">
-            <h1 className='title'>Tasks</h1>
-           <button className='Auth-btn' onClick={()=>navigate("/dashboard/tasks-data")}>  + Add New Task</button>
+          {
+              role==="Manager" ?
+              <>
+                 <h1 className='title'>Tasks</h1>
+                  <button className='Auth-btn' onClick={()=>navigate("/dashboard/tasks-data")}>  + Add New Task</button>
+              </>:
+                 <h1 className='title'>Tasks Board</h1>
+
+          }
+           
         </div>
       
       </header>
@@ -217,15 +237,46 @@ const filteredTasks = searchTerm
         placeholder="Search users..."
       /> */
       }
-      <Search placeholder='search task' onSearch={setSearchTerm}/>
-    <DataTable
-			columns={columns}
-			data={filteredTasks}
-      pagination
-      paginationPerPage={5}
-      responsive striped bordered 
-		/>
+      {/* start admin  */}
+      {role==="Manager"? <>
+            <Search placeholder='search task' onSearch={setSearchTerm}/>
+              <DataTable
+            columns={columns}
+            data={filteredTasks}
+            pagination
+            paginationPerPage={10}
+            responsive striped bordered 
+          /> 
+          </>:
+              <Container>
+                  <Row className='g-5 my-2'>
+                    {
+                        Object.entries(groupedTasks).map(([status, tasks]) => (
+                        
+                         <Col sm={12} md={6} lg={4} >
+                              <h3 className={`${styles.boxHeader}`}>{status}</h3>
+                              <div className={`${styles.boxTasks}`}>
+                                    {tasks.map(task => (
+                                    <div  className={`${styles.taskElement}`} key={task.id}>{task.title}</div>
+                          ))}
 
+                              </div>
+                         </Col>
+                        
+                        
+                        
+                        ))
+                    }
+
+      </Row>
+      
+    </Container>
+          }
+    
+    {/* end admin */}
+    {/* start user */}
+  
+    {/* end user */}
 
     <Confirmation
        show={showModal}

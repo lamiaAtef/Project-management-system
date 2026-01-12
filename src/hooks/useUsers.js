@@ -10,7 +10,7 @@ const useUsers = () => {
         console.log("fetchUsers Called");
         setLoading(true);   
         try {
-            const response = await axiosInstance.get(USER_URLS.GET_USERS_BY_MANAGER);
+            const response = await axiosInstance.get(USER_URLS.GET_FILTER_USERS_LOGGED_IN_USER);
             console.log(response?.data?.data);
             setUsers(response?.data?.data);            
         }   catch (err) { 
