@@ -110,11 +110,11 @@ const donutOptions = {
           You can add project and assign tasks to your team
         </p>
       </div>
-<div className={`${styles.dashboard_cards_wrapper}`}>
-      <Card className={`${styles.tasks_summary_card }pt-3`}>
+   <div className={`${styles.dashboard_cards_wrapper}`}>
+      <Card className={`${styles.tasks_summary_card } bgOverlayDark pt-3`}>
     <Card.Body>
-      <h5 className="mb-1">Tasks</h5>
-      <p className="text-muted mb-4">
+      <h5 className="textDark mb-1">Tasks</h5>
+      <p className="subTitleText mb-4">
         Lorem ipsum dolor sit amet, consectetur
       </p>
 
@@ -146,10 +146,10 @@ const donutOptions = {
     </Card.Body>
     
   </Card>
-  <Card  className={`${styles.tasks_summary_card} pt-3`}>
+  <Card  className={`${styles.tasks_summary_card} bgOverlayDark pt-3`}>
    <Card.Body>
-      <h5 className="mb-1">Users</h5>
-      <p className="text-muted mb-4">
+      <h5 className="textDark mb-1">Users</h5>
+      <p className="subTitleText mb-4">
         Lorem ipsum dolor sit amet, consectetur
       </p>
 

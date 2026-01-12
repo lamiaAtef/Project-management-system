@@ -63,7 +63,7 @@
 
   /* ------mainContent in masterLayout */
   .main-content{
-    background-color: rgba(244, 241, 241,0.5);
+    background-color: var(--bg-color);
     transition: 0.3s;
 
     margin-left: 250px;
@@ -96,3 +96,4 @@
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   }
+ 

@@ -12,7 +12,150 @@
   --textColorTable:rgba(79, 79, 79, 1);
   --grayColor:rgba(154, 154, 154, 0.4);
   --actveSidebar:rgba(239, 155, 40, 0.3);
+  --bg-color: rgba(244, 241, 241,0.5);
+  --bg-whiteAndDark: rgb(255, 255, 255);
+  --text-whiteAndDark: #000;
+  --textColorIcon: rgba(239, 155, 40, 1);
+  --bgOverlay:#fff;
+  --subTitle: rgba(33, 37, 41, 0.75);
 }
+
+.dark { 
+  /* --textColorTable: #e5e7eb; */
+  --bg-color:   #121212;
+  --bg-whiteAndDark: #121212;
+  --text-whiteAndDark: #fff;
+  --textColorIcon: #fff;
+  --bgOverlay:#1a1818;
+  --subTitle: #555151;
+}
+.bgNavbar{
+  background-color: var(--bg-whiteAndDark);
+  /* color: var(--text-whiteAndDark); */
+}
+
+.bgOverlayDark{
+  background: var(--bgOverlay);
+}
+header .title,
+.textDark{
+  color: var(--text-whiteAndDark);
+}
+.subTitleText{
+  color: var(--subTitle);
+}
+body.dark .rdt_TableBody{
+  background: var(--bgOverlay);
+}
+body.dark .rdt_TableRow{
+  background: var(--bgOverlay) !important;
+  color: #fff !important;
+  border-bottom: 1px solid #383a3b;
+  cursor: pointer;
+}
+body.dark .rdt_TableRow:hover{
+  background: var(--bg-color) !important;
+}
+body.dark .rdt_Pagination{
+  background: var(--bgOverlay) !important;
+  color: #fff !important;
+  border-bottom: 1px solid #383a3b;
+  border-top: 1px solid #383a3b;
+
+}
+body.dark .rdt_Pagination button {
+  color: white;
+}
+
+body.dark .rdt_Pagination button:disabled {
+  color: #6b7280;
+}
+
+/* Dropdown (rows per page) */
+body.dark .rdt_Pagination select {
+  background-color: #0d1117;
+  color: white;
+  border: 1px solid #383a3b;
+}
+
+/* Dropdown while open it*/
+body.dark .rdt_Pagination select option {
+  background-color: #0d1117;
+  color: white;
+}
+
+body.dark .search-box {
+  background: #0d1117;
+  border: 1px solid #2b3038;
+}
+
+body.dark .search-input {
+  background: var(--bgOverlay) !important;
+  color: white !important;
+}
+
+body.dark .search-icon {
+  background: var(--bgOverlay) !important;
+  color: white;
+  border: none;
+}
+
+/* placeholder */
+body.dark .search-input::placeholder {
+  color: #c9d1d9;
+}
+
+/*focus */
+body.dark .search-input:focus {
+  background: #0d1117;
+  color: white;
+  box-shadow: none;
+}
+
+/* dropdown menu in dark mode */
+body.dark .dropdown-menu {
+  background-color: var(--bgOverlay) !important;
+  border: 1px solid #2b3038;
+}
+
+/* dropdown item*/
+body.dark .dropdown-item {
+  color: #c9d1d9 !important;
+}
+
+/* Hover */
+body.dark .dropdown-item:hover {
+  background-color: var(--bg-color) !important;
+  color: white !important;
+}
+
+/* divider*/
+body.dark .dropdown-divider {
+  border-color: #2b3038;
+}
+
+/* أيقونات */
+body.dark .dropdown-item svg {
+  color: white !important;
+}
+
+
+.theme-btn {
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--textColorIcon);
+  margin-right: 10px;
+  display: flex;
+  align-items: center;  /* يسطح الأيقون وسط الليفل */
+  justify-content: center;
+  height: 100%;  /* يملأ ارتفاع الflex parent */
+  padding: 0;    /* حذف أي padding افتراضي */
+  cursor: pointer;
+}
+
+
 * {
     font-family: var(--main-font);
     margin: 0;
@@ -278,7 +421,7 @@ select:-webkit-autofill {
   align-items: center;
   justify-content: space-between;
   padding-block: 10px;
-  background-color: #fff;
+  background-color: var(--bg-white);
 }
 .title{
   font-family: var(--font-family);
@@ -294,7 +437,7 @@ th,td{
   font-size: 14px;
 }
 tr:nth-child(odd){
-  background-color: #fff;
+  background-color: var(--bg-white);
 }
 tr:nth-child(even){
   background-color: rgba(245, 245, 245, 1);
