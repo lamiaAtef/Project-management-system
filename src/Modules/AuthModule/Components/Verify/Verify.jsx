@@ -19,7 +19,7 @@ export default function Verify() {
 
   const onSubmit=async(data)=>{
     try {
-    let response= await axios.post(`${baseURL}${USER_URLS.VERIFY}`,data,
+    let response= await axios.put(`${baseURL}${USER_URLS.VERIFY}`,data,
           {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`
