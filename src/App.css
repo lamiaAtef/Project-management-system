@@ -3,6 +3,7 @@
 /*------SidBar--------  */
 .ps-sidebar-root{
   height: 100%;
+  border-right: 0 !important;
 }
 .sidebar-container{
   position: relative;
