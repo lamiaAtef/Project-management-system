@@ -20,6 +20,7 @@
   --subTitle: rgba(33, 37, 41, 0.75);
 }
 
+/* ---------------------Start Dark Mode---------------------------- */
 .dark { 
   /* --textColorTable: #e5e7eb; */
   --bg-color:   #121212;
@@ -134,7 +135,7 @@ body.dark .dropdown-divider {
   border-color: #2b3038;
 }
 
-/* أيقونات */
+/* icons*/
 body.dark .dropdown-item svg {
   color: white !important;
 }
@@ -180,13 +181,14 @@ body.dark .form-admin .form-control:focus {
   color: var(--textColorIcon);
   margin-right: 10px;
   display: flex;
-  align-items: center;  /* يسطح الأيقون وسط الليفل */
+  align-items: center;  
   justify-content: center;
-  height: 100%;  /* يملأ ارتفاع الflex parent */
-  padding: 0;    /* حذف أي padding افتراضي */
+  height: 100%;  
+  padding: 0;    
   cursor: pointer;
 }
 
+/* --------------------End Dark Mode----------------------------- */
 
 * {
     font-family: var(--main-font);

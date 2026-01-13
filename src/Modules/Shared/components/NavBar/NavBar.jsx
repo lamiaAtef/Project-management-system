@@ -13,8 +13,9 @@ import useLogout from '../../../../hooks/useLogout';
 import styles from './NavBar.module.css';
 import { ThemeContext } from '../../../../context/ThemeContext';
 import { FaMoon, FaSun } from "react-icons/fa";
+import { FiMenu, FiX } from "react-icons/fi";
 
-export default function NavBar() {
+export default function NavBar({setCollapsed, collapsed}) {
   const {userData}= useContext(AuthContext);
   const{theme, toggleTheme} = useContext(ThemeContext);
 
@@ -25,6 +26,12 @@ export default function NavBar() {
   
   return (
     <div className={`${styles.navbarNormal} navbar-normal bgNavbar d-flex justify-content-between p-2`}>
+
+    <button 
+      className={`${styles.mobileMenuBtn} me-2`}
+      onClick={() => setCollapsed(!collapsed)}>
+      {collapsed ? <FiMenu size={24}/> : <FiX size={24}/>}
+    </button>
       <div>
         <img src={logo} alt="img"/>
       </div>

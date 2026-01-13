@@ -81,6 +81,31 @@
     transition: 0.3s;
   }
 
+  /* sidebar in mobile */
+  @media (max-width: 768px) {
+    .sidebar-container {
+      transform: translateX(0);
+      transition: 0.3s ease;
+      z-index: 2000;
+    }
+  
+    .sidebar-container.collapsed {
+      transform: translateX(-100%);
+    }
+  
+    .collapse-btn {
+      display: none;
+    }
+  
+    .main-content,
+    .main-content.collapsed {
+      margin-left: 0 !important;
+      width: 100% !important;
+    }
+  }
+
+
+  /* -----------profile--------------------------- */
   .profile .imgPorfile{
     border:3px solid #ef9b28;
     width: 120px;

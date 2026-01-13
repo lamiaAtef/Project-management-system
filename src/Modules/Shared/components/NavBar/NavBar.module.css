@@ -23,3 +23,17 @@
     box-shadow: none !important;
   }
   
+  .mobileMenuBtn{
+    display: none;
+    background: none;
+    border: none;
+    font-size: 26px;
+    color: var(--textColor);
+  }
+  
+  /* show only in mobile*/
+  @media (max-width: 768px) {
+    .mobileMenuBtn {
+      display: block;
+    }
+  }
