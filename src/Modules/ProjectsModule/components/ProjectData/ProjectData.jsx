@@ -26,10 +26,12 @@ export default function ProjectData() {
   navigate("/dashboard/projects");
   toast.success("update success");
     } catch (error) {
-      console.log(error);
+      console.log(error.response?.data?.message);
 
 
     }
+
+
 
   }
   else{
@@ -42,7 +44,7 @@ navigate("/dashboard/projects")
 
 
 } catch (error) {
-  console.log(error);
+  console.log(error.response?.data?.message);
 
 }
 
@@ -61,7 +63,7 @@ try {
 
 }
  catch (error) {
-  console.log(error);
+  console.log(error.response?.data?.message);
 
 }
 // finally{
@@ -93,7 +95,7 @@ if(id){
             <MdKeyboardArrowLeft />
             View All projects
           </Link>
-          <h1 className='title my-3'>Add a New Project</h1>
+          <h1 className='title my-3'> {id? "updata Project":"Add a New Project"} </h1>
         </div>
 
       </header>
@@ -101,6 +103,7 @@ if(id){
 <Container>
   <Row className='d-flex justify-content-center aligns-items-center'>
 <Col lg={8} md={10}>
+
       <Form onSubmit={handleSubmit(onSubmit)} className='shadow-sm p-3 bg-white my-3 rounded rounded-2 form-admin'>
           <Form.Group className="form-group mb-4">
           <Form.Label htmlFor="title">Title</Form.Label>

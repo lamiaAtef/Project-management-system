@@ -18,6 +18,7 @@ import TasksData from './Modules/TasksModule/components/TasksData/TasksData';
 import TasksList from './Modules/TasksModule/components/TasksList/TasksList';
 import ProjectData from './Modules/ProjectsModule/components/ProjectData/ProjectData';
 import ProjectsList from './Modules/ProjectsModule/components/ProjectsList/ProjectsList';
+import Profile from './Modules/Shared/components/Pofile/Profile';
 
 
 function App() {
@@ -49,8 +50,9 @@ function App() {
           {path:"project-data/new_project", element:<ProjectData/>},
            {path:"project-data/:id?",element:<ProjectData/>},
           {path:"tasks", element:<TasksList/>},
-          {path:"tasks-data", element:<TasksData/>},
+          {path:"tasks-data/:id?", element:<TasksData/>},
           {path:"users", element:<UsersList/>},
+          {path:"profile", element:<Profile/>}
         ]
       },
 

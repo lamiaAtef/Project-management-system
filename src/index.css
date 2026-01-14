@@ -1,8 +1,8 @@
 /* start general css  */
 
 :root {
-  font-family: "Montserrat", sans-serif;
-  font-weight: 400;
+  --font-family: "Montserrat", sans-serif;
+  --font-weight: 400;
   --mainColor:rgba(239, 155, 40, 1);
   --bgColor:rgb(14, 56, 47);
   --secondaryColor:rgba(49, 89, 81, 0.898);
@@ -10,8 +10,8 @@
   --notActiveBtColor:rgba(146, 46, 37, 0.7);
   --toDoBtnColor:rgba(228, 225, 245, 1);
   --textColorTable:rgba(79, 79, 79, 1);
-
-
+  --grayColor:rgba(154, 154, 154, 0.4);
+  --actveSidebar:rgba(239, 155, 40, 0.3);
 }
 * {
     font-family: var(--main-font);
@@ -20,6 +20,7 @@
     box-sizing: border-box;
 
 }
+
 .overlayReg{
   background-color: rgba(49, 74, 89, 0.902);
 
@@ -261,8 +262,16 @@ select:-webkit-autofill {
   display: block;
   width:15px;
 }
-<<<<<<< Updated upstream
-=======
+/* start general Admin css */
+
+.title{
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 28px;
+  color: #4F4F4F;
+
+}
+
 /* projectlist style */
 .header{
   display: flex;
@@ -296,12 +305,38 @@ th {
   color: #fff !important;
 
 }
+
 .headerLink{
   color: var(--bgColor);
   text-decoration: none;
 }
-/* start form//// */
 
+/* table */
+table,.sc-dlMBXc{
+  min-height:  50vh !important;
+}
+th ,.rdt_TableHeadRow{
+  background-color: var(--secondaryColor) !important;
+  border: 1px solid var(--secondaryColor) !important;
+  color: #fff !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+
+}
+td{
+  border:none !important;
+  padding: 5px !important;
+}
+
+
+.form-admin{
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #fff;
+  /* width: 80%; */
+  margin-block: 20px;
+}
 .form-admin label{
   color: var(--textColorTable);
   font-weight: 400;
@@ -322,6 +357,51 @@ th {
   color:#fff;
   border:none;
 }
+/* Drop down button styles */
+.dropDownMenu{
+    background-color: #fff ;
+    box-shadow: 0px 0px 16px 0px #0000001A;
+    border-radius: 15px;
+    /* list-style: none; */
+    padding: 0;
+    /* position: relative; */
+    border:0
+
+}
+.list_item:nth-child(0){
+    /* cursor: pointer; */
+    /* transition: .2s; */
+    border-radius: 15px;
+    padding: 5px;
+
+
+}
+.dropdown-toggle::after{
+    display: none ;
+}
+.list_item:hover{
+    background: #F8F9FB;
+
+}
+/* start tasks css */
+.status{
+  border-radius: 20px;
+}
+.bg-active{
+  background-color: var(--activeBtnColor);
+
+}
+
+.bg-notActive{
+  background-color:var(--notActiveBtColor);
+
+
+}
+.bg-progress{
+  background-color: var(--mainColor);
+
+}
+
 .icon-color{
   color:rgba(14, 56, 47, 1);
 
@@ -344,4 +424,30 @@ th {
   outline: none !important;
   box-shadow: none !important;
 }
->>>>>>> Stashed changes
+
+/* status */
+.status{
+  border-radius: 20px;
+   padding: 4px 12px;
+  border-radius: 5px solid #0e0d0d;
+  font-size: 13px;
+  cursor: pointer;
+}
+.status {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.status.active {
+  background-color:var(--activeBtnColor);
+
+}
+
+.status.inactive {
+  background-color: var(--notActiveBtColor);
+
+}
+.model_style{
+  color:var(--mainColor) ;
+}

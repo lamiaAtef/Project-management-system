@@ -27,7 +27,7 @@ export default function ChangePassword() {
   const[secondPass,toggleSecondPass]=useToggle();
   const[thirdPass,toggleThirdPass]=useToggle();
 
-      const onSubmit= async(data)=>{
+const onSubmit= async(data)=>{
 
   try {
       let response=await axiosInstance.put(USER_URLS.CHANGE_PASSWORD,data);
@@ -40,7 +40,8 @@ export default function ChangePassword() {
 
   } catch (error) {
    toast.error(error.response?.data.message||"there is an error")
-  }}
+  }
+}
 return(
     <>
 <Col {...colProps} className=" p-1 rounded-3 formBg text-white" >
