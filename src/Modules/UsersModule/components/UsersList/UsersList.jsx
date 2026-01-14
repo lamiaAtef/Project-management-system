@@ -12,6 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
+import { BeatLoader } from 'react-spinners';
 
 
 export default function UsersList() {
@@ -26,6 +27,7 @@ const [searchTerm, setSearchTerm] = useState('');
 
   const getAllUsers = async () => {
     try {
+      if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div>
       let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=10&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
       console.log(response.data.data);
       setUsersList(response.data.data);
