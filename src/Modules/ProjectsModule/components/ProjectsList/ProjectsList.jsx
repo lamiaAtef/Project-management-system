@@ -77,7 +77,7 @@ setLoading(true);
 
   }
   catch (error) {
-    console.log(error.response?.data?.message);
+     toast.error(error.response?.data?.message ||  "sorry i cant get any project");
 
   }
 finally{
@@ -94,7 +94,7 @@ setLoading(true);
     setProjectList(response.data.data);
   }
   catch (error) {
-    console.log(error.response?.data?.message);
+    toast.error(error.response?.data?.message ||  "sorry i cant get any project");
 
   }
 finally{
@@ -118,6 +118,7 @@ finally{
 
 
  useEffect(()=>{
+
   if(!userData?.userGroup)return;
   if(userData?.userGroup=== "Employee"){
 getAllProjectEmployee();
@@ -197,7 +198,12 @@ onChange={handelChange}/>
 
       <td>
       {project?.task.map((task)=>(
-<p className='status_style px-2 m-2  rounded rounded-3 text-center'>{task.status}</p>
+        // 'status_style px-2 m-2  rounded rounded-3 text-center'
+<p className=" status_style px-2 m-2  rounded rounded-3 text-center"
+
+>
+  {task.status}
+  </p>
       ))}
         </td>
       {userData?.userGroup!="Employee"?
