@@ -13,6 +13,7 @@ import Button from "react-bootstrap/Button";
 import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
 import { BeatLoader } from 'react-spinners';
+import { IoMdArrowDropup } from 'react-icons/io';
 
 
 export default function UsersList() {
@@ -114,12 +115,14 @@ const filteredUsers = searchTerm
   : usersList;
   const columns = [
     {
-      name: 'User Name',
+      name: (<>User Name <LuChevronsUpDown /></>),
+      
       selector: row => row.userName,
       sortable: true,
     },
     {
-    name: 'Status',
+     name: (<>Status <LuChevronsUpDown /></>),
+
     selector: row => row.status,  
     cell: (row) => (
      <button
@@ -149,17 +152,20 @@ const filteredUsers = searchTerm
   },
   
     {
-      name: 'Phone Number',
+      name: (<>Phone Number <LuChevronsUpDown /></>),
+
       selector: row => row.phoneNumber,
       sortable: true,
     },
     {
-      name: 'Email',
+      name: (<>Email<LuChevronsUpDown /></>),
+
       selector: row => row.email,
       sortable: true,
     },
       {
-      name: 'Date Created',
+      name: (<>Date Created <LuChevronsUpDown /></>),
+
       
       selector: row => row.task[0].creationDate ?  new Date(row.task[0].creationDate).toLocaleDateString() : '-',
       sortable: true,
@@ -312,7 +318,7 @@ const filteredUsers = searchTerm
       responsive 
       striped 
       bordered 
-      sortIcon={<LuChevronsUpDown />}
+      sortIcon={ <IoMdArrowDropup />}
 		/>   
 <Modal
   show={showUser}

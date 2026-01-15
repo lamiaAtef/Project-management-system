@@ -93,13 +93,15 @@ const filteredTasks = searchTerm
   
   const columns = [
 	{
-		name: 'Title',
+    name: (<>Title<LuChevronsUpDown /></>),
+
 		selector: row => row.title,
     sortable: true,
 	},
   {
-  name: 'Status',
-  selector: row => row.status,   // للـ sorting
+  name: (<>Status<LuChevronsUpDown /></>),
+
+  selector: row => row.status,  
   cell: (row) => (
     row.status === "ToDo" ? 
       <span className="bg-notActive status text-white px-3 py-1">
@@ -118,17 +120,20 @@ const filteredTasks = searchTerm
 },
 
   {
-		name: 'User',
+    name: (<>User<LuChevronsUpDown /></>),
+
 		selector: row => row.employee.userName,
     sortable: true,
 	},
   {
-		name: 'Project',
+    name: (<>Project<LuChevronsUpDown /></>),
+
 		selector: row => row.project.title,
     sortable: true,
 	},
     {
-		name: 'Date',
+    name: (<>Date<LuChevronsUpDown /></>),
+
 		selector: row => row.creationDate? new Date(row.creationDate).toLocaleDateString() : '-',
     sortable: true,
 	},

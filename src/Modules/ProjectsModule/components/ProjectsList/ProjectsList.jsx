@@ -139,18 +139,21 @@ getAllProjectEmployee();
 
   const columns = [
   {
-    name: '#',
+    name: (<># <LuChevronsUpDown /></>),
+
     selector: row => row.id,
      sortable: true,
   },
   
    {
-    name: 'Title',
+    name: (<>Title <LuChevronsUpDown /></>),
+
     selector: row => row.title,
      sortable: true,
   },
    {
-    name: 'Statues',
+    name: (<>Status <LuChevronsUpDown /></>),
+
     cell: (row) => (
   <div className="d-flex flex-column mx-0">
     {row?.task?.map((task, index) => (
@@ -175,7 +178,8 @@ getAllProjectEmployee();
   },
  ...(userData?.userGroup === "Employee"
   ? [{
-      name: 'Modification Date',
+      name: (<>Modification Date<LuChevronsUpDown /></>),
+
       selector: row => row.modificationDate ? new Date(row.modificationDate).toLocaleDateString() : '-',
       sortable: true,
     }]
@@ -187,7 +191,8 @@ getAllProjectEmployee();
    ...(userData?.userGroup !== "Employee"
     ? [
         {
-          name: 'Num Users',
+          name: (<>Num Users<LuChevronsUpDown /></>),
+
           selector: row => 5,
           sortable: true,
         },
@@ -195,12 +200,16 @@ getAllProjectEmployee();
     : [])
     },
     {
-    name: 'Num Tasks',
+    
+     name: (<>Num Tasks<LuChevronsUpDown /></>),
+
     selector: row => row.task?.length,
      sortable: true,
   },
     {
-    name: 'Date Created ',
+     name: (<>Date Created<LuChevronsUpDown /></>),
+
+    
     selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString() : '-',
      sortable: true,
   },
