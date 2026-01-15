@@ -46,7 +46,7 @@ const [searchTerm, setSearchTerm] = useState('');
   }
   const toggleUserStatus = async (id) => {
   try {
-    await axiosInstance.put(-
+    await axiosInstance.put(
       `${USER_URLS.TOGGLE_USER}/${id}`,
       {},
       {
