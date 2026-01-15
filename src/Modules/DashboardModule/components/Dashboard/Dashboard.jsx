@@ -13,8 +13,8 @@ import styles from "./Dashboard.module.css"
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 export default function Dashboard() {
+ 
   const { userData } = useContext(AuthContext);
-  
   const [counts, setCounts] = useState({
     toDo: 0,
     inProgress: 0,
@@ -54,7 +54,26 @@ export default function Dashboard() {
   tasks: "rgba(135, 206, 250, 1)",
   projects: "rgba(144, 238, 144, 1)",
 };
-
+  const donutUserColors = {
+  activatedEmployeeCount: "rgba(255, 217, 102, 1)",
+  
+  deactivatedEmployeeCount: "rgba(144, 238, 144, 1)",
+};
+const donutUserData = {
+  labels: ["activatedEmployeeCount", "deactivatedEmployeeCount"],
+  datasets: [
+    {
+      data: [ countsUser.activatedEmployeeCount,
+        countsUser.deactivatedEmployeeCount],
+        backgroundColor: [
+        donutUserColors.activatedEmployeeCount,
+        donutUserColors.deactivatedEmployeeCount,
+        
+      ],
+      borderWidth: 0,
+    },
+  ],
+};
 const donutData = {
   labels: ["Progress", "Tasks", "Projects"],
   datasets: [
@@ -78,10 +97,10 @@ const donutOptions = {
       display: false,
     },
     datalabels: {
-      color: "#000",
+      color: "rgba(255, 248, 248, 1)",
       font: {
         weight: "bold",
-        size: 12,
+        size: 15,
       },
       formatter: (value, context) => {
         const data = context.chart.data.datasets[0].data;
@@ -110,33 +129,38 @@ const donutOptions = {
           You can add project and assign tasks to your team
         </p>
       </div>
+     
 <div className={`${styles.dashboard_cards_wrapper}`}>
+  <div className="row">
+    <div className="col-12 col-md-9 col-lg-12 ">
       <Card className={`${styles.tasks_summary_card }pt-3`}>
     <Card.Body>
-      <h5 className="mb-1">Tasks</h5>
-      <p className="text-muted mb-4">
+      <div className={styles.cardPad}>
+      <h5 className="m-3">Tasks</h5>
+      <p className="text-muted m-3">
         Lorem ipsum dolor sit amet, consectetur
       </p>
+      </div>
 
-      <div className={`${styles.inner_cards_wrapper}`}>
+      <div className={`${styles.inner_cards_wrapper} col-md-4 col-sm-12`}>
         <div className={`${styles.stat_card} ${styles.progressUser}`}>
-          <div className={`${styles.icon_box} ${styles.icon_box_total}`}>
+          <div className={`${styles.icon_box} ${styles.icon_box_total}col-md-4 col-sm-12`}>
             <LuChartNoAxesCombined />
           </div>
-          <p className="mb-1 text-muted">Progress</p>
+          <p className="mb-1 text-muted col-md-4 col-sm-12">Progress</p>
           <h5>{`$ ${counts.inProgress}`}</h5>
         </div>
 
-        <div className={`${styles.stat_card} ${styles.tasksNumber}`}>
-          <div className="icon-box tasks">
+        <div className={`${styles.stat_card} ${styles.tasksNumber}` }>
+          <div className="icon-box tasks col-md-4 col-sm-12 ">
             <GoChecklist />
           </div>
           <p className="mb-1 text-muted">Tasks Number</p>
           <h5>{counts.toDo}</h5>
         </div>
 
-        <div className={`${styles.stat_card} ${styles.projectNumber}`}>
-          <div className={`${styles.projects} ${styles.icon_box}`}>
+        <div className={`${styles.stat_card} ${styles.projectNumber} col-md-4 col-sm-12`}>
+          <div className={`${styles.projects} ${styles.icon_box} col-md-4 col-sm-12`}>
             <TbBusinessplan />
           </div>
           <p className="mb-1 text-muted">Projects Number</p>
@@ -146,12 +170,19 @@ const donutOptions = {
     </Card.Body>
     
   </Card>
+  </div>
+  </div>
+  {userData?.userGroup== "Manager"?
+    <div className="row">
+    <div className="col-12 col-md-6 col-lg-12 ">
   <Card  className={`${styles.tasks_summary_card} pt-3`}>
    <Card.Body>
-      <h5 className="mb-1">Users</h5>
-      <p className="text-muted mb-4">
+    <div className={styles.cardPad}>
+      <h5 className=" m-3">Users</h5>
+      <p className="text-muted m-3">
         Lorem ipsum dolor sit amet, consectetur
       </p>
+     </div>
 
       <div className={`${styles.inner_cards_wrapper}`}>
         <div className={`${styles.progressUser} ${styles.stat_card}`}>
@@ -173,9 +204,18 @@ const donutOptions = {
        
       </div>
     </Card.Body>
+    
     </Card>
+    
+    </div>
+    </div>
+    :""}
+   
+   
   </div>
- 
+
+ <div className=" row">
+ <div className="col-12 col-md-8 col-lg-4 mb-4">
 <div className={`${styles.tasks_donut_wrapper}`}>
 
 
@@ -185,6 +225,22 @@ const donutOptions = {
     <Doughnut data={donutData} options={donutOptions} />
   </div>
 
+</div>
+</div>
+{userData?.userGroup== "Manager"?
+<div className="col-12 col-md-8 col-lg-4 offset-2">
+<div className={`${styles.tasks_donut_wrapper} `}>
+
+
+
+ 
+  <div className={`${styles.donut_wrapper}`}>
+    <Doughnut data={donutUserData} options={donutOptions} />
+  </div>
+
+</div>
+</div>
+:""}
 </div>
 
     </>
