@@ -16,6 +16,7 @@ import { LuChevronsUpDown } from 'react-icons/lu';
 import { CiSearch } from 'react-icons/ci';
 import { BeatLoader } from 'react-spinners';
 import { AuthContext } from '../../../../context/AuthContext';
+import DataTable from 'react-data-table-component';
 
 
 
@@ -30,7 +31,7 @@ export default function ProjectsList() {
      const navigate= useNavigate();
      ///////search filteration
   const [search,setSearch]=useState('');
-  const [loading,setLoading]=useState(true);
+  const [loading,setLoading]=useState(false);
   // view modal
   const [title,setTitle]=useState("");
   const[tasksNum,setTasksNum]=useState("");
@@ -107,11 +108,18 @@ finally{
 
 
  const deleteProject=async()=>{
-  const response=await axiosInstance.delete(PROJECT_URLS.DELETE_PROJECT(projectId));
-  console.log(response);
-  handleClose();
-  toast.success('delete success');
-  getAllProjectManager();
+  try
+  {
+       const response=await axiosInstance.delete(PROJECT_URLS.DELETE_PROJECT(projectId));
+      console.log(response);
+      handleClose();
+      toast.success('delete success');
+      getAllProjectManager();
+  }
+  catch(error){
+    toast.error(error?.response?.data?.message || "sorry can't  delete this project ")
+  }
+ 
 
 
  }
@@ -129,6 +137,96 @@ getAllProjectEmployee();
 
  },[userData])
 
+  const columns = [
+  {
+    name: '#',
+    selector: row => row.id,
+     sortable: true,
+  },
+  
+   {
+    name: 'Title',
+    selector: row => row.title,
+     sortable: true,
+  },
+   {
+    name: 'Statues',
+    cell: (row) => (
+  <div className="d-flex flex-column mx-0">
+    {row?.task?.map((task, index) => (
+      <span
+        key={index}
+        className={`badge ${
+          task.status === "ToDo"
+            ? "bg-notActive status text-white px-3 py-1  "
+            : task.status === "InProgress"
+            ? "bg-progress status text-white px-3 py-1  "
+            : "bg-active status text-white px-3 py-1  "
+        } mb-1`}
+      >
+        {task.status}
+      </span>
+    ))}
+  </div>
+),
+
+    
+     sortable: true,
+  },
+ ...(userData?.userGroup === "Employee"
+  ? [{
+      name: 'Modification Date',
+      selector: row => row.modificationDate ? new Date(row.modificationDate).toLocaleDateString() : '-',
+      sortable: true,
+    }]
+  : []
+),
+
+
+  {
+   ...(userData?.userGroup !== "Employee"
+    ? [
+        {
+          name: 'Num Users',
+          selector: row => 5,
+          sortable: true,
+        },
+      ]
+    : [])
+    },
+    {
+    name: 'Num Tasks',
+    selector: row => row.task?.length,
+     sortable: true,
+  },
+    {
+    name: 'Date Created ',
+    selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString() : '-',
+     sortable: true,
+  },
+   {
+   name: 'Action',
+   cell: (row) => (
+        <div className="dropdown">
+      <span
+        data-bs-toggle="dropdown"
+        style={{ cursor: "pointer", fontSize: "20px" }}
+      >
+      <HiDotsVertical  className='icon-color'/>
+      </span>
+
+      <ul className="dropdown-menu ">
+        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-2'/> View</li>
+       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
+         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
+      </ul>
+    </div>
+    
+   ),
+ 
+ }
+ 
+ ];
 
  if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100 '>
    <BeatLoader size={20} color='#288131'  />
@@ -172,7 +270,7 @@ onChange={handelChange}/>
 
 
 
-  <table className="table table-striped  table-responsive">
+  {/* <table className="table table-striped  table-responsive">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -241,7 +339,20 @@ onChange={handelChange}/>
 
 
   </tbody>
-</table>
+</table> */}
+
+ <DataTable
+            columns={columns}
+            data={filterProjects}
+            pagination
+            paginationPerPage={8}
+            responsive
+            striped
+           bordered 
+          /> 
+
+
+
 <Modal show={showView} onHide={handleCloseView} className='view_modal'>
         <Modal.Header closeButton>
           <Modal.Title  className='model_style'>Project Details</Modal.Title>

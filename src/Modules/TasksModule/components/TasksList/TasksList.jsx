@@ -26,6 +26,8 @@ export default function TasksList() {
   let [selectedId, setSelectedId] = useState(null);
   let [selectedName, setSelectedName] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const STATUS_ORDER = ["ToDo", "InProgress", "Done"];
+
    // view modal
     const [showView, setShowView] = useState(false);
     const [viewTask, setViewTask] = useState(null);
@@ -68,7 +70,6 @@ useEffect(() => {
 // Group tasks
 // TODO why i should use useMemo
  let groupedTasks = tasks.reduce((acc,task)=>{
-  // acc={"ToDo":[],"In Progress":[],"5ش":[]}
   let status = task.status;
   if (!acc[status]) acc[status] = []
   acc[status].push(task)
@@ -128,7 +129,7 @@ const filteredTasks = searchTerm
 	},
     {
 		name: 'Date',
-		selector: row => row.creationDate,
+		selector: row => row.creationDate? new Date(row.creationDate).toLocaleDateString() : '-',
     sortable: true,
 	},
   {
@@ -256,26 +257,25 @@ const filteredTasks = searchTerm
           /> 
           </>:
               <Container>
-                  <Row className='g-5 my-2'>
-                    {
-                        Object.entries(groupedTasks).map(([status, tasks]) => (
-                        
-                         <Col sm={12} md={6} lg={4} >
-                              <h3 className={`${styles.boxHeader}`}>{status}</h3>
-                              <div className={`${styles.boxTasks}`}>
-                                    {tasks.map(task => (
-                                    <div  className={`${styles.taskElement}`} key={task.id}>{task.title}</div>
-                          ))}
+               <Row className='g-5 my-2'>
+                {STATUS_ORDER.map((status) => (
+                  <Col sm={12} md={6} lg={4} key={status}>
+                    <h3 className={styles.boxHeader}>{status}</h3>
 
-                              </div>
-                         </Col>
-                        
-                        
-                        
-                        ))
-                    }
+                    <div className={styles.boxTasks}>
+                      {(groupedTasks[status] || []).map(task => (
+                        <div
+                          className={styles.taskElement}
+                          key={task.id}
+                        >
+                          {task.title}
+                        </div>
+                      ))}
+                    </div>
+                  </Col>
+                ))}
+              </Row>
 
-      </Row>
       
     </Container>
           }

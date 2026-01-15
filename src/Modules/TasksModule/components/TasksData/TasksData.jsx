@@ -55,17 +55,17 @@ export default function TasksData() {
 
 
   //     })
-  let onSubmit = (data) => {
+  let onSubmit = async (data) => {
     console.log(data);
     console.log("ana hena to add or update")
     if(id)
     {
-        updateTasks(id,data)
+       await updateTasks(id,data)
         
     }
     else{
       console.log("1")
-      addTask(data);
+      await addTask(data);
     }
     
   }
@@ -149,10 +149,10 @@ export default function TasksData() {
                <Button disabled={isSubmitting} type='submit' className='w-25 mt-4 Auth-btn'>
                 {isSubmitting ?(
                     <>
-                    Save
+                    {id? "update":"Save"}
                     <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
                     </>
-                  ):('Save')}
+                  ):id? "update":"save"}
             </Button>
             </Form.Group>
           </Form>

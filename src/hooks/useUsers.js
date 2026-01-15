@@ -4,7 +4,7 @@ import axiosInstance from '../services/api';
 const useUsers = () => {
     console.log("useUsers Hook Initialized");
     const [users,setUsers] = useState([]);    
-    const [loading,setLoading] = useState(true);
+    const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);        
     const fetchUsers = async () => {
         console.log("fetchUsers Called");

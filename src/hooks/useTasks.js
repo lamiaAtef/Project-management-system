@@ -11,7 +11,7 @@ const useTasks = () => {
     // const [organicTasks,setOrganicTasks] = useState([]);
 
     const[singleTask,setSingleTask]=useState()
-    const [loading,setLoading] = useState(true);
+    const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
     const[taskById,setTaskById]=useState(null)
 

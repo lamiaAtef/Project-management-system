@@ -12,8 +12,8 @@ import { AuthContext } from '../../../../context/AuthContext';
 
 
 export default function ProjectData() {
- const {register,handleSubmit,formState:{errors},isSubmitting,setValue} =useForm();
- const [loading,setLoading]=useState(true);
+ const {register,handleSubmit,formState:{errors,isSubmitting},setValue} =useForm();
+ const [loading,setLoading]=useState(false);
  const{userData}=useContext(AuthContext);
  const{id}=useParams();
  const navigate=useNavigate();
@@ -66,6 +66,7 @@ try {
 }
  catch (error) {
   console.log(error.response?.data?.message);
+  toast.error(error.response?.data?.message || "sorry! cann't load projects details")
 
 }
 finally{
@@ -74,7 +75,6 @@ finally{
 
 }
 // end details projectId
-
 
 
 
@@ -89,6 +89,7 @@ if(id){
   getProjectDetails();
 }
 },[userData]);
+
  if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100'>
    <BeatLoader size={20} color='#288131' />
  </div>
@@ -126,11 +127,16 @@ if(id){
            <Button disabled={isSubmitting} type='submit' className='w-25 mt-4 Auth-btn'>
 
 
+                
+
+        {isSubmitting ?(
+                <>
                 {id? "update":"save"}
+                <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+                </>
+            ):  id? "update":"save"}
 
-
-
-
+          
 
         </Button>
         </div>

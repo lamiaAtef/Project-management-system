@@ -6,7 +6,7 @@ import axiosInstance from '../services/api';
 const useProjects = () => {
     console.log("useProjects Hook Initialized");
     const [projects,setProjects] = useState([]);      
-    const [loading,setLoading] = useState(true);
+    const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
     const fetchProjects = async () => {
         console.log("fetchProjects Called");
