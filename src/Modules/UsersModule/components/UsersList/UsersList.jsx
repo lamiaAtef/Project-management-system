@@ -24,10 +24,10 @@ const [blockedUIUsers, setBlockedUIUsers] = useState([]);
 const [searchTerm, setSearchTerm] = useState('');
 
 
-
+const[loading,setLoading]=useState(false)
   const getAllUsers = async () => {
+setLoading(true)
     try {
-      if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader- size={30} color='#288131' margin={10}  /></div>
       let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=20&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
       console.log(response.data.data);
       setUsersList(response.data.data);
@@ -42,6 +42,7 @@ const [searchTerm, setSearchTerm] = useState('');
 
 
     }
+    finally{setLoading(false)}
 
   }
   const toggleUserStatus = async (id) => {
@@ -194,8 +195,10 @@ const filteredUsers = searchTerm
   }
   
   ];
-  
+       if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div>
+
   return (
+    
     <div>
      <Search placeholder='search user name' onSearch={setSearchTerm}/>
       
