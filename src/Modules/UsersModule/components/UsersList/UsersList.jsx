@@ -12,6 +12,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
+import { BeatLoader } from 'react-spinners';
 
 
 export default function UsersList() {
@@ -23,11 +24,12 @@ const [blockedUIUsers, setBlockedUIUsers] = useState([]);
 const [searchTerm, setSearchTerm] = useState('');
 
 
-
+const[loading,setLoading]=useState(false)
   const getAllUsers = async () => {
+setLoading(true)
     try {
-       let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}`)
-      console.log(response.data.data.length);
+      let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=20&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
+      console.log(response.data.data);
       setUsersList(response.data.data);
       console.log("hi",response.data.data )
 
@@ -41,6 +43,7 @@ const [searchTerm, setSearchTerm] = useState('');
 
 
     }
+    finally{setLoading(false)}
 
   }
   const toggleUserStatus = async (id) => {
@@ -57,7 +60,7 @@ const [searchTerm, setSearchTerm] = useState('');
 
     toast.success("User status updated successfully");
 
-    getAllUsers();
+   
 
   } catch (error) {
     toast.error(error.response?.data?.message || "Error updating status");
@@ -94,13 +97,21 @@ const toggleBlockUI = (id) => {
 };
 
  useEffect(() => {
-  // if (userData?.userGroup!="Manager") {
+ if (userData?.userGroup== "Manager"){
+ getAllUsers();
+ }
+
  
-  getAllUsers();
-  // }
-}, []);
+ 
 
+}, [userData]);
 
+const filteredUsers = searchTerm
+  ? usersList.filter(user =>
+      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
+     
+    )
+  : usersList;
   const columns = [
     {
       name: 'User Name',
@@ -109,7 +120,7 @@ const toggleBlockUI = (id) => {
     },
     {
     name: 'Status',
-    selector: row => row.status,   // للـ sorting
+    selector: row => row.status,  
     cell: (row) => (
      <button
   className={`status ${
@@ -185,14 +196,10 @@ const toggleBlockUI = (id) => {
   }
   
   ];
-  const filteredUsers = searchTerm
-  ? usersList.filter(user =>
-      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
-     
-    )
-  : usersList;
-  
+       if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div>
+
   return (
+    
     <div>
      <Search placeholder='search user name' onSearch={setSearchTerm}/>
       
