@@ -27,8 +27,8 @@ const [searchTerm, setSearchTerm] = useState('');
 
   const getAllUsers = async () => {
     try {
-      if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div>
-      let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=10&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
+      if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader- size={30} color='#288131' margin={10}  /></div>
+      let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=20&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
       console.log(response.data.data);
       setUsersList(response.data.data);
 
@@ -46,7 +46,7 @@ const [searchTerm, setSearchTerm] = useState('');
   }
   const toggleUserStatus = async (id) => {
   try {
-    await axiosInstance.put(
+    await axiosInstance.put(-
       `${USER_URLS.TOGGLE_USER}/${id}`,
       {},
       {
