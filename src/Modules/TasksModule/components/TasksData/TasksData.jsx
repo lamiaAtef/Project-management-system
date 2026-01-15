@@ -21,15 +21,13 @@ export default function TasksData() {
   let {addTask,singleTask,fetchOneTaskById,updateTasks}= useTasks()
   let {register,handleSubmit,formState:{errors,isSubmitting},reset} = useForm();
 
-const {id} = useParams()
-const userData = useContext(AuthContext)
+    const {id} = useParams()
+    const {userData} = useContext(AuthContext)
 
-     let role =  userData?.userData?.userGroup;
+     let role =  userData?.userGroup;
      console.log(role,"role")
 
     useEffect(() => {
-    
-
       console.log(id,"idddddddddddddddd")
       if (id) {
         fetchOneTaskById(id);

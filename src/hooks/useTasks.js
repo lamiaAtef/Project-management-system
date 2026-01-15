@@ -20,7 +20,11 @@ const useTasks = () => {
     const fetchTasks = async () => {
         setLoading(true);
         try {
-            const response = await axiosInstance.get(TASKS_URLS.GET_ALL_MY_TASKS_FOR_MANAGER);
+            const response = await axiosInstance.get(TASKS_URLS.GET_ALL_MY_TASKS_FOR_MANAGER,
+            {params:{
+                pageSize:20,
+                pageNumber:1,
+            }});
             console.log(response?.data?.data);
             setTasks(response?.data?.data);
             // setOrganicTasks(response?.data?.data)

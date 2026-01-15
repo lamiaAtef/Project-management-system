@@ -13,6 +13,10 @@ import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
 import { AuthContext } from '../../../../context/AuthContext';
 import styles from "./TasksList.module.css"
+import {
+  DndContext,
+  closestCenter
+} from "@dnd-kit/core"
 
 
 export default function TasksList() {
@@ -27,9 +31,9 @@ export default function TasksList() {
     const [viewTask, setViewTask] = useState(null);
     const handleCloseView = () => setShowView(false);
 
-     const userData = useContext(AuthContext)
+     const {userData} = useContext(AuthContext)
 
-     let role =  userData?.userData?.userGroup;
+     let role =  userData?.userGroup;
      console.log(role,"role")
 
   const openConfirmationModal = (id,name) => {
@@ -64,6 +68,7 @@ useEffect(() => {
 // Group tasks
 // TODO why i should use useMemo
  let groupedTasks = tasks.reduce((acc,task)=>{
+  // acc={"ToDo":[],"In Progress":[],"5ش":[]}
   let status = task.status;
   if (!acc[status]) acc[status] = []
   acc[status].push(task)
@@ -240,12 +245,14 @@ const filteredTasks = searchTerm
       {/* start admin  */}
       {role==="Manager"? <>
             <Search placeholder='search task' onSearch={setSearchTerm}/>
-              <DataTable
+          <DataTable
             columns={columns}
             data={filteredTasks}
             pagination
-            paginationPerPage={10}
-            responsive striped bordered 
+            paginationPerPage={8}
+            responsive
+            striped
+           bordered 
           /> 
           </>:
               <Container>
