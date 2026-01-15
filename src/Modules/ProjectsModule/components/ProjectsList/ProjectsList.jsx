@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Form, Navigate, useNavigate } from 'react-router-dom'
 import axiosInstance from '../../../../services/api';
 import { PROJECT_URLS, TASKS_URLS } from '../../../../services/api/apiURLs';
@@ -15,16 +15,18 @@ import { toast } from 'react-toastify';
 import { LuChevronsUpDown } from 'react-icons/lu';
 import { CiSearch } from 'react-icons/ci';
 import { BeatLoader } from 'react-spinners';
-import { set } from 'react-hook-form';
+import { AuthContext } from '../../../../context/AuthContext';
+
 
 
 
 
 export default function ProjectsList() {
+  const{userData}=useContext(AuthContext);
   const [projectList,setProjectList]=useState([]);
    const [projectId,setProjectId]=useState(0);
     const [projectName,setProjectName]=useState('');
-    const [allProjectsId,setAllProjectsId] = useState([])
+
      const navigate= useNavigate();
      ///////search filteration
   const [search,setSearch]=useState('');
@@ -60,26 +62,12 @@ export default function ProjectsList() {
 
      setShow(true);
   }
-  let getTasksInProject =async() =>{
-      console.log(arr,"arr")
-
-    // console.log("hena",id)
-    // console.log(id)
-    // let response = await axiosInstance.get(PROJECT_URLS.GET_PROJECT(id))
-    // console.log("hena bageb response",response.data)
 
 
-  }
-  //   let getUsersInProject =async(id) =>{
-    
-  //   console.log(id)
-  //   let response = await axiosInstance.get(PROJECT_URLS.GET_PROJECT(id))
-  //   console.log("hena bageb response")
-    
+  console.log("userData",userData);
 
-  // }
 
- const getAllProject=async()=>{
+ const getAllProjectManager=async()=>{
 
 setLoading(true);
   try {
@@ -87,10 +75,26 @@ setLoading(true);
     console.log(response.data.data);
     setProjectList(response.data.data);
 
-
   }
   catch (error) {
-    console.log(error);
+     toast.error(error.response?.data?.message ||  "sorry i cant get any project");
+
+  }
+finally{
+  setLoading(false);
+}
+
+ }
+  const getAllProjectEmployee=async()=>{
+
+setLoading(true);
+  try {
+    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_EMPLOYEE);
+    console.log(response.data.data);
+    setProjectList(response.data.data);
+  }
+  catch (error) {
+    toast.error(error.response?.data?.message ||  "sorry i cant get any project");
 
   }
 finally{
@@ -99,27 +103,32 @@ finally{
 
 
  }
+
+
+
  const deleteProject=async()=>{
   const response=await axiosInstance.delete(PROJECT_URLS.DELETE_PROJECT(projectId));
   console.log(response);
   handleClose();
   toast.success('delete success');
-  getAllProject();
+  getAllProjectManager();
 
 
  }
 
 
  useEffect(()=>{
-  getAllProject();
-  // getTasksInProject()
- 
-  // countTasks();
- },[])
-//  useEffect(()=>{
-//  setAllProjectsId( projectList.map(project=>project.id))
-//   console.log(allProjectsId,"all")
-//  },[projectList])
+
+  if(!userData?.userGroup)return;
+  if(userData?.userGroup=== "Employee"){
+getAllProjectEmployee();
+  }else
+    {
+        getAllProjectManager();
+    }
+
+ },[userData])
+
 
  if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100 '>
    <BeatLoader size={20} color='#288131'  />
@@ -143,9 +152,10 @@ finally{
     {/* end modal */}
   <header className='header'>
     <h1 className='title'> Projects</h1>
+    {userData?.userGroup !="Employee"?
     <button className='Auth-btn' onClick={()=>navigate('/dashboard/project-data/new_project')}>
     + Add New Project
-    </button>
+    </button>:""}
   </header>
 
 {/* /////search */}
@@ -168,7 +178,12 @@ onChange={handelChange}/>
       <th scope="col">#</th>
       <th scope="col">Title <LuChevronsUpDown /> </th>
       <th scope="col">Statues <LuChevronsUpDown /></th>
+      {userData?.userGroup!="Employee"?
       <th scope="col">Num Users <LuChevronsUpDown /></th>
+      :""}
+           {userData?.userGroup =="Employee"?
+<th>modificationDate</th>
+  :""}
       <th scope="col">Num Tasks <LuChevronsUpDown /></th>
        <th scope="col">Date Created <LuChevronsUpDown /></th>
         <th scope="col">Action </th>
@@ -180,9 +195,21 @@ onChange={handelChange}/>
        <tr key={project.id}>
         <td>{project?.id}</td>
       <td >{project?.title}</td>
-      <td> <span className='status_style px-2 py-1 rounded rounded-3'>public</span></td>
-      {/* <td>{()=>getTasksInProject(project?.id)}</td> */}
-      <td>5</td>
+
+      <td>
+      {project?.task.map((task)=>(
+        // 'status_style px-2 m-2  rounded rounded-3 text-center'
+<p className=" status_style px-2 m-2  rounded rounded-3 text-center"
+
+>
+  {task.status}
+  </p>
+      ))}
+        </td>
+      {userData?.userGroup!="Employee"?
+      <td>5</td>:""}
+            {userData?.userGroup=="Employee"?
+      <td>{project?.modificationDate}</td>:""}
       <td>{project?.task?.length}</td>
 
 
@@ -197,9 +224,9 @@ onChange={handelChange}/>
       </span>
 
       <ul className="dropdown-menu ">
-        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-1'/> View</li>
-        <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-1'/>Edit</li>
-        <li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-1'/>Delete</li>
+        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-2'/> View</li>
+       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
+         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
       </ul>
     </div>
       </td>
@@ -215,13 +242,13 @@ onChange={handelChange}/>
 
   </tbody>
 </table>
-<Modal show={showView} onHide={handleCloseView}>
+<Modal show={showView} onHide={handleCloseView} className='view_modal'>
         <Modal.Header closeButton>
-          <Modal.Title >Project Details</Modal.Title>
+          <Modal.Title  className='model_style'>Project Details</Modal.Title>
         </Modal.Header>
-<h6 className='p-2'>project title:{title}</h6>
-<h6 className='p-2'>tasksNum:{tasksNum}</h6>
-<h6 className='p-2'>Status: {'public'}</h6>
+<h6 className='p-2'>project title: {title}</h6>
+<h6 className='p-2'>tasksNum: {tasksNum}</h6>
+<h6 className='p-2'>Status:   {'public'}</h6>
         <Modal.Footer>
 
 

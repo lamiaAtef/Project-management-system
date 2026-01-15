@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Button, Col, Container, Form, Row } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { MdKeyboardArrowLeft } from 'react-icons/md'
@@ -8,11 +8,13 @@ import { PROJECT_URLS } from '../../../../services/api/apiURLs';
 import { toast } from 'react-toastify';
 import { useState } from 'react';
 import { BeatLoader } from 'react-spinners';
+import { AuthContext } from '../../../../context/AuthContext';
 
 
 export default function ProjectData() {
  const {register,handleSubmit,formState:{errors},isSubmitting,setValue} =useForm();
  const [loading,setLoading]=useState(true);
+ const{userData}=useContext(AuthContext);
  const{id}=useParams();
  const navigate=useNavigate();
 //  Add project
@@ -26,10 +28,12 @@ export default function ProjectData() {
   navigate("/dashboard/projects");
   toast.success("update success");
     } catch (error) {
-      console.log(error);
+     toast.error(error.response?.data?.message ||  "sorry i can't update  project");
 
 
     }
+
+
 
   }
   else{
@@ -42,7 +46,7 @@ navigate("/dashboard/projects")
 
 
 } catch (error) {
-  console.log(error);
+   toast.error(error.response?.data?.message );
 
 }
 
@@ -52,7 +56,7 @@ navigate("/dashboard/projects")
 //  End ADD project
 // get detais fpr projectId
 const getProjectDetails=async()=>{
-// setLoading(true);
+setLoading(true);
 try {
     const {data}= await axiosInstance.get(PROJECT_URLS.GET_PROJECT(id));
   console.log(data);
@@ -61,12 +65,12 @@ try {
 
 }
  catch (error) {
-  console.log(error);
+  console.log(error.response?.data?.message);
 
 }
-// finally{
-//   setLoading(false)
-// }
+finally{
+  setLoading(false)
+}
 
 }
 // end details projectId
@@ -77,13 +81,17 @@ try {
 
 
 useEffect(()=>{
+  if(userData?.userGroup=="Employee"){
+    navigate("/dashboard");
+  }
+
 if(id){
   getProjectDetails();
 }
-},[])
-//  if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100'>
-//    <BeatLoader size={20} color='#288131' />
-//  </div>
+},[userData]);
+ if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100'>
+   <BeatLoader size={20} color='#288131' />
+ </div>
 
   return (
     <>
@@ -93,7 +101,7 @@ if(id){
             <MdKeyboardArrowLeft />
             View All projects
           </Link>
-          <h1 className='title my-3'>Add a New Project</h1>
+          <h1 className='title my-3'> {id? "updata Project":"Add a New Project"} </h1>
         </div>
 
       </header>
@@ -101,6 +109,7 @@ if(id){
 <Container>
   <Row className='d-flex justify-content-center aligns-items-center'>
 <Col lg={8} md={10}>
+
       <Form onSubmit={handleSubmit(onSubmit)} className='shadow-sm p-3 bg-white my-3 rounded rounded-2 form-admin'>
           <Form.Group className="form-group mb-4">
           <Form.Label htmlFor="title">Title</Form.Label>

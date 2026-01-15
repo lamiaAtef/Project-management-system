@@ -270,7 +270,7 @@ select:-webkit-autofill {
   font-size: 28px;
   color: #4F4F4F;
 
-} 
+}
 
 /* projectlist style */
 .header{
@@ -390,19 +390,19 @@ td{
 }
 .form-admin .cancelBtn:hover{
   background-color: var(--mainColor);
-  color:#fff; 
+  color:#fff;
   border:none;
 }
 /* Drop down button styles */
 .dropDownMenu{
-    background-color: #fff ; 
+    background-color: #fff ;
     box-shadow: 0px 0px 16px 0px #0000001A;
     border-radius: 15px;
     /* list-style: none; */
     padding: 0;
     /* position: relative; */
     border:0
-    
+
 }
 .list_item:nth-child(0){
     /* cursor: pointer; */
@@ -410,7 +410,7 @@ td{
     border-radius: 15px;
     padding: 5px;
 
-   
+
 }
 .dropdown-toggle::after{
     display: none ;
@@ -425,17 +425,17 @@ td{
 }
 .bg-active{
   background-color: var(--activeBtnColor);
- 
+
 }
 
 .bg-notActive{
-  background-color:var(--notActiveBtColor);  
+  background-color:var(--notActiveBtColor);
 
-  
+
 }
 .bg-progress{
   background-color: var(--mainColor);
- 
+
 }
 
 .icon-color{
@@ -477,10 +477,13 @@ td{
 
 .status.active {
   background-color:var(--activeBtnColor);
-  
+
 }
 
 .status.inactive {
   background-color: var(--notActiveBtColor);
- 
+
+}
+.model_style{
+  color:var(--mainColor) ;
 }
