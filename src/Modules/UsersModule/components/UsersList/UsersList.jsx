@@ -161,7 +161,7 @@ const filteredUsers = searchTerm
       {
       name: 'Date Created',
       
-      selector: row => row.task[0].creationDate,
+      selector: row => row.task[0].creationDate ?  new Date(row.task[0].creationDate).toLocaleDateString() : '-',
       sortable: true,
     },
     {
@@ -309,7 +309,10 @@ const filteredUsers = searchTerm
 			data={filteredUsers}
       pagination
       paginationPerPage={5}
-      responsive striped bordered 
+      responsive 
+      striped 
+      bordered 
+      sortIcon={<LuChevronsUpDown />}
 		/>   
 <Modal
   show={showUser}
