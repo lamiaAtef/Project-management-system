@@ -26,7 +26,7 @@ export default function ForgetPassword() {
     {
       autoClose: 3000,
     })
-    navigate('/reset-password');
+    navigate('/reset-pass');
 
     
   } catch (error) {
