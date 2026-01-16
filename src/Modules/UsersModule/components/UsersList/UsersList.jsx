@@ -23,15 +23,26 @@ export default function UsersList() {
 const [showUser, setShowUser] = useState(false);
 const [blockedUIUsers, setBlockedUIUsers] = useState([]);
 const [searchTerm, setSearchTerm] = useState('');
-
+  // server pagination 
+  const [page, setPage] = useState(1);
+const [pageSize, setPageSize] = useState(5);
+const [total, setTotal] = useState(0);
+  // end server pagination
 
 const[loading,setLoading]=useState(false)
   const getAllUsers = async () => {
 setLoading(true)
     try {
-      let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=20&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
+      let response = await axiosInstance.get(USER_URLS.GET_USERS_BY_MANAGER,{
+         params: {
+          pageSize:pageSize,
+          pageNumber:page,
+    },
+      })
       console.log(response.data.data);
       setUsersList(response.data.data);
+      setTotal(response?.data?.totalNumberOfRecords)
+
       console.log("hi",response.data.data )
 
 
@@ -102,10 +113,7 @@ const toggleBlockUI = (id) => {
  getAllUsers();
  }
 
- 
- 
-
-}, [userData]);
+}, [userData,page, pageSize]);
 
 const filteredUsers = searchTerm
   ? usersList.filter(user =>
@@ -313,12 +321,18 @@ const filteredUsers = searchTerm
    <DataTable
 			columns={columns}
 			data={filteredUsers}
-      pagination
-      paginationPerPage={5}
-      responsive 
-      striped 
-      bordered 
-      sortIcon={ <IoMdArrowDropup />}
+        pagination
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page); }}
 		/>   
 <Modal
   show={showUser}

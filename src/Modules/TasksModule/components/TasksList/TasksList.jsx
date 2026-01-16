@@ -21,7 +21,7 @@ import {
 
 export default function TasksList() {
   let navigate = useNavigate();
-  let {tasks,loading,error,fetchTasks,deleteTask,fetchUserTasks}= useTasks()
+  let {tasks,loading,error,page,setPage ,total,pageSize,setPageSize,fetchTasks,deleteTask,fetchUserTasks}= useTasks()
   let [showModal, setShowModal] = useState(false);
   let [selectedId, setSelectedId] = useState(null);
   let [selectedName, setSelectedName] = useState(null);
@@ -37,6 +37,8 @@ export default function TasksList() {
 
      let role =  userData?.userGroup;
      console.log(role,"role")
+
+ 
 
   const openConfirmationModal = (id,name) => {
     setSelectedId(id);
@@ -65,7 +67,7 @@ useEffect(() => {
     fetchUserTasks();
 
   }
-}, [role]);
+}, [role,page,pageSize]);
 
 // Group tasks
 // TODO why i should use useMemo
@@ -255,10 +257,20 @@ const filteredTasks = searchTerm
             columns={columns}
             data={filteredTasks}
             pagination
-            paginationPerPage={8}
-            responsive
-            striped
-           bordered 
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page); 
+  }}
+
+  progressPending={loading}
           /> 
           </>:
               <Container>

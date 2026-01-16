@@ -664,3 +664,14 @@ td{
 .model_style{
   color:var(--mainColor) ;
 }
+@media (max-width: 768px) {
+  .cell {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .label {
+    font-weight: bold;
+  }
+}
+
