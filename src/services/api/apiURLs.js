@@ -8,7 +8,7 @@ export const USER_URLS={
      RESET_REQUEST:`/Users/Reset/Request`,
      CHANGE_PASSWORD:`/Users/ChangePassword`,
      VERIFY:`/Users/verify`,
-     REST:`/Users/Reset`,
+     RESET:`/Users/Reset`,
      GET_CURRENT_USER:`/Users/currentUser`,
      CREATE_AN_MANAGER:`/Users/Create`,
      GET_USER_BYID:(userId)=>`/Users/${userId}`,

@@ -9,10 +9,11 @@ import { useState } from 'react';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
 import { useForm } from 'react-hook-form';
 import { EMAIL_VALIDATION, PASSWORD_VALIDATION, REQUIRED_VALIDATION } from '../../../../services/validation';
-import axios from 'axios';
+import axiosInstance from '../../../../services/api/index.js';
 import { USER_URLS, baseURL } from '../../../../services/api/apiURLs';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+// import axios from 'axios';
 
 export default function ResetPassword() {
   const colProps = { md: 8, lg: 6, xl: 5 };
@@ -23,26 +24,26 @@ export default function ResetPassword() {
  const{register, formState:{errors,isSubmitting}, handleSubmit,watch}= useForm();
  
  let navigate = useNavigate();
-  const onSubmit=async(data)=>{
-    console.log(data);
-
+  const onSubmit = async (data) => {
   try {
-    let response= await axiosInstance.post(`${USER_URLS.REST}`,data);
-    toast.success('success to reset password!',
-    {
-      autoClose: 3000,
-    })
-    navigate('/dashboard');
+    // await axios.post("https://upskilling-egypt.com:3003/api/v1/Users/Reset",data)
+    await axiosInstance.post(USER_URLS.RESET,data)
 
-    
-  } catch (error) {
-    toast.error(error?.response?.data?.message || 'Failed to reset password',
-    {
+    toast.success("Password reset successfully!", {
       autoClose: 3000,
-    })
-    
+    });
+
+    navigate("/dashboard");
+  } catch (error) {
+    toast.error(
+      error?.response?.data?.message || "Failed to reset password",
+      {
+        autoClose: 3000,
+      }
+    );
   }
- }
+};
+
 
   return (
     <>

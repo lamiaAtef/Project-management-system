@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Button, Col ,Form} from 'react-bootstrap';
 import { EMAIL_VALIDATION} from '../../../../services/validation';
-import AuthHeader from '../../../Shared/components/AuthHeader/Authheader.jsx';
+import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader.jsx';
 
 
 
@@ -22,7 +22,7 @@ export default function ForgetPassword() {
   try {
     let response= await axiosInstance.post(USER_URLS.RESET_REQUEST,data);
     console.log(response);
-    toast.success('Welcome to PMS!',
+    toast.success('ready to reset your password',
     {
       autoClose: 3000,
     })

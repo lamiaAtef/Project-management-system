@@ -10,6 +10,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import styles from "./Dashboard.module.css"
+import ChatBot from "../../../Shared/components/ChatPot/ChatPot";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 export default function Dashboard() {
@@ -130,6 +131,8 @@ const donutOptions = {
         </p>
       </div>
    <div className={`${styles.dashboard_cards_wrapper}`}>
+     <div className="row">
+    <div className="col-12 col-md-12 col-lg-6">
       <Card className={`${styles.tasks_summary_card } bgOverlayDark pt-3`}>
     <Card.Body>
       <h5 className="textDark mb-1">Tasks</h5>
@@ -167,10 +170,10 @@ const donutOptions = {
     
   </Card>
   </div>
-  
-  {userData?.userGroup == "Manager"?
+  </div>
+    {userData?.userGroup == "Manager"?
     <div className="row">
-    <div className="col-12 col-md-6 col-lg-12 ">
+    <div className="col-12 col-md-12 col-lg-6">
   <Card  className={`${styles.tasks_summary_card} bgOverlayDark pt-3`}>
    <Card.Body>
     <div className={styles.cardPad}>
@@ -206,6 +209,9 @@ const donutOptions = {
     </div>
     </div>
     :""}
+  </div>
+  
+
 
  <div className="row">
   <div className="col-12 col-md-8 col-lg-4 mb-4">
@@ -225,6 +231,9 @@ const donutOptions = {
       </div>
     </div>
   )}
+</div>
+<div className="d-flex justify-content-end">
+  <ChatBot/>
 </div>
 </>
   )
