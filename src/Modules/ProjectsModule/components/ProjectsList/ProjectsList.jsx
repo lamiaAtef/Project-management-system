@@ -36,7 +36,15 @@ export default function ProjectsList() {
   const [title,setTitle]=useState("");
   const[tasksNum,setTasksNum]=useState("");
   const [showView, setShowView] = useState(false);
+
+  // server pagination 
+  const [page, setPage] = useState(1);
+const [pageSize, setPageSize] = useState(10);
+const [total, setTotal] = useState(0);
+  // end server pagination
   const handleCloseView = () => setShowView(false);
+
+
   const handleShowView = (project) =>{
 
   setTitle( project?.title);
@@ -72,9 +80,15 @@ export default function ProjectsList() {
 
 setLoading(true);
   try {
-    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_MANGER);
+    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_MANGER,{
+       params: {
+      pageSize:pageSize,
+      pageNumber:page,
+    },
+    });
     console.log(response.data.data);
     setProjectList(response.data.data);
+    setTotal(response?.data?.totalNumberOfRecords)
 
   }
   catch (error) {
@@ -93,6 +107,7 @@ setLoading(true);
     let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_EMPLOYEE);
     console.log(response.data.data);
     setProjectList(response.data.data);
+    
   }
   catch (error) {
     toast.error(error.response?.data?.message ||  "sorry i cant get any project");
@@ -129,28 +144,31 @@ finally{
 
   if(!userData?.userGroup)return;
   if(userData?.userGroup=== "Employee"){
-getAllProjectEmployee();
+    getAllProjectEmployee();
   }else
     {
         getAllProjectManager();
     }
 
- },[userData])
+ },[userData,page, pageSize])
 
   const columns = [
   {
-    name: '#',
+    name: (<># <LuChevronsUpDown /></>),
+
     selector: row => row.id,
      sortable: true,
   },
   
    {
-    name: 'Title',
+    name: (<>Title <LuChevronsUpDown /></>),
+
     selector: row => row.title,
      sortable: true,
   },
    {
-    name: 'Statues',
+    name: (<>Status <LuChevronsUpDown /></>),
+
     cell: (row) => (
   <div className="d-flex flex-column mx-0">
     {row?.task?.map((task, index) => (
@@ -175,7 +193,8 @@ getAllProjectEmployee();
   },
  ...(userData?.userGroup === "Employee"
   ? [{
-      name: 'Modification Date',
+      name: (<>Modification Date<LuChevronsUpDown /></>),
+
       selector: row => row.modificationDate ? new Date(row.modificationDate).toLocaleDateString() : '-',
       sortable: true,
     }]
@@ -187,7 +206,8 @@ getAllProjectEmployee();
    ...(userData?.userGroup !== "Employee"
     ? [
         {
-          name: 'Num Users',
+          name: (<>Num Users<LuChevronsUpDown /></>),
+
           selector: row => 5,
           sortable: true,
         },
@@ -195,12 +215,16 @@ getAllProjectEmployee();
     : [])
     },
     {
-    name: 'Num Tasks',
+    
+     name: (<>Num Tasks<LuChevronsUpDown /></>),
+
     selector: row => row.task?.length,
      sortable: true,
   },
     {
-    name: 'Date Created ',
+     name: (<>Date Created<LuChevronsUpDown /></>),
+
+    
     selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString() : '-',
      sortable: true,
   },
@@ -344,11 +368,19 @@ onChange={handelChange}/>
  <DataTable
             columns={columns}
             data={filterProjects}
-            pagination
-            paginationPerPage={8}
-            responsive
-            striped
-           bordered 
+             pagination
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page); }}
+            
           /> 
 
 

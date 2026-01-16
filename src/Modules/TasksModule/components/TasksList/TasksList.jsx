@@ -21,7 +21,7 @@ import {
 
 export default function TasksList() {
   let navigate = useNavigate();
-  let {tasks,loading,error,fetchTasks,deleteTask,fetchUserTasks}= useTasks()
+  let {tasks,loading,error,page,setPage ,total,pageSize,setPageSize,fetchTasks,deleteTask,fetchUserTasks}= useTasks()
   let [showModal, setShowModal] = useState(false);
   let [selectedId, setSelectedId] = useState(null);
   let [selectedName, setSelectedName] = useState(null);
@@ -37,6 +37,8 @@ export default function TasksList() {
 
      let role =  userData?.userGroup;
      console.log(role,"role")
+
+ 
 
   const openConfirmationModal = (id,name) => {
     setSelectedId(id);
@@ -65,7 +67,7 @@ useEffect(() => {
     fetchUserTasks();
 
   }
-}, [role]);
+}, [role,page,pageSize]);
 
 // Group tasks
 // TODO why i should use useMemo
@@ -93,13 +95,15 @@ const filteredTasks = searchTerm
   
   const columns = [
 	{
-		name: 'Title',
+    name: (<>Title<LuChevronsUpDown /></>),
+
 		selector: row => row.title,
     sortable: true,
 	},
   {
-  name: 'Status',
-  selector: row => row.status,   // للـ sorting
+  name: (<>Status<LuChevronsUpDown /></>),
+
+  selector: row => row.status,  
   cell: (row) => (
     row.status === "ToDo" ? 
       <span className="bg-notActive status text-white px-3 py-1">
@@ -118,17 +122,20 @@ const filteredTasks = searchTerm
 },
 
   {
-		name: 'User',
+    name: (<>User<LuChevronsUpDown /></>),
+
 		selector: row => row.employee.userName,
     sortable: true,
 	},
   {
-		name: 'Project',
+    name: (<>Project<LuChevronsUpDown /></>),
+
 		selector: row => row.project.title,
     sortable: true,
 	},
     {
-		name: 'Date',
+    name: (<>Date<LuChevronsUpDown /></>),
+
 		selector: row => row.creationDate? new Date(row.creationDate).toLocaleDateString() : '-',
     sortable: true,
 	},
@@ -163,7 +170,7 @@ const filteredTasks = searchTerm
 
   return (
     <>
-      <header className='bg-white container-fluid m-0 p-2'>
+      <header className='bgOverlayDark container-fluid m-0 px-2 py-3'>
         <div className="container d-flex justify-content-between align-items-center">
           {
               role==="Manager" ?
@@ -250,10 +257,20 @@ const filteredTasks = searchTerm
             columns={columns}
             data={filteredTasks}
             pagination
-            paginationPerPage={8}
-            responsive
-            striped
-           bordered 
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page); 
+  }}
+
+  progressPending={loading}
           /> 
           </>:
               <Container>

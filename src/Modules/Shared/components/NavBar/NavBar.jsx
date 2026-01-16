@@ -11,9 +11,13 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import useLogout from '../../../../hooks/useLogout';
 import styles from './NavBar.module.css';
+import { ThemeContext } from '../../../../context/ThemeContext';
+import { FaMoon, FaSun } from "react-icons/fa";
+import { FiMenu, FiX } from "react-icons/fi";
 
-export default function NavBar() {
+export default function NavBar({setCollapsed, collapsed}) {
   const {userData}= useContext(AuthContext);
+  const{theme, toggleTheme} = useContext(ThemeContext);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -21,20 +25,29 @@ export default function NavBar() {
   const logout = useLogout();
   
   return (
-    <div className={`${styles.navbarNormal} navbar-normal d-flex justify-content-between p-2`}>
+    <div className={`${styles.navbarNormal} navbar-normal bgNavbar d-flex justify-content-between p-2`}>
+
+    <button 
+      className={`${styles.mobileMenuBtn} me-2`}
+      onClick={() => setCollapsed(!collapsed)}>
+      {collapsed ? <FiMenu size={24}/> : <FiX size={24}/>}
+    </button>
       <div>
         <img src={logo} alt="img"/>
       </div>
 
       <div className='d-flex align-items-center ps-3'>
+        <button onClick={toggleTheme} className='theme-btn'>
+          {theme === "light" ? <FaMoon /> : <FaSun />}
+        </button>
         <FaBell className='textHeader me-3' size={20}/>
         <div className= {`${styles.headerDivider} px-3`}>
           <button className={`${styles.userMenuBtn} btn d-flex align-items-center p-0 `} 
             data-bs-toggle="dropdown" aria-expanded="false" onClick={()=> setMenuOpen(!menuOpen)}>
             <img src={profileImg} style={{width:"50px"}} alt="profileimg" className='me-2'/>
-            <div className='d-flex flex-column text-start'>
-             <span className='fw-bold me-2'>{userData?.userName}</span>
-             <span className='text-muted me-2'>{userData?.userEmail}</span>
+            <div className='d-flex flex-column text-start textDark'>
+             <span className='fw-bold me-2 t'>{userData?.userName}</span>
+             <span className='me-2'>{userData?.userEmail}</span>
             </div>
             
             {menuOpen ? <BsChevronUp /> : <BsChevronDown />}

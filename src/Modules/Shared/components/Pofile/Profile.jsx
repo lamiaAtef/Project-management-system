@@ -7,16 +7,16 @@ export default function Profile() {
   return (
     <>
         <div className='d-flex justify-content-center my-3'>
-            <div className='profile bg-white px-4 py-5 col-12 col-sm-10 col-md-8 col-lg-8'>
-                <div className='d-flex flex-column justify-content-center align-items-center mb-3'>
+            <div className='bgOverlayDark profile  px-4 py-5 col-12 col-sm-10 col-md-8 col-lg-8'>
+                <div className='textDark d-flex flex-column justify-content-center align-items-center mb-3'>
                     <img src={profileImg} className="imgPorfile" alt="profileImage"/>
                     <h4 className='mt-4 fw-bold'>{userData?.userName}</h4>
                     <h4 className='profile-role'>{userData?.userGroup}</h4>
                 </div>
 
-                <p className='mb-2'><strong>Email:</strong> {userData?.userEmail}</p>
-                <p className='mb-2'><strong>User Group:</strong> {userData?.userGroup}</p>
-                <p><strong>User ID:</strong> {userData?.userId}</p>
+                <p className='mb-2 textDark'><strong>Email:</strong> {userData?.userEmail}</p>
+                <p className='mb-2 textDark'><strong>User Group:</strong> {userData?.userGroup}</p>
+                <p className='textDark'><strong>User ID:</strong> {userData?.userId}</p>
             </div>
         </div>  
     </>
