@@ -93,8 +93,8 @@ const useTasks = () => {
         try {
             //const response = await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`,data);
             const response =  await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`,data)
-            console.log("task added",response.data);
             setTasks(prevTasks => [...prevTasks, response.data]);
+            await fetchTasks()
             console.log("tasks length" , tasks.length)
             toast.success("Task added successfully");
             navigate("/dashboard/tasks")

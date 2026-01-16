@@ -240,9 +240,9 @@ finally{
       </span>
 
       <ul className="dropdown-menu ">
-        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-2'/> View</li>
-       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
-         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
+        <li className="dropdown-item" onClick={()=>handleShowView(row)}> <FaEye  className='icon-color mx-2'/> View</li>
+       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${row.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
+         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(row)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
       </ul>
     </div>
     
