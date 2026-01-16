@@ -6,8 +6,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 import { Button, Col ,Form} from 'react-bootstrap';
 import { EMAIL_VALIDATION} from '../../../../services/validation';
-import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
-
+import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader.jsx';
 
 
 
@@ -15,7 +14,7 @@ import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 export default function ForgetPassword() {
    const colProps = { md: 8, lg: 6, xl: 5 };
 
- const{register, formState:{errors}, handleSubmit}= useForm();
+ const{register, formState:{errors,isSubmitting}, handleSubmit}= useForm();
  let navigate = useNavigate();
 
  const onSubmit=async(data)=>{
@@ -23,11 +22,11 @@ export default function ForgetPassword() {
   try {
     let response= await axiosInstance.post(USER_URLS.RESET_REQUEST,data);
     console.log(response);
-    toast.success('Welcome to PMS!',
+    toast.success('ready to reset your password',
     {
       autoClose: 3000,
     })
-    navigate('/reset-password');
+    navigate('/reset-pass');
 
     
   } catch (error) {
@@ -52,7 +51,14 @@ export default function ForgetPassword() {
         {...register('email',EMAIL_VALIDATION)} />
         {errors.email && <small className='text-danger d-block mt-1'>{errors.email.message}</small>}
       </Form.Group>
-      <Button type='submit' className='w-100 mt-4 Auth-btn'>Verify</Button>
+        <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
+            {isSubmitting ?(
+                <>
+                Verify
+                <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+                </>
+              ):('Verify')}
+        </Button>
     </Form>
      </Col>
       

@@ -13,6 +13,12 @@ import { ToastContainer } from 'react-toastify';
 import MasterLayout from './Modules/Shared/components/MasterLayout/MasterLayout';
 import Dashboard from './Modules/DashboardModule/components/Dashboard/Dashboard';
 import ProtectedRoute from './Modules/Shared/components/ProtectedRoute/ProtectedRoute';
+import UsersList from './Modules/UsersModule/components/UsersList/UsersList';
+import TasksData from './Modules/TasksModule/components/TasksData/TasksData';
+import TasksList from './Modules/TasksModule/components/TasksList/TasksList';
+import ProjectData from './Modules/ProjectsModule/components/ProjectData/ProjectData';
+import ProjectsList from './Modules/ProjectsModule/components/ProjectsList/ProjectsList';
+import Profile from './Modules/Shared/components/Pofile/Profile';
 
 
 function App() {
@@ -39,9 +45,17 @@ function App() {
         errorElement:<NotFound/>,
         children:[
           {index:true, element:<Dashboard/>},
-          
+          {path:"home", element:<Dashboard/>},
+          {path:"projects", element:<ProjectsList/>},
+          {path:"project-data/new_project", element:<ProjectData/>},
+           {path:"project-data/:id?",element:<ProjectData/>},
+          {path:"tasks", element:<TasksList/>},
+          {path:"tasks-data/:id?", element:<TasksData/>},
+          {path:"users", element:<UsersList/>},
+          {path:"profile", element:<Profile/>}
         ]
-      }
+      },
+
 
     ]
   )
@@ -49,7 +63,7 @@ function App() {
     <>
     <RouterProvider router={routes}></RouterProvider>
     <ToastContainer/>
-     
+
     </>
   )
 }
