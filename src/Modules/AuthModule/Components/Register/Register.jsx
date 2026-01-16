@@ -46,7 +46,7 @@ const [profileImageError, setProfileImageError] = useState(false);
      if (key !== 'profileImage') {
     formData.append(key, data[key]);
   }
-    formData.append(key, data[key]);
+    // formData.append(key, data[key]);
   });
     try {
     let response= await axios.post(`${baseURL}${USER_URLS.REGISTER}`,formData);
@@ -111,8 +111,8 @@ const [profileImageError, setProfileImageError] = useState(false);
           <div className="col-6">
              <Form.Label className='textHeader'>User Name</Form.Label>
             <Form.Control type="text" placeholder="Enter your name" 
-            {...register('name',NAME_VALIDATION)} />
-            {errors.name && <small className='text-danger d-block mt-1'>{errors.name.message}</small>}
+            {...register('userName',NAME_VALIDATION)} />
+            {errors.userName && <small className='text-danger d-block mt-1'>{errors.userName.message}</small>}
           </div>
           <div className="col-6">
               <Form.Label className='textHeader'>E-mail</Form.Label>
