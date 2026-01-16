@@ -10,10 +10,10 @@ export default function Search({ placeholder = "Search...", onSearch }) {
   };
 
   return (
-    <div className='input-group w-25 my-3    border   rounded-5   border_color  overflow-hidden'>
-      <span className='input-group-text bg-white border-0'><CiSearch /> </span>
+    <div className='search-box input-group w-25 my-3    border   rounded-5   border_color  overflow-hidden'>
+      <span className='search-icon input-group-text bg-white border-0'><CiSearch /> </span>
         <input type="text"
-        placeholder={placeholder} className='form-control  '
+        placeholder={placeholder} className='form-control search-input'
         onChange={handleChange}/>
     
     </div>

@@ -88,7 +88,7 @@ export default function TasksData() {
 
   return (
     <>
-      <header className='bg-white container-fluid m-0 p-3'>
+      <header className='bgOverlayDark container-fluid m-0 p-3'>
         <div className="container">
           <Link to="/dashboard/tasks" className='headerLink'>
             <MdKeyboardArrowLeft />

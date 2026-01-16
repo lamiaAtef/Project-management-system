@@ -168,7 +168,7 @@ const filteredTasks = searchTerm
 
   return (
     <>
-      <header className='bg-white container-fluid m-0 p-2'>
+      <header className='bgOverlayDark container-fluid m-0 px-2 py-3'>
         <div className="container d-flex justify-content-between align-items-center">
           {
               role==="Manager" ?

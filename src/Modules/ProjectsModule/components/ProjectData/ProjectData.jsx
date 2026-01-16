@@ -96,7 +96,7 @@ if(id){
 
   return (
     <>
-         <header className='bg-white container-fluid m-0 p-3'>
+        <header className='bgOverlayDark container-fluid m-0 p-3'>
         <div className="container">
           <Link to="/dashboard/projects" className='headerLink'>
             <MdKeyboardArrowLeft />
@@ -110,8 +110,7 @@ if(id){
 <Container>
   <Row className='d-flex justify-content-center aligns-items-center'>
 <Col lg={8} md={10}>
-
-      <Form onSubmit={handleSubmit(onSubmit)} className='shadow-sm p-3 bg-white my-3 rounded rounded-2 form-admin'>
+      <Form onSubmit={handleSubmit(onSubmit)} className='form-admin shadow-sm p-3 my-3 rounded rounded-2 form-admin '>
           <Form.Group className="form-group mb-4">
           <Form.Label htmlFor="title">Title</Form.Label>
           <Form.Control placeholder="Name" type="text" id="title" className='form-control' {...register("title",{required:"Title is required"})} />

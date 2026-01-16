@@ -129,18 +129,14 @@ const donutOptions = {
           You can add project and assign tasks to your team
         </p>
       </div>
-     
-<div className={`${styles.dashboard_cards_wrapper}`}>
-  <div className="row">
-    <div className="col-12 col-md-9 col-lg-12 ">
-      <Card className={`${styles.tasks_summary_card }pt-3`}>
+   <div className={`${styles.dashboard_cards_wrapper}`}>
+      <Card className={`${styles.tasks_summary_card } bgOverlayDark pt-3`}>
     <Card.Body>
-      <div className={styles.cardPad}>
-      <h5 className="m-3">Tasks</h5>
-      <p className="text-muted m-3">
+      <h5 className="textDark mb-1">Tasks</h5>
+      <p className="subTitleText mb-4">
         Lorem ipsum dolor sit amet, consectetur
       </p>
-      </div>
+      
 
       <div className={`${styles.inner_cards_wrapper} col-md-4 col-sm-12`}>
         <div className={`${styles.stat_card} ${styles.progressUser}`}>
@@ -171,15 +167,15 @@ const donutOptions = {
     
   </Card>
   </div>
-  </div>
-  {userData?.userGroup== "Manager"?
+  
+  {userData?.userGroup == "Manager"?
     <div className="row">
     <div className="col-12 col-md-6 col-lg-12 ">
-  <Card  className={`${styles.tasks_summary_card} pt-3`}>
+  <Card  className={`${styles.tasks_summary_card} bgOverlayDark pt-3`}>
    <Card.Body>
     <div className={styles.cardPad}>
-      <h5 className=" m-3">Users</h5>
-      <p className="text-muted m-3">
+      <h5 className="textDark  m-3">Users</h5>
+      <p className="subTitleText m-3">
         Lorem ipsum dolor sit amet, consectetur
       </p>
      </div>
@@ -210,39 +206,26 @@ const donutOptions = {
     </div>
     </div>
     :""}
-   
-   
+
+ <div className="row">
+  <div className="col-12 col-md-8 col-lg-4 mb-4">
+    <div className={styles.tasks_donut_wrapper}>
+      <div className={styles.donut_wrapper}>
+        <Doughnut data={donutData} options={donutOptions} />
+      </div>
+    </div>
   </div>
 
- <div className=" row">
- <div className="col-12 col-md-8 col-lg-4 mb-4">
-<div className={`${styles.tasks_donut_wrapper}`}>
-
-
-
- 
-  <div className={`${styles.donut_wrapper}`}>
-    <Doughnut data={donutData} options={donutOptions} />
-  </div>
-
+  {userData?.userGroup === "Manager" && (
+    <div className="col-12 col-md-8 col-lg-4 offset-lg-2">
+      <div className={styles.tasks_donut_wrapper}>
+        <div className={styles.donut_wrapper}>
+          <Doughnut data={donutUserData} options={donutOptions} />
+        </div>
+      </div>
+    </div>
+  )}
 </div>
-</div>
-{userData?.userGroup== "Manager"?
-<div className="col-12 col-md-8 col-lg-4 offset-2">
-<div className={`${styles.tasks_donut_wrapper} `}>
-
-
-
- 
-  <div className={`${styles.donut_wrapper}`}>
-    <Doughnut data={donutUserData} options={donutOptions} />
-  </div>
-
-</div>
-</div>
-:""}
-</div>
-
-    </>
-  );
+</>
+  )
 }
