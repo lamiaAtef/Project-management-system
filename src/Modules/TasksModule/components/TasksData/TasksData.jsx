@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Button, Container, FormLabel } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import { MdKeyboardArrowLeft } from "react-icons/md";
@@ -11,6 +11,7 @@ import useTasks from '../../../../hooks/useTasks';
 import useProjects from '../../../../hooks/useProject';
 import useUsers from '../../../../hooks/useUsers';
 import { BeatLoader } from 'react-spinners';
+import { AuthContext } from '../../../../context/AuthContext';
 
 export default function TasksData() {
   const [validated, setValidated] = useState(false);
@@ -20,7 +21,11 @@ export default function TasksData() {
   let {addTask,singleTask,fetchOneTaskById,updateTasks}= useTasks()
   let {register,handleSubmit,formState:{errors,isSubmitting},reset} = useForm();
 
-const {id} = useParams()
+    const {id} = useParams()
+    const {userData} = useContext(AuthContext)
+
+     let role =  userData?.userGroup;
+     console.log(role,"role")
 
     useEffect(() => {
       console.log(id,"idddddddddddddddd")
@@ -50,24 +55,35 @@ const {id} = useParams()
 
 
   //     })
-  let onSubmit = (data) => {
+  let onSubmit = async (data) => {
     console.log(data);
     console.log("ana hena to add or update")
     if(id)
     {
-        updateTasks(id,data)
+       await updateTasks(id,data)
         
     }
     else{
       console.log("1")
-      addTask(data);
+      await addTask(data);
     }
     
   }
   useEffect(()=>{
-    fetchProjects();
-    fetchUsers();
-  },[])
+      console.log(role,"rooooole")
+    if(role === "Employee") {
+      console.log("el mafrood home")
+         navigate("/dashboard/home")
+    }
+    else{
+      fetchProjects();
+      fetchUsers();
+    }
+    
+  },[role])
+
+
+
     if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div> 
 
   return (
@@ -133,10 +149,10 @@ const {id} = useParams()
                <Button disabled={isSubmitting} type='submit' className='w-25 mt-4 Auth-btn'>
                 {isSubmitting ?(
                     <>
-                    Save
+                    {id? "update":"Save"}
                     <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
                     </>
-                  ):('Save')}
+                  ):id? "update":"save"}
             </Button>
             </Form.Group>
           </Form>

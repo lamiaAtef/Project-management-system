@@ -10,6 +10,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from "chartjs-plugin-datalabels";
 import styles from "./Dashboard.module.css"
+import ChatBot from "../../../Shared/components/ChatPot/ChatPot";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 export default function Dashboard() {
@@ -242,7 +243,7 @@ const donutOptions = {
 </div>
 :""}
 </div>
-
+<ChatBot></ChatBot>
     </>
   );
 }

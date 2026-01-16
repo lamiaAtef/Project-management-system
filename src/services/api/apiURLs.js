@@ -39,7 +39,7 @@ export const PROJECT_URLS={
 export const TASKS_URLS={
 
      CREATE_TASK:`/Task`,
-     GET_ALL_MY_ASIGGNED_TASK:`/Task/`,
+     GET_ALL_MY_ASIGGNED_TASK:`/Task`,
      GET_ALL_MY_TASKS_FOR_MANAGER:`/Task/manager`,
      GET_TASK_BY_ID:(taskId)=>`/Task/${taskId}`,
      UPDATE_TASK: (taskId)=>`/Task/${taskId}`,

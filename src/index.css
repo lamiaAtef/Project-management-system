@@ -270,7 +270,7 @@ select:-webkit-autofill {
   font-size: 28px;
   color: #4F4F4F;
 
-} 
+}
 
 /* projectlist style */
 .header{
@@ -327,7 +327,43 @@ td{
   border:none !important;
   padding: 5px !important;
 }
+/* start media query [table] */
+@media (max-width: 768px) {
+  table,
+  thead,
+  tbody,
+  th,
+  td,
+  tr {
+    display: block;
+  }
 
+  thead {
+    display: none;
+  }
+
+  /* tr {
+    background: #fff;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    padding: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  } */
+
+  td {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+  }
+
+  td::before {
+    content: attr(name);
+    font-weight: 600;
+    color: #555;
+  }
+}
+
+/* end table css */
 
 .form-admin{
   box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.25);
@@ -354,19 +390,19 @@ td{
 }
 .form-admin .cancelBtn:hover{
   background-color: var(--mainColor);
-  color:#fff; 
+  color:#fff;
   border:none;
 }
 /* Drop down button styles */
 .dropDownMenu{
-    background-color: #fff ; 
+    background-color: #fff ;
     box-shadow: 0px 0px 16px 0px #0000001A;
     border-radius: 15px;
     /* list-style: none; */
     padding: 0;
     /* position: relative; */
     border:0
-    
+
 }
 .list_item:nth-child(0){
     /* cursor: pointer; */
@@ -374,7 +410,7 @@ td{
     border-radius: 15px;
     padding: 5px;
 
-   
+
 }
 .dropdown-toggle::after{
     display: none ;
@@ -389,17 +425,17 @@ td{
 }
 .bg-active{
   background-color: var(--activeBtnColor);
- 
+
 }
 
 .bg-notActive{
-  background-color:var(--notActiveBtColor);  
+  background-color:var(--notActiveBtColor);
 
-  
+
 }
 .bg-progress{
   background-color: var(--mainColor);
- 
+
 }
 
 .icon-color{
@@ -441,10 +477,13 @@ td{
 
 .status.active {
   background-color:var(--activeBtnColor);
-  
+
 }
 
 .status.inactive {
   background-color: var(--notActiveBtColor);
- 
+
+}
+.model_style{
+  color:var(--mainColor) ;
 }
