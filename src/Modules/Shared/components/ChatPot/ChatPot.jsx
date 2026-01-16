@@ -26,15 +26,7 @@ function ChatBot() {
     No, users cannot access other accounts.<br></br> Only the Manager can.
     </>
       
-  },
-  {
-    keywords: ["access", "account", "ahmed"],
-    answer:
-    <>
-    he is my Love ,Koky 7biby💋
-    </>
-      
-  },
+  }
   {
     keywords: ["team", "who", "built", "developer"],
     answer:
