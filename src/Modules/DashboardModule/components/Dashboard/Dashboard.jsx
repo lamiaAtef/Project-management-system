@@ -9,8 +9,6 @@ import { TbBusinessplan } from "react-icons/tb";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Doughnut } from 'react-chartjs-2';
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import styles from "./Dashboard.module.css"
-import ChatBot from "../../../Shared/components/ChatPot/ChatPot";
 
 ChartJS.register(ArcElement, Tooltip, Legend, ChartDataLabels);
 export default function Dashboard() {
@@ -118,137 +116,57 @@ const donutOptions = {
     getTaskssCount()
     getUsersCount();
   }, []);
-
-  return (
-    <>
-      
-      <div className="homeImage d-flex flex-column justify-content-center p-4">
-        <h3 className="text-white">
-          Welcome <span className="textHeader fw-bold">{userData?.userName}</span>
-        </h3>
-        <p className="text-white fs-2">
-          You can add project and assign tasks to your team
-        </p>
-      </div>
-     
-<div className={`${styles.dashboard_cards_wrapper}`}>
-  <div className="row">
-    <div className="col-12 col-md-9 col-lg-12 ">
-      <Card className={`${styles.tasks_summary_card }pt-3`}>
-<div className="dashboard-cards-wrapper">
-      <Card className="tasks-summary-card pt-3">
-    <Card.Body>
-      <div className={styles.cardPad}>
-      <h5 className="m-3">Tasks</h5>
-      <p className="text-muted m-3">
-        Lorem ipsum dolor sit amet, consectetur
-      </p>
-      </div>
-
-      <div className="inner-cards-wrapper">
-        <div className="stat-card progressUser">
-          <div className="icon-box total">
-            <LuChartNoAxesCombined />
-          </div>
-          <p className="mb-1 text-muted">Progress</p>
-          <h5>{`$ ${counts.inProgress}`}</h5>
-        </div>
-
-        <div className="stat-card tasksNumber">
-          <div className="icon-box tasks">
-            <GoChecklist />
-          </div>
-          <p className="mb-1 text-muted">Tasks Number</p>
-          <h5>{counts.toDo}</h5>
-        </div>
-
-        <div className="stat-card projectNumber">
-          <div className="icon-box projects">
-            <TbBusinessplan />
-          </div>
-          <p className="mb-1 text-muted">Projects Number</p>
-          <h5>{counts.done}</h5>
-        </div>
-      </div>
-    </Card.Body>
-    
-  </Card>
-  </div>
-  </div>
-  {userData?.userGroup== "Manager"?
-    <div className="row">
-    <div className="col-12 col-md-6 col-lg-12 ">
-  <Card  className={`${styles.tasks_summary_card} pt-3`}>
-  <Card  className="tasks-summary-card pt-3">
-   <Card.Body>
-    <div className={styles.cardPad}>
-      <h5 className=" m-3">Users</h5>
-      <p className="text-muted m-3">
-        Lorem ipsum dolor sit amet, consectetur
-      </p>
-     </div>
-
-      <div className="inner-cards-wrapper">
-        <div className="stat-card progressUser">
-          <div className="icon-box total">
-            <LuChartNoAxesCombined />
-          </div>
-          <p className="mb-1 text-muted">active</p>
-          <h5>{`$ ${countsUser.activatedEmployeeCount}`}</h5>
-        </div>
-
-        <div className="stat-card tasksNumber">
-          <div className="icon-box tasks">
-            <GoChecklist />
-          </div>
-          <p className="mb-1 text-muted">inactive</p>
-          <h5>{countsUser.deactivatedEmployeeCount}</h5>
-        </div>
-
-       
-      </div>
-    </Card.Body>
-    
-    </Card>
-    
-    </div>
-    </div>
-    :""}
-   
-   
-  </div>
-
- <div className=" row">
- <div className="col-12 col-md-8 col-lg-4 mb-4">
-<div className={`${styles.tasks_donut_wrapper}`}>
- 
-<div className="tasks-donut-wrapper">
-
-
-
- 
-  <div className="donut-wrapper">
-    <Doughnut data={donutData} options={donutOptions} />
-  </div>
-
-</div>
-</div>
-{userData?.userGroup== "Manager"?
-<div className="col-12 col-md-8 col-lg-4 offset-2">
-<div className={`${styles.tasks_donut_wrapper} `}>
-
-
-
- 
-  <div className={`${styles.donut_wrapper}`}>
-    <Doughnut data={donutUserData} options={donutOptions} />
-  </div>
-
-</div>
-</div>
-:""}
-</div>
-<ChatBot></ChatBot>
-    </>
-  );
 }
+
+ return (
+  <>
+    <div className="homeImage d-flex flex-column justify-content-center p-4">
+      <h3 className="text-white">
+        Welcome <span className="textHeader fw-bold">{userData?.userName}</span>
+      </h3>
+      <p className="text-white fs-2">
+        You can add project and assign tasks to your team
+      </p>
+    </div>
+
+    <div className="dashboard-cards-wrapper">
+      <Card className="tasks-summary-card pt-3">
+        <Card.Body>
+          <h5 className="m-3">Tasks</h5>
+          <p className="text-muted m-3">Lorem ipsum dolor sit amet</p>
+        </Card.Body>
+      </Card>
+
+      <Card className="tasks-summary-card pt-3">
+        <Card.Body>
+          <h5 className="m-3">Users</h5>
+          <p className="text-muted m-3">Lorem ipsum dolor sit amet</p>
+        </Card.Body>
+      </Card>
+    </div>
+
+    <div className="tasks-donut-wrapper">
+      <div className="donut-wrapper">
+        <Doughnut data={donutData} options={donutOptions} />
+      </div>
+    </div>
+
+    {userData?.userGroup === "Manager" && (
+      <div className="col-12 col-md-8 col-lg-4 offset-2">
+        <Doughnut data={donutUserData} options={donutOptions} />
+      </div>
+    )}
+
+    <ChatBot />
+  </>
+);
+
+   
+   
+
+ 
+
+
+
+ 
+ 
