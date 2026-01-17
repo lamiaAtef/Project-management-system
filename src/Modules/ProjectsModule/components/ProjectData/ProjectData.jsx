@@ -89,9 +89,9 @@ if(id){
   getProjectDetails();
 }
 },[userData]);
- if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100'>
-   <BeatLoader size={20} color='#288131' />
- </div>
+//  if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100'>
+//    <BeatLoader size={20} color='#288131' />
+//  </div>
 
   return (
     <>
@@ -108,8 +108,8 @@ if(id){
 
 <Container>
   <Row className='d-flex justify-content-center aligns-items-center'>
-<Col lg={8} md={10}>
 
+<Col lg={8} md={10}>
       <Form onSubmit={handleSubmit(onSubmit)} className='shadow-sm p-3 bg-white my-3 rounded rounded-2 form-admin'>
           <Form.Group className="form-group mb-4">
           <Form.Label htmlFor="title">Title</Form.Label>
@@ -124,17 +124,9 @@ if(id){
             <div className='d-flex justify-content-between my-4'>
           <Button type="button" className=' cancelBtn w-25 mt-4 ' onClick={()=>navigate(`/dashboard/projects`)}>cancel</Button>
            <Button disabled={isSubmitting} type='submit' className='w-25 mt-4 Auth-btn'>
-
-
                 {id? "update":"save"}
-
-
-
-
-
         </Button>
         </div>
-
       </Form>
       </Col>
       </Row>
