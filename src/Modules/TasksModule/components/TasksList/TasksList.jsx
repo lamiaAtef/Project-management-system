@@ -18,6 +18,9 @@ import {
   closestCenter
 } from "@dnd-kit/core"
 
+import {Draggable} from './Draggable';
+import {Droppable} from './Droppable';
+
 
 export default function TasksList() {
   let navigate = useNavigate();
