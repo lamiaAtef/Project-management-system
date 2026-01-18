@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import { Col } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 import {EMAIL_VALIDATION, NAME_VALIDATION, PASSWORD_VALIDATION, PHONE_VALIDATION } from '../../../../services/validation';
-import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 import Form from 'react-bootstrap/Form';
 import { useForm } from 'react-hook-form';
 import {FaEye, FaEyeSlash} from 'react-icons/fa';
@@ -11,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import { USER_URLS, baseURL } from '../../../../services/api/apiURLs';
 import { useNavigate } from 'react-router-dom';
 import profileImg from "../../../../assets/images/profileImg.png";
+import AuthHeader from '../../../Shared/components/AuthHeader/AuthHeader';
 export default function Register() {
    const colProps = { md: 12, lg: 10, xl: 8};
     const[showPassword, setShowPassword] = useState(false);
@@ -20,7 +20,7 @@ const [profileImage, setProfileImage] = useState(null);
 const [profileImageError, setProfileImageError] = useState(false);
 
    
-    const{register, formState:{errors}, handleSubmit,setValue,watch}= useForm();
+    const{register, formState:{errors,isSubmitting}, handleSubmit,setValue,watch}= useForm();
     const navigate = useNavigate();
     const handleProfileImageChange = (e) => {
   const file = e.target.files[0];
@@ -42,12 +42,13 @@ const [profileImageError, setProfileImageError] = useState(false);
   formData.append('profileImage', profileImage);
 
   
+
   Object.keys(data).forEach((key) => {
-     if (key !== 'profileImage') {
+  if (key !== 'profileImage') {
     formData.append(key, data[key]);
   }
-    formData.append(key, data[key]);
-  });
+});
+
     try {
     let response= await axios.post(`${baseURL}${USER_URLS.REGISTER}`,formData);
    
@@ -111,8 +112,8 @@ const [profileImageError, setProfileImageError] = useState(false);
           <div className="col-6">
              <Form.Label className='textHeader'>User Name</Form.Label>
             <Form.Control type="text" placeholder="Enter your name" 
-            {...register('name',NAME_VALIDATION)} />
-            {errors.name && <small className='text-danger d-block mt-1'>{errors.name.message}</small>}
+            {...register('userName',NAME_VALIDATION)} />
+            {errors.userName && <small className='text-danger d-block mt-1'>{errors.userName.message}</small>}
           </div>
           <div className="col-6">
               <Form.Label className='textHeader'>E-mail</Form.Label>
@@ -172,9 +173,15 @@ const [profileImageError, setProfileImageError] = useState(false);
           </div>
           </Form.Group>
     
-          
+            <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
+           {isSubmitting ?(
+          <>
+          Save
+          <span className='spinner-border spinner-border-sm ms-2' role='status' aria-hidden='true'/>
+          </>
+            ):('Save')}
+          </Button>
     
-          <Button type='submit' className='w-100 mt-4 Auth-btn'>save</Button>
         </Form>
       
        
