@@ -20,19 +20,7 @@ export default function ChangePassword() {
   let{register,handleSubmit,formState:{errors,isSubmitting},watch}=useForm();
  const navigate= useNavigate();
   const passwordValue= watch("newPassword");
-  // const onSubmit= async(data)=>{
-  //   try{
-  //   let response= await axiosInstance.put(USER_URLS.CHANGE_PASSWORD,data);
-  //   toast.success('password changed successfuly');
-  //   navigate("/login");
 
-  //     console.log(response);
-  //   }
-  //   catch(err){
-
-  //     toast.error(err.response?.data.message||"there is an error")
-  //   }
-  // }
 
    const colProps = { md: 8, lg: 6, xl: 5 };
   const[firstPass,toggleFirstPass]=useToggle();
@@ -105,6 +93,10 @@ return(
 
       </Form.Group>
        {errors.confirmNewPassword && <small className='text-danger d-block '>{errors.confirmNewPassword.message}</small>}
+
+
+
+
 
         <Button disabled={isSubmitting} type='submit' className='w-100 mt-4 Auth-btn'>
       {isSubmitting ?(

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Form, Navigate, useNavigate } from 'react-router-dom'
 import axiosInstance from '../../../../services/api';
 import { PROJECT_URLS, TASKS_URLS } from '../../../../services/api/apiURLs';
@@ -15,25 +15,36 @@ import { toast } from 'react-toastify';
 import { LuChevronsUpDown } from 'react-icons/lu';
 import { CiSearch } from 'react-icons/ci';
 import { BeatLoader } from 'react-spinners';
-import { set } from 'react-hook-form';
+import { AuthContext } from '../../../../context/AuthContext';
+import DataTable from 'react-data-table-component';
+
 
 
 
 
 export default function ProjectsList() {
+  const{userData}=useContext(AuthContext);
   const [projectList,setProjectList]=useState([]);
    const [projectId,setProjectId]=useState(0);
     const [projectName,setProjectName]=useState('');
-    const [allProjectsId,setAllProjectsId] = useState([])
+
      const navigate= useNavigate();
      ///////search filteration
   const [search,setSearch]=useState('');
-  const [loading,setLoading]=useState(true);
+  const [loading,setLoading]=useState(false);
   // view modal
   const [title,setTitle]=useState("");
   const[tasksNum,setTasksNum]=useState("");
   const [showView, setShowView] = useState(false);
+
+  // server pagination 
+  const [page, setPage] = useState(1);
+const [pageSize, setPageSize] = useState(10);
+const [total, setTotal] = useState(0);
+  // end server pagination
   const handleCloseView = () => setShowView(false);
+
+
   const handleShowView = (project) =>{
 
   setTitle( project?.title);
@@ -60,37 +71,46 @@ export default function ProjectsList() {
 
      setShow(true);
   }
-  let getTasksInProject =async() =>{
-      console.log(arr,"arr")
-
-    // console.log("hena",id)
-    // console.log(id)
-    // let response = await axiosInstance.get(PROJECT_URLS.GET_PROJECT(id))
-    // console.log("hena bageb response",response.data)
 
 
-  }
-  //   let getUsersInProject =async(id) =>{
-    
-  //   console.log(id)
-  //   let response = await axiosInstance.get(PROJECT_URLS.GET_PROJECT(id))
-  //   console.log("hena bageb response")
-    
+  console.log("userData",userData);
 
-  // }
 
- const getAllProject=async()=>{
+ const getAllProjectManager=async()=>{
 
 setLoading(true);
   try {
-    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_MANGER);
+    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_MANGER,{
+       params: {
+      pageSize:pageSize,
+      pageNumber:page,
+    },
+    });
     console.log(response.data.data);
     setProjectList(response.data.data);
-
+    setTotal(response?.data?.totalNumberOfRecords)
 
   }
   catch (error) {
-    console.log(error);
+     toast.error(error.response?.data?.message ||  "sorry i cant get any project");
+
+  }
+finally{
+  setLoading(false);
+}
+
+ }
+  const getAllProjectEmployee=async()=>{
+
+setLoading(true);
+  try {
+    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_EMPLOYEE);
+    console.log(response.data.data);
+    setProjectList(response.data.data);
+    
+  }
+  catch (error) {
+    toast.error(error.response?.data?.message ||  "sorry i cant get any project");
 
   }
 finally{
@@ -99,27 +119,138 @@ finally{
 
 
  }
+
+
+
  const deleteProject=async()=>{
-  const response=await axiosInstance.delete(PROJECT_URLS.DELETE_PROJECT(projectId));
-  console.log(response);
-  handleClose();
-  toast.success('delete success');
-  getAllProject();
+  try
+  {
+       const response=await axiosInstance.delete(PROJECT_URLS.DELETE_PROJECT(projectId));
+      console.log(response);
+      handleClose();
+      toast.success('delete success');
+      getAllProjectManager();
+  }
+  catch(error){
+    toast.error(error?.response?.data?.message || "sorry can't  delete this project ")
+  }
+ 
 
 
  }
 
 
  useEffect(()=>{
-  getAllProject();
-  // getTasksInProject()
+
+  if(!userData?.userGroup)return;
+  if(userData?.userGroup=== "Employee"){
+    getAllProjectEmployee();
+  }else
+    {
+        getAllProjectManager();
+    }
+
+ },[userData,page, pageSize])
+
+  const columns = [
+  {
+    name: (<># <LuChevronsUpDown /></>),
+
+    selector: row => row.id,
+     sortable: true,
+  },
+  
+   {
+    name: (<>Title <LuChevronsUpDown /></>),
+
+    selector: row => row.title,
+     sortable: true,
+  },
+   {
+    name: (<>Status <LuChevronsUpDown /></>),
+
+    cell: (row) => (
+  <div className="d-flex flex-column mx-0">
+    {row?.task?.map((task, index) => (
+      <span
+        key={index}
+        className={`badge ${
+          task.status === "ToDo"
+            ? "bg-notActive status text-white px-3 py-1  "
+            : task.status === "InProgress"
+            ? "bg-progress status text-white px-3 py-1  "
+            : "bg-active status text-white px-3 py-1  "
+        } mb-1`}
+      >
+        {task.status}
+      </span>
+    ))}
+  </div>
+),
+
+    
+     sortable: true,
+  },
+ ...(userData?.userGroup === "Employee"
+  ? [{
+      name: (<>Modification Date<LuChevronsUpDown /></>),
+
+      selector: row => row.modificationDate ? new Date(row.modificationDate).toLocaleDateString() : '-',
+      sortable: true,
+    }]
+  : []
+),
+
+
+  {
+   ...(userData?.userGroup !== "Employee"
+    ? [
+        {
+          name: (<>Num Users<LuChevronsUpDown /></>),
+
+          selector: row => 5,
+          sortable: true,
+        },
+      ]
+    : [])
+    },
+    {
+    
+     name: (<>Num Tasks<LuChevronsUpDown /></>),
+
+    selector: row => row.task?.length,
+     sortable: true,
+  },
+    {
+     name: (<>Date Created<LuChevronsUpDown /></>),
+
+    
+    selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString() : '-',
+     sortable: true,
+  },
+   {
+   name: 'Action',
+   cell: (row) => (
+        <div className="dropdown">
+      <span
+        data-bs-toggle="dropdown"
+        style={{ cursor: "pointer", fontSize: "20px" }}
+      >
+      <HiDotsVertical  className='icon-color'/>
+      </span>
+
+      <ul className="dropdown-menu ">
+        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-2'/> View</li>
+       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
+         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
+      </ul>
+    </div>
+    
+   ),
  
-  // countTasks();
- },[])
-//  useEffect(()=>{
-//  setAllProjectsId( projectList.map(project=>project.id))
-//   console.log(allProjectsId,"all")
-//  },[projectList])
+ }
+ 
+ ];
 
  if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100 '>
    <BeatLoader size={20} color='#288131'  />
@@ -143,9 +274,10 @@ finally{
     {/* end modal */}
   <header className='header'>
     <h1 className='title'> Projects</h1>
+    {userData?.userGroup !="Employee"?
     <button className='Auth-btn' onClick={()=>navigate('/dashboard/project-data/new_project')}>
     + Add New Project
-    </button>
+    </button>:""}
   </header>
 
 {/* /////search */}
@@ -162,13 +294,18 @@ onChange={handelChange}/>
 
 
 
-  <table className="table table-striped  table-responsive">
+  {/* <table className="table table-striped  table-responsive">
   <thead>
     <tr>
       <th scope="col">#</th>
       <th scope="col">Title <LuChevronsUpDown /> </th>
       <th scope="col">Statues <LuChevronsUpDown /></th>
+      {userData?.userGroup!="Employee"?
       <th scope="col">Num Users <LuChevronsUpDown /></th>
+      :""}
+           {userData?.userGroup =="Employee"?
+<th>modificationDate</th>
+  :""}
       <th scope="col">Num Tasks <LuChevronsUpDown /></th>
        <th scope="col">Date Created <LuChevronsUpDown /></th>
         <th scope="col">Action </th>
@@ -180,9 +317,21 @@ onChange={handelChange}/>
        <tr key={project.id}>
         <td>{project?.id}</td>
       <td >{project?.title}</td>
-      <td> <span className='status_style px-2 py-1 rounded rounded-3'>public</span></td>
-      {/* <td>{()=>getTasksInProject(project?.id)}</td> */}
-      <td>5</td>
+
+      <td>
+      {project?.task.map((task)=>(
+        // 'status_style px-2 m-2  rounded rounded-3 text-center'
+<p className=" status_style px-2 m-2  rounded rounded-3 text-center"
+
+>
+  {task.status}
+  </p>
+      ))}
+        </td>
+      {userData?.userGroup!="Employee"?
+      <td>5</td>:""}
+            {userData?.userGroup=="Employee"?
+      <td>{project?.modificationDate}</td>:""}
       <td>{project?.task?.length}</td>
 
 
@@ -197,9 +346,9 @@ onChange={handelChange}/>
       </span>
 
       <ul className="dropdown-menu ">
-        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-1'/> View</li>
-        <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-1'/>Edit</li>
-        <li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-1'/>Delete</li>
+        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-2'/> View</li>
+       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
+         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
       </ul>
     </div>
       </td>
@@ -214,14 +363,35 @@ onChange={handelChange}/>
 
 
   </tbody>
-</table>
-<Modal show={showView} onHide={handleCloseView}>
+</table> */}
+
+ <DataTable
+            columns={columns}
+            data={filterProjects}
+             pagination
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page); }}
+            
+          /> 
+
+
+
+<Modal show={showView} onHide={handleCloseView} className='view_modal'>
         <Modal.Header closeButton>
-          <Modal.Title >Project Details</Modal.Title>
+          <Modal.Title  className='model_style'>Project Details</Modal.Title>
         </Modal.Header>
-<h6 className='p-2'>project title:{title}</h6>
-<h6 className='p-2'>tasksNum:{tasksNum}</h6>
-<h6 className='p-2'>Status: {'public'}</h6>
+<h6 className='p-2'>project title: {title}</h6>
+<h6 className='p-2'>tasksNum: {tasksNum}</h6>
+<h6 className='p-2'>Status:   {'public'}</h6>
         <Modal.Footer>
 
 

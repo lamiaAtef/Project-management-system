@@ -42,11 +42,12 @@ const [profileImageError, setProfileImageError] = useState(false);
   formData.append('profileImage', profileImage);
 
   
+
   Object.keys(data).forEach((key) => {
-     if (key !== 'profileImage') {
+  if (key !== 'profileImage') {
     formData.append(key, data[key]);
   }
-    // formData.append(key, data[key]);
+    formData.append(key, data[key]);
   });
     try {
     let response= await axios.post(`${baseURL}${USER_URLS.REGISTER}`,formData);

@@ -12,6 +12,8 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
+import { BeatLoader } from 'react-spinners';
+import { IoMdArrowDropup } from 'react-icons/io';
 
 
 export default function UsersList() {
@@ -21,14 +23,26 @@ export default function UsersList() {
 const [showUser, setShowUser] = useState(false);
 const [blockedUIUsers, setBlockedUIUsers] = useState([]);
 const [searchTerm, setSearchTerm] = useState('');
+  // server pagination 
+  const [page, setPage] = useState(1);
+const [pageSize, setPageSize] = useState(5);
+const [total, setTotal] = useState(0);
+  // end server pagination
 
-
-
+const[loading,setLoading]=useState(false)
   const getAllUsers = async () => {
+setLoading(true)
     try {
-       let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}`)
-      console.log(response.data.data.length);
+      let response = await axiosInstance.get(USER_URLS.GET_USERS_BY_MANAGER,{
+         params: {
+          pageSize:pageSize,
+          pageNumber:page,
+    },
+      })
+      console.log(response.data.data);
       setUsersList(response.data.data);
+      setTotal(response?.data?.totalNumberOfRecords)
+
       console.log("hi",response.data.data )
 
 
@@ -41,6 +55,7 @@ const [searchTerm, setSearchTerm] = useState('');
 
 
     }
+    finally{setLoading(false)}
 
   }
   const toggleUserStatus = async (id) => {
@@ -57,7 +72,7 @@ const [searchTerm, setSearchTerm] = useState('');
 
     toast.success("User status updated successfully");
 
-    getAllUsers();
+   
 
   } catch (error) {
     toast.error(error.response?.data?.message || "Error updating status");
@@ -94,22 +109,29 @@ const toggleBlockUI = (id) => {
 };
 
  useEffect(() => {
-  // if (userData?.userGroup!="Manager") {
- 
-  getAllUsers();
-  // }
-}, []);
+ if (userData?.userGroup== "Manager"){
+ getAllUsers();
+ }
 
+}, [userData,page, pageSize]);
 
+const filteredUsers = searchTerm
+  ? usersList.filter(user =>
+      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
+     
+    )
+  : usersList;
   const columns = [
     {
-      name: 'User Name',
+      name: (<>User Name <LuChevronsUpDown /></>),
+      
       selector: row => row.userName,
       sortable: true,
     },
     {
-    name: 'Status',
-    selector: row => row.status,   // للـ sorting
+     name: (<>Status <LuChevronsUpDown /></>),
+
+    selector: row => row.status,  
     cell: (row) => (
      <button
   className={`status ${
@@ -138,19 +160,22 @@ const toggleBlockUI = (id) => {
   },
   
     {
-      name: 'Phone Number',
+      name: (<>Phone Number <LuChevronsUpDown /></>),
+
       selector: row => row.phoneNumber,
       sortable: true,
     },
     {
-      name: 'Email',
+      name: (<>Email<LuChevronsUpDown /></>),
+
       selector: row => row.email,
       sortable: true,
     },
       {
-      name: 'Date Created',
+      name: (<>Date Created <LuChevronsUpDown /></>),
+
       
-      selector: row => row.task[0].creationDate,
+      selector: row => row.task[0].creationDate ?  new Date(row.task[0].creationDate).toLocaleDateString() : '-',
       sortable: true,
     },
     {
@@ -185,14 +210,10 @@ const toggleBlockUI = (id) => {
   }
   
   ];
-  const filteredUsers = searchTerm
-  ? usersList.filter(user =>
-      user.userName.toLowerCase().includes(searchTerm.toLowerCase())
-     
-    )
-  : usersList;
-  
+       if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div>
+
   return (
+    
     <div>
      <Search placeholder='search user name' onSearch={setSearchTerm}/>
       
@@ -300,9 +321,18 @@ const toggleBlockUI = (id) => {
    <DataTable
 			columns={columns}
 			data={filteredUsers}
-      pagination
-      paginationPerPage={5}
-      responsive striped bordered 
+        pagination
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page); }}
 		/>   
 <Modal
   show={showUser}

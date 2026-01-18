@@ -11,19 +11,28 @@ const useTasks = () => {
     // const [organicTasks,setOrganicTasks] = useState([]);
 
     const[singleTask,setSingleTask]=useState()
-    const [loading,setLoading] = useState(true);
+    const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
     const[taskById,setTaskById]=useState(null)
+       //  start server pagination 
+    const [page, setPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [total, setTotal] = useState(0);
 
+    //  end server pagination 
    
     let navigate = useNavigate()
     const fetchTasks = async () => {
         setLoading(true);
         try {
-            const response = await axiosInstance.get(TASKS_URLS.GET_ALL_MY_TASKS_FOR_MANAGER);
+            const response = await axiosInstance.get(TASKS_URLS.GET_ALL_MY_TASKS_FOR_MANAGER,
+            {params:{
+                pageSize:pageSize,
+                pageNumber:page,
+            }});
             console.log(response?.data?.data);
             setTasks(response?.data?.data);
-            // setOrganicTasks(response?.data?.data)
+            setTotal(response?.data?.totalNumberOfRecords)
         } catch (err) {
             setError(err);
             getErrorMessage(err,"sorry! can't  loaded tasks now")
@@ -67,6 +76,7 @@ const useTasks = () => {
             const response = await axiosInstance.delete(`${TASKS_URLS.DELETE_TASK(id)}`);
             console.log("task deleted");
             setTasks(tasks.filter(task => task.id !== id));
+            setTotal(total-1)
         
         } catch (err) {
             setError(err);
@@ -121,6 +131,6 @@ const useTasks = () => {
    
 
   
-   return {tasks,loading,error,fetchTasks,deleteTask,addTask,taskById,fetchOneTaskById,singleTask,updateTasks,fetchUserTasks};
+   return {tasks,total,setTotal,page,setPage,pageSize,setPageSize,loading,error,fetchTasks,deleteTask,addTask,taskById,fetchOneTaskById,singleTask,updateTasks,fetchUserTasks};
 }
 export default useTasks;

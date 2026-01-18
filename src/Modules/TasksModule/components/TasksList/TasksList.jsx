@@ -13,24 +13,32 @@ import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
 import { AuthContext } from '../../../../context/AuthContext';
 import styles from "./TasksList.module.css"
+import {
+  DndContext,
+  closestCenter
+} from "@dnd-kit/core"
 
 
 export default function TasksList() {
   let navigate = useNavigate();
-  let {tasks,loading,error,fetchTasks,deleteTask,fetchUserTasks}= useTasks()
+  let {tasks,loading,error,page,setPage ,total,pageSize,setPageSize,fetchTasks,deleteTask,fetchUserTasks}= useTasks()
   let [showModal, setShowModal] = useState(false);
   let [selectedId, setSelectedId] = useState(null);
   let [selectedName, setSelectedName] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const STATUS_ORDER = ["ToDo", "InProgress", "Done"];
+
    // view modal
     const [showView, setShowView] = useState(false);
     const [viewTask, setViewTask] = useState(null);
     const handleCloseView = () => setShowView(false);
 
-     const userData = useContext(AuthContext)
+     const {userData} = useContext(AuthContext)
 
-     let role =  userData?.userData?.userGroup;
+     let role =  userData?.userGroup;
      console.log(role,"role")
+
+ 
 
   const openConfirmationModal = (id,name) => {
     setSelectedId(id);
@@ -59,7 +67,7 @@ useEffect(() => {
     fetchUserTasks();
 
   }
-}, [role]);
+}, [role,page,pageSize]);
 
 // Group tasks
 // TODO why i should use useMemo
@@ -87,13 +95,15 @@ const filteredTasks = searchTerm
   
   const columns = [
 	{
-		name: 'Title',
+    name: (<>Title<LuChevronsUpDown /></>),
+
 		selector: row => row.title,
     sortable: true,
 	},
   {
-  name: 'Status',
-  selector: row => row.status,   // للـ sorting
+  name: (<>Status<LuChevronsUpDown /></>),
+
+  selector: row => row.status,  
   cell: (row) => (
     row.status === "ToDo" ? 
       <span className="bg-notActive status text-white px-3 py-1">
@@ -112,18 +122,21 @@ const filteredTasks = searchTerm
 },
 
   {
-		name: 'User',
+    name: (<>User<LuChevronsUpDown /></>),
+
 		selector: row => row.employee.userName,
     sortable: true,
 	},
   {
-		name: 'Project',
+    name: (<>Project<LuChevronsUpDown /></>),
+
 		selector: row => row.project.title,
     sortable: true,
 	},
     {
-		name: 'Date',
-		selector: row => row.creationDate,
+    name: (<>Date<LuChevronsUpDown /></>),
+
+		selector: row => row.creationDate? new Date(row.creationDate).toLocaleDateString() : '-',
     sortable: true,
 	},
   {
@@ -240,35 +253,46 @@ const filteredTasks = searchTerm
       {/* start admin  */}
       {role==="Manager"? <>
             <Search placeholder='search task' onSearch={setSearchTerm}/>
-              <DataTable
+          <DataTable
             columns={columns}
             data={filteredTasks}
             pagination
-            paginationPerPage={10}
-            responsive striped bordered 
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page); 
+  }}
+
+  progressPending={loading}
           /> 
           </>:
               <Container>
-                  <Row className='g-5 my-2'>
-                    {
-                        Object.entries(groupedTasks).map(([status, tasks]) => (
-                        
-                         <Col sm={12} md={6} lg={4} >
-                              <h3 className={`${styles.boxHeader}`}>{status}</h3>
-                              <div className={`${styles.boxTasks}`}>
-                                    {tasks.map(task => (
-                                    <div  className={`${styles.taskElement}`} key={task.id}>{task.title}</div>
-                          ))}
+               <Row className='g-5 my-2'>
+                {STATUS_ORDER.map((status) => (
+                  <Col sm={12} md={6} lg={4} key={status}>
+                    <h3 className={styles.boxHeader}>{status}</h3>
 
-                              </div>
-                         </Col>
-                        
-                        
-                        
-                        ))
-                    }
+                    <div className={styles.boxTasks}>
+                      {(groupedTasks[status] || []).map(task => (
+                        <div
+                          className={styles.taskElement}
+                          key={task.id}
+                        >
+                          {task.title}
+                        </div>
+                      ))}
+                    </div>
+                  </Col>
+                ))}
+              </Row>
 
-      </Row>
       
     </Container>
           }
