@@ -169,34 +169,14 @@ finally{
    {
     name: (<>Status <LuChevronsUpDown /></>),
 
-cell: (row) => {
-  const statuses = row.task?.map(t => t.status) || [];
+    cell: () => {
+        <div className='status_style px-2 m-2  rounded rounded-3 text-center'>
+            public
+        </div>
 
-  let projectStatus = "No Tasks";
 
-  if (statuses.includes("InProgress")) {
-    projectStatus = "InProgress";
-  } else if (statuses.includes("ToDo")) {
-    projectStatus = "ToDo";
-  } else if (statuses.includes("Done")) {
-    projectStatus = "Done";
-  }
-
-  return (
-    <span
-      className={`badge ${
-        projectStatus === "ToDo"
-          ? "bg-notActive"
-          : projectStatus === "InProgress"
-          ? "bg-progress"
-          : "bg-active"
-      } text-white px-3 py-2 fsize `}
-    >
-      {projectStatus}
-    </span>
-  );
-},
- 
+    },
+    
      sortable: true,
   },
  ...(userData?.userGroup === "Employee"
@@ -412,9 +392,9 @@ onChange={handelChange}/>
         <Modal.Header closeButton>
           <Modal.Title  className='model_style'>Project Details</Modal.Title>
         </Modal.Header>
-<h6 className='p-2'>project title: {title}</h6>
-<h6 className='p-2'>tasksNum: {tasksNum}</h6>
-<h6 className='p-2'>Status:   {'public'}</h6>
+            <h6 className='p-2'>project title: {title}</h6>
+            <h6 className='p-2'>tasksNum: {tasksNum}</h6>
+            <h6 className='p-2'>Status:   {'public'}</h6>
         <Modal.Footer>
 
 
