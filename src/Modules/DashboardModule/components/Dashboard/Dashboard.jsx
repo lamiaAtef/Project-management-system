@@ -131,14 +131,20 @@ const donutOptions = {
         </p>
       </div>
    <div className={`${styles.dashboard_cards_wrapper} container-fluid`}>
-     <div className="row g-5  ">
-          <div className="col-12 col-md-12 col-lg-6">
+     <div className="row g-5 ">
+            <div
+        className={`${
+          userData?.userGroup === "Manager"
+            ? "col-12 col-md-12 col-lg-6"
+            : "col-12"
+        }`}
+      >
             <div class="row">
                <Card className={`${styles.tasks_summary_card }  bgOverlayDark pt-3`}>
                 <Card.Body>
             <div className={styles.cardPad}>
                 <h5 className="textDark mb-2 p-2">Tasks</h5>
-                </div>
+              </div>
             <p className="subTitleText mb-4 p-2">
               Lorem ipsum dolor sit amet, consectetur
             </p>
@@ -175,7 +181,13 @@ const donutOptions = {
           
             </Card>
             </div>
-            <div class="row">
+            <div
+            className={`${
+              userData?.userGroup != "Manager"
+                ? "row"
+                : ""
+            }`}
+          >
                 <div className={styles.tasks_donut_wrapper}>
                   <div className={styles.donut_wrapper}>
                     <Doughnut data={donutData} options={donutOptions} />
