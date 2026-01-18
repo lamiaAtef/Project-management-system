@@ -676,6 +676,7 @@ td{
     font-weight: bold;
   }
 }
+<<<<<<< HEAD
 .badge.fsize{
   font-size: 13px;
   
@@ -696,6 +697,30 @@ td{
   cursor: pointer;
   z-index: 9999;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+=======
+/* draaag */
+/* drag and drop */
+.boxTasks{
+    background-color: var(--secondaryColor);
+    min-height: 50vh;
+    padding: 10px;
+    border-radius: 10px; 
+
+}
+.boxHeader{
+    color: var(--textColorTable);
+    font-size: 22px;
+}
+.taskElement{
+    background-color: var(--mainColor);
+    color: hsl(0, 0%, 100%);
+    margin-block: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+
+
+>>>>>>> 7cd2a75b77c8ec21f6f4acd5ee7515913a97ff72
 }
 
 .chat-window {
