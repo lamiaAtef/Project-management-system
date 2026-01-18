@@ -219,6 +219,7 @@ body.dark .form-admin .form-control:focus {
 }
 .buttonActive{
   background-color: var(--activeBtnColor);
+  color: white;
 }
 .buttonDeActive{
   background-color: var(--notActiveBtColor);
@@ -226,6 +227,7 @@ body.dark .form-admin .form-control:focus {
 .buttonToDo{
   background-color: var(--toDoBtnColor);
 }
+
 .tableColor{
   color: var(--textColorTable);
 }
@@ -674,4 +676,38 @@ td{
     font-weight: bold;
   }
 }
+.badge.fsize{
+  font-size: 13px;
+  
+}
+.chat-float-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background-color: var(--bgColor);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
 
+.chat-window {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 350px;
+  height: 450px;
+  z-index: 9999;
+}
+
+.chat-body {
+  height: 300px;
+  overflow-y: auto;
+}

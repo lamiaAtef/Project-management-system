@@ -135,10 +135,14 @@ const donutOptions = {
     <div className="col-12 col-md-12 col-lg-6">
       <Card className={`${styles.tasks_summary_card } bgOverlayDark pt-3`}>
     <Card.Body>
-      <h5 className="textDark mb-1">Tasks</h5>
-      <p className="subTitleText mb-4">
+      <div className={styles.cardPad}>
+          <h5 className="textDark mb-2 p-2">Tasks</h5>
+          </div>
+      <p className="subTitleText mb-4 p-2">
         Lorem ipsum dolor sit amet, consectetur
       </p>
+      
+     
       
 
       <div className={`${styles.inner_cards_wrapper} col-md-4 col-sm-12`}>
@@ -177,11 +181,12 @@ const donutOptions = {
   <Card  className={`${styles.tasks_summary_card} bgOverlayDark pt-3`}>
    <Card.Body>
     <div className={styles.cardPad}>
-      <h5 className="textDark  m-3">Users</h5>
+      <h5 className="textDark  mb-2 p-2">Users</h5>
+      </div>
       <p className="subTitleText m-3">
         Lorem ipsum dolor sit amet, consectetur
       </p>
-     </div>
+     
 
       <div className={`${styles.inner_cards_wrapper}`}>
         <div className={`${styles.progressUser} ${styles.stat_card}`}>

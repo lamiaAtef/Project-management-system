@@ -43,7 +43,7 @@ setLoading(true)
       setUsersList(response.data.data);
       setTotal(response?.data?.totalNumberOfRecords)
 
-      console.log("hi",response.data.data )
+     
 
 
 
@@ -134,7 +134,7 @@ const filteredUsers = searchTerm
     selector: row => row.status,  
     cell: (row) => (
      <button
-  className={`status ${
+  className={`status text-white px-4 py-2 ${
     blockedUIUsers.includes(row.id)
       ? "inactive"
       : row.isActivated
@@ -328,11 +328,35 @@ const filteredUsers = searchTerm
 
           paginationDefaultPage={page}
           paginationPerPage={pageSize}
+          
 
           onChangePage={(page) => setPage(page)}
           onChangeRowsPerPage={(size) => {
             setPageSize(size);
-            setPage(page); }}
+            setPage(page);
+          
+          
+          }
+          
+          
+          }
+                        customStyles={{
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "400",
+        
+      },
+    },
+    cells: {
+      style: {
+        fontSize: "16px",
+        fontWeight: "400",
+      },
+    },
+  }}
+    
+          
 		/>   
 <Modal
   show={showUser}
@@ -353,11 +377,11 @@ const filteredUsers = searchTerm
         <p>
           <b>Status:</b>{" "}
           <span
-            className={
-              selectedUser.isActivated
-                ? "text-success fw-bold"
-                : "text-danger fw-bold"
-            }
+           className={`px-3 py-1 rounded-pill fw-bold ${
+    selectedUser.isActivated
+      ? "bg-success text-white"
+      : "bg-danger text-white"
+  }`}
           >
             {selectedUser.isActivated ? "Active" : "Not Active"}
           </span>

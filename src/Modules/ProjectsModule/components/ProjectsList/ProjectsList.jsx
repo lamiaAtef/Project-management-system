@@ -163,30 +163,58 @@ finally{
    {
     name: (<>Title <LuChevronsUpDown /></>),
 
-    selector: row => row.title,
+    selector: row =>row.title,
      sortable: true,
   },
    {
     name: (<>Status <LuChevronsUpDown /></>),
 
-    cell: (row) => (
-  <div className="d-flex flex-column mx-0">
-    {row?.task?.map((task, index) => (
-      <span
-        key={index}
-        className={`badge ${
-          task.status === "ToDo"
-            ? "bg-notActive status text-white px-3 py-1  "
-            : task.status === "InProgress"
-            ? "bg-progress status text-white px-3 py-1  "
-            : "bg-active status text-white px-3 py-1  "
-        } mb-1`}
-      >
-        {task.status}
-      </span>
-    ))}
-  </div>
-),
+//     cell: (row) => (
+//   <div className="d-flex flex-column mx-0">
+//     {row?.task?.map((task, index) => (
+//       <span
+//         key={index}
+//         className={`badge ${
+//          task.status === "ToDo"
+//     ? "bg-notActive status text-white px-3 py-1"
+//     : task.status === "InProgress"
+//     ? "bg-progress status text-white px-3 py-1"
+//     : "bg-active status text-white px-3 py-1"
+
+//         } mb-1`}
+//       >
+//         {task.status}
+//       </span>
+//     ))}
+//   </div>
+// ),
+cell: (row) => {
+  const statuses = row.task?.map(t => t.status) || [];
+
+  let projectStatus = "No Tasks";
+
+  if (statuses.includes("InProgress")) {
+    projectStatus = "InProgress";
+  } else if (statuses.includes("ToDo")) {
+    projectStatus = "ToDo";
+  } else if (statuses.includes("Done")) {
+    projectStatus = "Done";
+  }
+
+  return (
+    <span
+      className={`badge ${
+        projectStatus === "ToDo"
+          ? "bg-notActive"
+          : projectStatus === "InProgress"
+          ? "bg-progress"
+          : "bg-active"
+      } text-white px-3 py-2 fsize `}
+    >
+      {projectStatus}
+    </span>
+  );
+},
 
     
      sortable: true,
@@ -225,7 +253,7 @@ finally{
      name: (<>Date Created<LuChevronsUpDown /></>),
 
     
-    selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString() : '-',
+    selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString('en-GB') : '/',
      sortable: true,
   },
    {
@@ -240,9 +268,9 @@ finally{
       </span>
 
       <ul className="dropdown-menu ">
-        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-2'/> View</li>
-       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
-         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
+        <li className="dropdown-item" onClick={()=>handleShowView(row)}> <FaEye  className='icon-color mx-2'/> View</li>
+       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${row.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
+         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(row)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
       </ul>
     </div>
     
@@ -380,6 +408,21 @@ onChange={handelChange}/>
           onChangeRowsPerPage={(size) => {
             setPageSize(size);
             setPage(page); }}
+              customStyles={{
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "400",
+        
+      },
+    },
+    cells: {
+      style: {
+        fontSize: "16px",
+        fontWeight: "400",
+      },
+    },
+  }}
             
           /> 
 

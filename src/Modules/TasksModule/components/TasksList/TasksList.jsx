@@ -269,6 +269,21 @@ const filteredTasks = searchTerm
             setPageSize(size);
             setPage(page); 
   }}
+                        customStyles={{
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "400",
+        
+      },
+    },
+    cells: {
+      style: {
+        fontSize: "16px",
+        fontWeight: "400",
+      },
+    },
+  }}
 
   progressPending={loading}
           /> 
