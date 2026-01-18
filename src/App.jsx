@@ -19,10 +19,7 @@ import TasksList from './Modules/TasksModule/components/TasksList/TasksList';
 import ProjectData from './Modules/ProjectsModule/components/ProjectData/ProjectData';
 import ProjectsList from './Modules/ProjectsModule/components/ProjectsList/ProjectsList';
 import Profile from './Modules/Shared/components/Pofile/Profile';
-// import {DndContext} from '@dnd-kit/core';
 
-// import {Droppable} from './Droppable';
-// import {Draggable} from './Draggable';
 
 function App() {
 
@@ -66,7 +63,7 @@ function App() {
     <>
     <RouterProvider router={routes}></RouterProvider>
     <ToastContainer/>
-     
+
     </>
   )
 }

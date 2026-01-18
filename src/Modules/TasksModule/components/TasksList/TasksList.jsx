@@ -35,9 +35,12 @@ export default function TasksList() {
   const role = userData?.userGroup;
 
   useEffect(() => {
-    if (!role) return;
-    if (role === "Manager") fetchTasks();
-    else fetchUserTasks();
+    const loadTasks = async()=>{
+         if (!role) return;
+          if (role === "Manager")await fetchTasks();
+          else await fetchUserTasks();
+    }
+   loadTasks()
   }, [role, page, pageSize]);
 
  

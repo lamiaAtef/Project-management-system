@@ -93,8 +93,8 @@ const useTasks = () => {
         try {
             //const response = await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`,data);
             const response =  await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`,data)
+            console.log("task added",response.data);
             setTasks(prevTasks => [...prevTasks, response.data]);
-            await fetchTasks()
             console.log("tasks length" , tasks.length)
             toast.success("Task added successfully");
             navigate("/dashboard/tasks")
@@ -108,19 +108,15 @@ const useTasks = () => {
             setLoading(false);
         }
     }
-     const updateTask = async (id,data) => {
-        // setLoading(true);
+     const updateTasks = async (id,data) => {
+        setLoading(true);
         console.log(data,"update test")
         try {
             const response = await axiosInstance.put(`${TASKS_URLS.UPDATE_TASK(id)}`,data);
             console.log("task updated");
-
-            setTasks(prevTasks =>
-                    prevTasks.map(task =>
-                        task.id === id ? response.data : task
-                    )
-              );
-
+            // console.log(response.data.data)
+            setTasks(prevTasks =>[...prevTasks,response.data])
+            navigate("/dashboard/tasks")
             toast.success("Task updated successfully");
 
         } catch (err) {
@@ -131,21 +127,10 @@ const useTasks = () => {
             setLoading(false);
         }
     }
-    const changeStatus = async (id,status) =>{
-        try {
-            await axiosInstance.put(`${TASKS_URLS.CHANGE_STATUS(id)}`,status)
-
-        } catch (error) {
-            getErrorMessage(err,"sorry! can't update this task status now")
-
-        }
-    }
-
    
    
 
   
-   return {tasks,total,changeStatus,setTotal,setTasks,page,setPage,pageSize,setPageSize,loading,error,fetchTasks,deleteTask,addTask,taskById,fetchOneTaskById,singleTask,updateTask,fetchUserTasks};
+   return {tasks,total,setTotal,page,setPage,pageSize,setPageSize,loading,error,fetchTasks,deleteTask,addTask,taskById,fetchOneTaskById,singleTask,updateTasks,fetchUserTasks};
 }
-
 export default useTasks;
