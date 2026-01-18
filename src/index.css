@@ -576,9 +576,9 @@ td{
 .dropDownMenu{
     background-color: #fff ;
     box-shadow: 0px 0px 16px 0px #0000001A;
-    border-radius: 15px;
+    border-radius: 5px;
     /* list-style: none; */
-    padding: 0;
+    padding: 10px;
     /* position: relative; */
     border:0
 
@@ -676,7 +676,6 @@ td{
     font-weight: bold;
   }
 }
-<<<<<<< HEAD
 .badge.fsize{
   font-size: 13px;
   
@@ -697,8 +696,21 @@ td{
   cursor: pointer;
   z-index: 9999;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-=======
-/* draaag */
+}
+
+.chat-window {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 350px;
+  height: 450px;
+  z-index: 9999;
+}
+
+.chat-body {
+  height: 300px;
+  overflow-y: auto;
+}
 /* drag and drop */
 .boxTasks{
     background-color: var(--secondaryColor);
@@ -720,19 +732,4 @@ td{
     cursor: pointer;
 
 
->>>>>>> 7cd2a75b77c8ec21f6f4acd5ee7515913a97ff72
-}
-
-.chat-window {
-  position: fixed;
-  bottom: 25px;
-  right: 25px;
-  width: 350px;
-  height: 450px;
-  z-index: 9999;
-}
-
-.chat-body {
-  height: 300px;
-  overflow-y: auto;
 }

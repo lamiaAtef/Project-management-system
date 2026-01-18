@@ -23,6 +23,7 @@ const useTasks = () => {
    
     let navigate = useNavigate()
     const fetchTasks = async () => {
+        console.log("fetchTasks")
         setLoading(true);
         try {
             const response = await axiosInstance.get(TASKS_URLS.GET_ALL_MY_TASKS_FOR_MANAGER,
@@ -30,8 +31,10 @@ const useTasks = () => {
                 pageSize:pageSize,
                 pageNumber:page,
             }});
+
             console.log(response?.data?.data);
             setTasks(response?.data?.data);
+
             setTotal(response?.data?.totalNumberOfRecords)
         } catch (err) {
             setError(err);
@@ -88,26 +91,23 @@ const useTasks = () => {
     const getErrorMessage = (err, fallback) =>
    toast.error(err?.response?.data?.message || fallback);
 
-     const addTask = async (data) => {
-        setLoading(true);
-        try {
-            //const response = await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`,data);
-            const response =  await axiosInstance.post(`${TASKS_URLS.CREATE_TASK}`,data)
-            setTasks(prevTasks => [...prevTasks, response.data]);
-            await fetchTasks()
-            console.log("tasks length" , tasks.length)
-            toast.success("Task added successfully");
-            navigate("/dashboard/tasks")
-        } catch (err) {
-            setError(err);
-            console.log(err);
-            // toast.error("Task can't added ");
-            getErrorMessage(err,"sorry! can't add this task")
+   const addTask = async (data) => {
+  setLoading(true);
+  try {
+   
+    let response =  await axiosInstance.post(TASKS_URLS.CREATE_TASK,data);
+    console.log(response,"resssss")
+    await fetchTasks(); 
+    toast.success("Task added successfully");
+    navigate("/dashboard/tasks");
+  } catch (err) {
+    setError(err);
+    getErrorMessage(err, "sorry! can't add this task");
+  } finally {
+    setLoading(false);
+  }
+};
 
-        } finally {
-            setLoading(false);
-        }
-    }
      const updateTask = async (id,data) => {
         // setLoading(true);
         console.log(data,"update test")
@@ -120,6 +120,7 @@ const useTasks = () => {
                         task.id === id ? response.data : task
                     )
               );
+             navigate("/dashboard/tasks");
 
             toast.success("Task updated successfully");
 
@@ -136,7 +137,7 @@ const useTasks = () => {
             await axiosInstance.put(`${TASKS_URLS.CHANGE_STATUS(id)}`,status)
 
         } catch (error) {
-            getErrorMessage(err,"sorry! can't update this task status now")
+            getErrorMessage(error,"sorry! can't update this task status now")
 
         }
     }

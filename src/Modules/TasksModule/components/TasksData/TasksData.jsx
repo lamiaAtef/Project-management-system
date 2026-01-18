@@ -42,8 +42,8 @@ export default function TasksData() {
     reset({
       title: singleTask.title,
       description: singleTask.description,
-      employeeId:String(singleTask.employee.id),
-      projectId: String(singleTask.project.id),
+      employeeId:Number(singleTask.employee.id),
+      projectId: Number(singleTask.project.id),
     });
   }
 }, [singleTask, reset]);
@@ -130,9 +130,9 @@ export default function TasksData() {
                 </Form.Group>
               </Col>
              <Col>
-              <Form.Group className="form-group">
+              <Form.Group className="form-group" >
                 <Form.Label htmlFor="projectId">Project</Form.Label>
-                <Form.Select id="projectId" className='form-control' {...register("projectId",{required:"Project is required"})} >
+                <Form.Select id="projectId" disabled={id} className='form-control' {...register("projectId",{required:"Project is required"})} >
                   <option value="">Select project</option> 
                   {projects.map((project) => (
                     <option key={project.id} value={project.id}>

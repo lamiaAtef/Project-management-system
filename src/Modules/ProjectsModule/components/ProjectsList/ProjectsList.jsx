@@ -169,26 +169,6 @@ finally{
    {
     name: (<>Status <LuChevronsUpDown /></>),
 
-<<<<<<< HEAD
-//     cell: (row) => (
-//   <div className="d-flex flex-column mx-0">
-//     {row?.task?.map((task, index) => (
-//       <span
-//         key={index}
-//         className={`badge ${
-//          task.status === "ToDo"
-//     ? "bg-notActive status text-white px-3 py-1"
-//     : task.status === "InProgress"
-//     ? "bg-progress status text-white px-3 py-1"
-//     : "bg-active status text-white px-3 py-1"
-
-//         } mb-1`}
-//       >
-//         {task.status}
-//       </span>
-//     ))}
-//   </div>
-// ),
 cell: (row) => {
   const statuses = row.task?.map(t => t.status) || [];
 
@@ -216,16 +196,7 @@ cell: (row) => {
     </span>
   );
 },
-
-=======
-    cell: (row) => (
-  <div className= 'status_style px-2 m-2  rounded rounded-3 text-center'>
->>>>>>> 7cd2a75b77c8ec21f6f4acd5ee7515913a97ff72
-    
-        public
-  </div>
-     
-    ),  
+ 
      sortable: true,
   },
  ...(userData?.userGroup === "Employee"
@@ -448,7 +419,7 @@ onChange={handelChange}/>
 
 
         </Modal.Footer>
-      </Modal>
+</Modal>
 
 
     </>
