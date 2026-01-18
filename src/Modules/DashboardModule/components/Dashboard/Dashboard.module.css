@@ -2,6 +2,8 @@
   background-image: url(../../../../assets/images/home-bg.png);
   height: 313px;
   border-radius: 15px;
+  background-repeat: no-repeat;
+  background-size: cover;
  
 }
 
@@ -107,6 +109,8 @@
   border-radius: 15px;
   border: none;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+  
+ 
 }
 
 .inner_cards_wrapper {

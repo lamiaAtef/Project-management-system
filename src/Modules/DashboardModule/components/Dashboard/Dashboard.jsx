@@ -130,113 +130,120 @@ const donutOptions = {
           You can add project and assign tasks to your team
         </p>
       </div>
-   <div className={`${styles.dashboard_cards_wrapper}`}>
-     <div className="row">
-    <div className="col-12 col-md-12 col-lg-6">
-      <Card className={`${styles.tasks_summary_card } bgOverlayDark pt-3`}>
-    <Card.Body>
-      <div className={styles.cardPad}>
-          <h5 className="textDark mb-2 p-2">Tasks</h5>
+   <div className={`${styles.dashboard_cards_wrapper} container-fluid`}>
+     <div className="row g-5  ">
+          <div className="col-12 col-md-12 col-lg-6">
+            <div class="row">
+               <Card className={`${styles.tasks_summary_card }  bgOverlayDark pt-3`}>
+                <Card.Body>
+            <div className={styles.cardPad}>
+                <h5 className="textDark mb-2 p-2">Tasks</h5>
+                </div>
+            <p className="subTitleText mb-4 p-2">
+              Lorem ipsum dolor sit amet, consectetur
+            </p>
+            
+          
+            
+
+            <div className={`${styles.inner_cards_wrapper} `}>
+              <div className={`${styles.stat_card} ${styles.progressUser}`}>
+                <div className={`${styles.icon_box} ${styles.icon_box_total}`}>
+                  <LuChartNoAxesCombined />
+                </div>
+                <p className="mb-1 text-muted">Progress</p>
+                <h5>{`$ ${counts.inProgress}`}</h5>
+              </div>
+
+              <div className={`${styles.stat_card} ${styles.tasksNumber}` }>
+                <div className="icon-box tasks ">
+                  <GoChecklist />
+                </div>
+                <p className="mb-1 text-muted">Tasks Number</p>
+                <h5>{counts.toDo}</h5>
+              </div>
+
+              <div className={`${styles.stat_card} ${styles.projectNumber}`}>
+                <div className={`${styles.projects} ${styles.icon_box}`}>
+                  <TbBusinessplan />
+                </div>
+                <p className="mb-1 text-muted">Projects Number</p>
+                <h5>{counts.done}</h5>
+              </div>
+            </div>
+          </Card.Body>
+          
+            </Card>
+            </div>
+            <div class="row">
+                <div className={styles.tasks_donut_wrapper}>
+                  <div className={styles.donut_wrapper}>
+                    <Doughnut data={donutData} options={donutOptions} />
+                  </div>
+               </div>
+            </div>
+           
           </div>
-      <p className="subTitleText mb-4 p-2">
-        Lorem ipsum dolor sit amet, consectetur
-      </p>
-      
-     
-      
+          <div className="col-12 col-md-12 col-lg-6">
+            <div class="row">
+               {userData?.userGroup == "Manager"?
+              <div className="row">
+              <div className="col-12 col-md-12 col-lg-6">
+            <Card  className={`${styles.tasks_summary_card} h-100 bgOverlayDark pt-3`}>
+            <Card.Body>
+              <div className={styles.cardPad}>
+                <h5 className="textDark  mb-2 p-2">Users</h5>
+                </div>
+                <p className="subTitleText mb-4 p-2">
+                  Lorem ipsum dolor sit amet, consectetur
+                </p>
+              
 
-      <div className={`${styles.inner_cards_wrapper} col-md-4 col-sm-12`}>
-        <div className={`${styles.stat_card} ${styles.progressUser}`}>
-          <div className={`${styles.icon_box} ${styles.icon_box_total}col-md-4 col-sm-12`}>
-            <LuChartNoAxesCombined />
-          </div>
-          <p className="mb-1 text-muted col-md-4 col-sm-12">Progress</p>
-          <h5>{`$ ${counts.inProgress}`}</h5>
-        </div>
+                <div className={`${styles.inner_cards_wrapper} py-2`}>
+                  <div className={`${styles.progressUser} ${styles.stat_card}`}>
+                    <div className={`${styles.icon_box} ${styles.icon_box_total}`}>
+                      <LuChartNoAxesCombined />
+                    </div>
+                    <p className="mb-1 text-muted">active</p>
+                    <h5>{`$ ${countsUser.activatedEmployeeCount}`}</h5>
+                  </div>
 
-        <div className={`${styles.stat_card} ${styles.tasksNumber}` }>
-          <div className="icon-box tasks col-md-4 col-sm-12 ">
-            <GoChecklist />
-          </div>
-          <p className="mb-1 text-muted">Tasks Number</p>
-          <h5>{counts.toDo}</h5>
-        </div>
+                  <div className={`${styles.stat_card} ${styles.tasksNumber}`}>
+                    <div className={`${styles.tasks} ${styles.icon_box}`}>
+                      <GoChecklist />
+                    </div>
+                    <p className="mb-1 text-muted">inactive</p>
+                    <h5>{countsUser.deactivatedEmployeeCount}</h5>
+                  </div>
 
-        <div className={`${styles.stat_card} ${styles.projectNumber} col-md-4 col-sm-12`}>
-          <div className={`${styles.projects} ${styles.icon_box} col-md-4 col-sm-12`}>
-            <TbBusinessplan />
-          </div>
-          <p className="mb-1 text-muted">Projects Number</p>
-          <h5>{counts.done}</h5>
-        </div>
-      </div>
-    </Card.Body>
-    
-  </Card>
-  </div>
-  </div>
-    {userData?.userGroup == "Manager"?
-    <div className="row">
-    <div className="col-12 col-md-12 col-lg-6">
-  <Card  className={`${styles.tasks_summary_card} bgOverlayDark pt-3`}>
-   <Card.Body>
-    <div className={styles.cardPad}>
-      <h5 className="textDark  mb-2 p-2">Users</h5>
-      </div>
-      <p className="subTitleText m-3">
-        Lorem ipsum dolor sit amet, consectetur
-      </p>
-     
-
-      <div className={`${styles.inner_cards_wrapper}`}>
-        <div className={`${styles.progressUser} ${styles.stat_card}`}>
-          <div className={`${styles.icon_box} ${styles.icon_box_total}`}>
-            <LuChartNoAxesCombined />
-          </div>
-          <p className="mb-1 text-muted">active</p>
-          <h5>{`$ ${countsUser.activatedEmployeeCount}`}</h5>
-        </div>
-
-        <div className={`${styles.stat_card} ${styles.tasksNumber}`}>
-          <div className={`${styles.tasks} ${styles.icon_box}`}>
-            <GoChecklist />
-          </div>
-          <p className="mb-1 text-muted">inactive</p>
-          <h5>{countsUser.deactivatedEmployeeCount}</h5>
-        </div>
-
-       
-      </div>
-    </Card.Body>
-    
-    </Card>
-    
-    </div>
-    </div>
-    :""}
-  </div>
-  
-
-
- <div className="row">
-  <div className="col-12 col-md-8 col-lg-4 mb-4">
-    <div className={styles.tasks_donut_wrapper}>
-      <div className={styles.donut_wrapper}>
-        <Doughnut data={donutData} options={donutOptions} />
-      </div>
-    </div>
-  </div>
-
-  {userData?.userGroup === "Manager" && (
-    <div className="col-12 col-md-8 col-lg-4 offset-lg-2">
+                
+                </div>
+              </Card.Body>
+              
+              </Card>
+              
+              </div>
+              </div>
+              :""}
+            </div>
+            <div class="row">
+               {userData?.userGroup === "Manager" && (
       <div className={styles.tasks_donut_wrapper}>
         <div className={styles.donut_wrapper}>
           <Doughnut data={donutUserData} options={donutOptions} />
         </div>
       </div>
-    </div>
+    
   )}
-</div>
+            </div>
+              
+          </div>
+  </div>
+   
+  </div>
+  
+
+
 <div className="d-flex justify-content-end">
   <ChatBot/>
 </div>
