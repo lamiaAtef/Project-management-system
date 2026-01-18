@@ -169,13 +169,14 @@ finally{
    {
     name: (<>Status <LuChevronsUpDown /></>),
 
-    cell: () => {
+    cell: () => (
+      
         <div className='status_style px-2 m-2  rounded rounded-3 text-center'>
             public
         </div>
+    )
 
-
-    },
+    ,
     
      sortable: true,
   },
