@@ -14,7 +14,7 @@ import { FaUnlockAlt } from "react-icons/fa";
 
 export default function SideBar({collapsed, setCollapsed}) {
   const{logoutUser, userData}=useContext(AuthContext);
- 
+
   // use logout hook to logout from your account
   const logout = useLogout();
 
@@ -24,7 +24,7 @@ export default function SideBar({collapsed, setCollapsed}) {
   return (
     <>
      <div className={`sidebar-container ${collapsed ? 'collapsed' : 'expanded'}`}>
-       
+
         <button className="collapse-btn" onClick={() => setCollapsed(!collapsed)}>
             {collapsed ? <FaAngleRight /> : <FaAngleLeft />}
         </button>
@@ -33,14 +33,14 @@ export default function SideBar({collapsed, setCollapsed}) {
             <MenuItem component={<Link to="/dashboard"/>} icon={<MdHome size={20}/>} className={`${pathname==='/dashboard'? 'active':null}`}>Home</MenuItem>
 
             {userData?.userGroup != "Employee" ?(
-              <MenuItem component={<Link to="/dashboard/users"/>} 
-              icon={<ImUsers size={20}/>}  
+              <MenuItem component={<Link to="/dashboard/users"/>}
+              icon={<ImUsers size={20}/>}
               className={`${pathname==='/dashboard/users'? 'active':null}`}>
                 Users
                 </MenuItem>
 
             ) : ""}
-            
+
             <MenuItem component={<Link to="/dashboard/projects"/>} icon={<RiQrCodeFill size={20}/>}  className={`${pathname==='/dashboard/projects'? 'active':null}`}>Projects</MenuItem>
             <MenuItem component={<Link to="/dashboard/tasks"/>} icon={<FaListCheck size={20}/>}  className={`${pathname==='/dashboard/tasks'? 'active':null}`}>Tasks</MenuItem>
             <MenuItem component={<Link to="/change-pass"/>} icon={<FaUnlockAlt />}  className={`${pathname==='/change-pass'? 'active':null}`}>Change Password</MenuItem>

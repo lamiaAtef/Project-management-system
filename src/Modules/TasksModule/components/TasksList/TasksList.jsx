@@ -13,10 +13,8 @@ import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
 import { AuthContext } from '../../../../context/AuthContext';
 import styles from "./TasksList.module.css"
-import {
-  DndContext,
-  closestCenter
-} from "@dnd-kit/core"
+
+
 
 
 export default function TasksList() {
@@ -47,13 +45,13 @@ export default function TasksList() {
     setShowModal(false);
     setSelectedId(null);
     setSelectedName(null)
-  } 
+  }
  const handleView = (task) => {
-  console.log(task); 
+  console.log(task);
   setViewTask(task);
-  setShowView(true); 
+  setShowView(true);
 };
-  
+
 
 
 useEffect(() => {
@@ -77,8 +75,8 @@ useEffect(() => {
  },{})
 
 
-// end group tasks 
-  if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div> 
+// end group tasks
+  if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div>
   // filter tasks
 const filteredTasks = searchTerm
   ? tasks.filter(task =>
@@ -90,7 +88,7 @@ const filteredTasks = searchTerm
   : tasks;
 
 
-  
+
   const columns = [
 	{
     name: (<>Title<LuChevronsUpDown /></>),
@@ -101,9 +99,9 @@ const filteredTasks = searchTerm
   {
   name: (<>Status<LuChevronsUpDown /></>),
 
-  selector: row => row.status,  
+  selector: row => row.status,
   cell: (row) => (
-    row.status === "ToDo" ? 
+    row.status === "ToDo" ?
       <span className="bg-notActive status text-white px-3 py-1">
         ToDo
       </span>
@@ -179,14 +177,14 @@ const filteredTasks = searchTerm
                  <h1 className='title'>Tasks Board</h1>
 
           }
-           
+
         </div>
-      
+
       </header>
-      
+
       {/* TODO TABLE */}
-      
-    
+
+
     {/* <table  responsive striped bordered >
       <thead>
         <tr>
@@ -195,24 +193,24 @@ const filteredTasks = searchTerm
           <th>User <LuChevronsUpDown /></th>
           <th>Project <LuChevronsUpDown /></th>
           <th>Date Created <LuChevronsUpDown /></th>
-          <th>Action <LuChevronsUpDown /></th>          
+          <th>Action <LuChevronsUpDown /></th>
         </tr>
       </thead>
       <tbody>
       {tasks.length > 0 ?
       tasks.map((task)=>(
         <tr key={task.id}>
-          <td>{task.title}</td> 
+          <td>{task.title}</td>
           <td>
-            {task.status === "ToDo" ? 
+            {task.status === "ToDo" ?
             <span className='bg-notActive status text-white px-3 py-1 '> ToDo </span>
             : task.status === "In Progress" ?
             <span className='bg-progress status text-white px-3 py-1'> In Progress </span>
             : <span className='bg-active status text-white px-3 py-1'> Done </span>
-            
+
             }</td>
           <td>{task.employee.userName}</td>
-          <td>{task.project.title}</td> 
+          <td>{task.project.title}</td>
           <td>{task.creationDate}</td>
           <td>
             <DropdownButton
@@ -258,8 +256,8 @@ const filteredTasks = searchTerm
             paginationPerPage={8}
             responsive
             striped
-           bordered 
-          /> 
+           bordered
+          />
           </>:
               <Container>
                <Row className='g-5 my-2'>
@@ -281,13 +279,13 @@ const filteredTasks = searchTerm
                 ))}
               </Row>
 
-      
+
     </Container>
           }
-    
+
     {/* end admin */}
     {/* start user */}
-  
+
     {/* end user */}
 
     <Confirmation
@@ -299,9 +297,9 @@ const filteredTasks = searchTerm
                     closeDeleteModal();
                   }}
                   task={`${selectedName}`}
-          
+
     />
-      
+
       <Modal show={showView} onHide={handleCloseView}>
         <Modal.Header closeButton>
           <Modal.Title >Task Details</Modal.Title>
@@ -315,7 +313,7 @@ const filteredTasks = searchTerm
 
         </Modal.Footer>
       </Modal>
-       
+
     </>
   )
 }

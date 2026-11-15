@@ -119,7 +119,7 @@ finally{
   catch(error){
     toast.error(error?.response?.data?.message || "sorry can't  delete this project ")
   }
- 
+
 
 
  }
@@ -144,7 +144,7 @@ getAllProjectEmployee();
     selector: row => row.id,
      sortable: true,
   },
-  
+
    {
     name: (<>Title <LuChevronsUpDown /></>),
 
@@ -154,26 +154,13 @@ getAllProjectEmployee();
    {
     name: (<>Status <LuChevronsUpDown /></>),
 
-    cell: (row) => (
-  <div className="d-flex flex-column mx-0">
-    {row?.task?.map((task, index) => (
-      <span
-        key={index}
-        className={`badge ${
-          task.status === "ToDo"
-            ? "bg-notActive status text-white px-3 py-1  "
-            : task.status === "InProgress"
-            ? "bg-progress status text-white px-3 py-1  "
-            : "bg-active status text-white px-3 py-1  "
-        } mb-1`}
-      >
-        {task.status}
-      </span>
-    ))}
-  </div>
+    cell: () => (
+ <div className='status_style px-2 m-2  rounded rounded-3 text-center'>
+public
+</div>
 ),
 
-    
+
      sortable: true,
   },
  ...(userData?.userGroup === "Employee"
@@ -200,7 +187,7 @@ getAllProjectEmployee();
     : [])
     },
     {
-    
+
      name: (<>Num Tasks<LuChevronsUpDown /></>),
 
     selector: row => row.task?.length,
@@ -209,7 +196,7 @@ getAllProjectEmployee();
     {
      name: (<>Date Created<LuChevronsUpDown /></>),
 
-    
+
     selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString() : '-',
      sortable: true,
   },
@@ -225,16 +212,16 @@ getAllProjectEmployee();
       </span>
 
       <ul className="dropdown-menu ">
-        <li className="dropdown-item" onClick={()=>handleShowView(project)}> <FaEye  className='icon-color mx-2'/> View</li>
-       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${project.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
-         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(project)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
+        <li className="dropdown-item" onClick={()=>handleShowView(row)}> <FaEye  className='icon-color mx-2'/> View</li>
+       {userData?.userGroup !="Employee"? <li className="dropdown-item" onClick={()=>navigate(`/dashboard/project-data/${row.id}`)}> <FaRegEdit  className='icon-color mx-2'/>Edit</li>:""}
+         {userData?.userGroup !="Employee"?<li className="dropdown-item " onClick={()=>handleShow(row)} > <FaRegTrashAlt  className='icon-color mx-2 text-danger'/>Delete</li>:""}
       </ul>
     </div>
-    
+
    ),
- 
+
  }
- 
+
  ];
 
  if(loading) return<div className=' d-flex align-items-center justify-content-center vh-100 '>
@@ -357,8 +344,8 @@ onChange={handelChange}/>
             paginationPerPage={8}
             responsive
             striped
-           bordered 
-          /> 
+           bordered
+          />
 
 
 

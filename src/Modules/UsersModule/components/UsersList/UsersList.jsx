@@ -49,19 +49,13 @@ setLoading(true)
   }
   const toggleUserStatus = async (id) => {
   try {
-    await axiosInstance.put(
-      `${USER_URLS.TOGGLE_USER}/${id}`,
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    await axiosInstance.put(USER_URLS.TOGGLE_ACTIVATED_EMPLOYEE(id))
+
+
 
     toast.success("User status updated successfully");
 
-   
+
 
   } catch (error) {
     toast.error(error.response?.data?.message || "Error updating status");
@@ -78,7 +72,7 @@ const viewUser = async (userId) => {
       }
     );
 
-   
+
     setSelectedUser(response.data);
     setShowUser(true);
   } catch (error) {
@@ -102,28 +96,28 @@ const toggleBlockUI = (id) => {
  getAllUsers();
  }
 
- 
- 
+
+
 
 }, [userData]);
 
 const filteredUsers = searchTerm
   ? usersList.filter(user =>
       user.userName.toLowerCase().includes(searchTerm.toLowerCase())
-     
+
     )
   : usersList;
   const columns = [
     {
       name: (<>User Name <LuChevronsUpDown /></>),
-      
+
       selector: row => row.userName,
       sortable: true,
     },
     {
      name: (<>Status <LuChevronsUpDown /></>),
 
-    selector: row => row.status,  
+    selector: row => row.status,
     cell: (row) => (
      <button
   className={`status ${
@@ -136,10 +130,10 @@ const filteredUsers = searchTerm
     disabled={blockedUIUsers.includes(row.id)}
     onClick={() => {
     if (!blockedUIUsers.includes(row.id)) {
-      toggleUserStatus(row.id); 
+      toggleUserStatus(row.id);
     }
   }}
-  
+
 >
    {blockedUIUsers.includes(row.id)
     ? "Blocked"
@@ -150,7 +144,7 @@ const filteredUsers = searchTerm
     ),
     sortable: true,
   },
-  
+
     {
       name: (<>Phone Number <LuChevronsUpDown /></>),
 
@@ -166,7 +160,7 @@ const filteredUsers = searchTerm
       {
       name: (<>Date Created <LuChevronsUpDown /></>),
 
-      
+
       selector: row => row.task[0].creationDate ?  new Date(row.task[0].creationDate).toLocaleDateString() : '-',
       sortable: true,
     },
@@ -196,19 +190,19 @@ const filteredUsers = searchTerm
     </Dropdown.Item>
   </Dropdown.Menu>
           </Dropdown>
-     
+
     ),
-  
+
   }
-  
+
   ];
        if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div>
 
   return (
-    
+
     <div>
      <Search placeholder='search user name' onSearch={setSearchTerm}/>
-      
+
       {/* <table className="table">
         <thead >
           <tr >
@@ -217,7 +211,7 @@ const filteredUsers = searchTerm
   <LuChevronsUpDown className='' />
 </th>
 
-            
+
             <th scope="col" className='text-white'>Status<LuChevronsUpDown /></th>
             <th scope="col"className='text-white' >Phone Number<LuChevronsUpDown /></th>
             <th scope="col"className='text-white'>Email<LuChevronsUpDown /></th>
@@ -238,7 +232,7 @@ const filteredUsers = searchTerm
         <td>{user.userName}</td>
 
         <td>
-         
+
  <button
   className={`status ${
     blockedUIUsers.includes(user.id)
@@ -250,7 +244,7 @@ const filteredUsers = searchTerm
   disabled={blockedUIUsers.includes(user.id)}
   onClick={() => {
     if (!blockedUIUsers.includes(user.id)) {
-      toggleUserStatus(user.id); 
+      toggleUserStatus(user.id);
     }
   }}
 >
@@ -264,7 +258,7 @@ const filteredUsers = searchTerm
 </td>
 
 
-       
+
 
         <td>{user.phoneNumber}</td>
         <td>{user.email}</td>
@@ -300,11 +294,11 @@ const filteredUsers = searchTerm
     ))
   ) : (
     <tr>
-      
+
        <td colSpan="6" className="text-end">
     <NoData />
   </td>
-      
+
     </tr>
   )}
 </tbody>
@@ -315,11 +309,11 @@ const filteredUsers = searchTerm
 			data={filteredUsers}
       pagination
       paginationPerPage={5}
-      responsive 
-      striped 
-      bordered 
+      responsive
+      striped
+      bordered
       sortIcon={ <IoMdArrowDropup />}
-		/>   
+		/>
 <Modal
   show={showUser}
   onHide={() => setShowUser(false)}
@@ -363,4 +357,3 @@ const filteredUsers = searchTerm
     </div>
   )
 }
-
