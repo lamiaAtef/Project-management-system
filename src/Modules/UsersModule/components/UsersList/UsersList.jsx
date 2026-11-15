@@ -23,16 +23,27 @@ export default function UsersList() {
 const [showUser, setShowUser] = useState(false);
 const [blockedUIUsers, setBlockedUIUsers] = useState([]);
 const [searchTerm, setSearchTerm] = useState('');
-
+  // server pagination 
+  const [page, setPage] = useState(1);
+const [pageSize, setPageSize] = useState(5);
+const [total, setTotal] = useState(0);
+  // end server pagination
 
 const[loading,setLoading]=useState(false)
   const getAllUsers = async () => {
 setLoading(true)
     try {
-      let response = await axiosInstance.get(`${USER_URLS.GET_USERS_BY_MANAGER}?pageSize=20&pageNumber=1`, { headers: {  Authorization:`Bearer ${localStorage.getItem('token')}` } })
+      let response = await axiosInstance.get(USER_URLS.GET_USERS_BY_MANAGER,{
+         params: {
+          pageSize:pageSize,
+          pageNumber:page,
+    },
+      })
       console.log(response.data.data);
       setUsersList(response.data.data);
-      console.log("hi",response.data.data )
+      setTotal(response?.data?.totalNumberOfRecords)
+
+     
 
 
 
@@ -96,10 +107,14 @@ const toggleBlockUI = (id) => {
  getAllUsers();
  }
 
+<<<<<<< HEAD
 
 
 
 }, [userData]);
+=======
+}, [userData,page, pageSize]);
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 
 const filteredUsers = searchTerm
   ? usersList.filter(user =>
@@ -120,7 +135,7 @@ const filteredUsers = searchTerm
     selector: row => row.status,
     cell: (row) => (
      <button
-  className={`status ${
+  className={`status text-white px-4 py-2 ${
     blockedUIUsers.includes(row.id)
       ? "inactive"
       : row.isActivated
@@ -307,6 +322,7 @@ const filteredUsers = searchTerm
    <DataTable
 			columns={columns}
 			data={filteredUsers}
+<<<<<<< HEAD
       pagination
       paginationPerPage={5}
       responsive
@@ -314,6 +330,45 @@ const filteredUsers = searchTerm
       bordered
       sortIcon={ <IoMdArrowDropup />}
 		/>
+=======
+        pagination
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+          
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page);
+          
+          
+          }
+          
+          
+          }
+                        customStyles={{
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "400",
+        
+      },
+    },
+    cells: {
+      style: {
+        fontSize: "16px",
+        fontWeight: "400",
+      },
+    },
+  }}
+    
+          
+		/>   
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 <Modal
   show={showUser}
   onHide={() => setShowUser(false)}
@@ -333,11 +388,11 @@ const filteredUsers = searchTerm
         <p>
           <b>Status:</b>{" "}
           <span
-            className={
-              selectedUser.isActivated
-                ? "text-success fw-bold"
-                : "text-danger fw-bold"
-            }
+           className={`px-3 py-1 rounded-pill fw-bold ${
+    selectedUser.isActivated
+      ? "bg-success text-white"
+      : "bg-danger text-white"
+  }`}
           >
             {selectedUser.isActivated ? "Active" : "Not Active"}
           </span>

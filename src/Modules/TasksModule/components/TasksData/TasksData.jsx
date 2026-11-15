@@ -18,9 +18,10 @@ export default function TasksData() {
   let{projects,loading,error,fetchProjects} = useProjects();
   let{users,loadingUsers,errorUsers,fetchUsers} = useUsers();
   let navigate = useNavigate();
-  let {addTask,singleTask,fetchOneTaskById,updateTasks}= useTasks()
+  let {addTask,singleTask,fetchOneTaskById,updateTask}= useTasks()
   let {register,handleSubmit,formState:{errors,isSubmitting},reset} = useForm();
 
+  
     const {id} = useParams()
     const {userData} = useContext(AuthContext)
 
@@ -41,8 +42,8 @@ export default function TasksData() {
     reset({
       title: singleTask.title,
       description: singleTask.description,
-      employeeId:String(singleTask.employee.id),
-      projectId: String(singleTask.project.id),
+      employeeId:Number(singleTask.employee.id),
+      projectId: Number(singleTask.project.id),
     });
   }
 }, [singleTask, reset]);
@@ -60,7 +61,7 @@ export default function TasksData() {
     console.log("ana hena to add or update")
     if(id)
     {
-       await updateTasks(id,data)
+       await updateTask(id,data)
         
     }
     else{
@@ -129,9 +130,9 @@ export default function TasksData() {
                 </Form.Group>
               </Col>
              <Col>
-              <Form.Group className="form-group">
+              <Form.Group className="form-group" >
                 <Form.Label htmlFor="projectId">Project</Form.Label>
-                <Form.Select id="projectId" className='form-control' {...register("projectId",{required:"Project is required"})} >
+                <Form.Select id="projectId" disabled={id} className='form-control' {...register("projectId",{required:"Project is required"})} >
                   <option value="">Select project</option> 
                   {projects.map((project) => (
                     <option key={project.id} value={project.id}>

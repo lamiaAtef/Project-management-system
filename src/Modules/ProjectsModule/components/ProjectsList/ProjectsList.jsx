@@ -36,7 +36,15 @@ export default function ProjectsList() {
   const [title,setTitle]=useState("");
   const[tasksNum,setTasksNum]=useState("");
   const [showView, setShowView] = useState(false);
+
+  // server pagination 
+  const [page, setPage] = useState(1);
+const [pageSize, setPageSize] = useState(10);
+const [total, setTotal] = useState(0);
+  // end server pagination
   const handleCloseView = () => setShowView(false);
+
+
   const handleShowView = (project) =>{
 
   setTitle( project?.title);
@@ -72,9 +80,15 @@ export default function ProjectsList() {
 
 setLoading(true);
   try {
-    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_MANGER);
+    let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_MANGER,{
+       params: {
+      pageSize:pageSize,
+      pageNumber:page,
+    },
+    });
     console.log(response.data.data);
     setProjectList(response.data.data);
+    setTotal(response?.data?.totalNumberOfRecords)
 
   }
   catch (error) {
@@ -93,6 +107,7 @@ setLoading(true);
     let response =await axiosInstance.get(PROJECT_URLS.PROJECTS_EMPLOYEE);
     console.log(response.data.data);
     setProjectList(response.data.data);
+    
   }
   catch (error) {
     toast.error(error.response?.data?.message ||  "sorry i cant get any project");
@@ -129,13 +144,13 @@ finally{
 
   if(!userData?.userGroup)return;
   if(userData?.userGroup=== "Employee"){
-getAllProjectEmployee();
+    getAllProjectEmployee();
   }else
     {
         getAllProjectManager();
     }
 
- },[userData])
+ },[userData,page, pageSize])
 
   const columns = [
   {
@@ -148,19 +163,30 @@ getAllProjectEmployee();
    {
     name: (<>Title <LuChevronsUpDown /></>),
 
-    selector: row => row.title,
+    selector: row =>row.title,
      sortable: true,
   },
    {
     name: (<>Status <LuChevronsUpDown /></>),
 
     cell: () => (
+<<<<<<< HEAD
  <div className='status_style px-2 m-2  rounded rounded-3 text-center'>
 public
 </div>
 ),
 
 
+=======
+      
+        <div className='status_style px-2 m-2  rounded rounded-3 text-center'>
+            public
+        </div>
+    )
+
+    ,
+    
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
      sortable: true,
   },
  ...(userData?.userGroup === "Employee"
@@ -196,8 +222,13 @@ public
     {
      name: (<>Date Created<LuChevronsUpDown /></>),
 
+<<<<<<< HEAD
 
     selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString() : '-',
+=======
+    
+    selector: row => row.creationDate ?new Date(row.creationDate).toLocaleDateString('en-GB') : '/',
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
      sortable: true,
   },
    {
@@ -340,12 +371,44 @@ onChange={handelChange}/>
  <DataTable
             columns={columns}
             data={filterProjects}
+<<<<<<< HEAD
             pagination
             paginationPerPage={8}
             responsive
             striped
            bordered
           />
+=======
+             pagination
+          paginationServer
+
+          paginationTotalRows={total}
+
+          paginationDefaultPage={page}
+          paginationPerPage={pageSize}
+
+          onChangePage={(page) => setPage(page)}
+          onChangeRowsPerPage={(size) => {
+            setPageSize(size);
+            setPage(page); }}
+              customStyles={{
+    headCells: {
+      style: {
+        fontSize: "14px",
+        fontWeight: "400",
+        
+      },
+    },
+    cells: {
+      style: {
+        fontSize: "16px",
+        fontWeight: "400",
+      },
+    },
+  }}
+            
+          /> 
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 
 
 
@@ -353,14 +416,14 @@ onChange={handelChange}/>
         <Modal.Header closeButton>
           <Modal.Title  className='model_style'>Project Details</Modal.Title>
         </Modal.Header>
-<h6 className='p-2'>project title: {title}</h6>
-<h6 className='p-2'>tasksNum: {tasksNum}</h6>
-<h6 className='p-2'>Status:   {'public'}</h6>
+            <h6 className='p-2'>project title: {title}</h6>
+            <h6 className='p-2'>tasksNum: {tasksNum}</h6>
+            <h6 className='p-2'>Status:   {'public'}</h6>
         <Modal.Footer>
 
 
         </Modal.Footer>
-      </Modal>
+</Modal>
 
 
     </>

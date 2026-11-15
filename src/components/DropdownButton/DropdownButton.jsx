@@ -4,22 +4,22 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 
 export default function DropdownButton({ actions }) {
   return (
-    <Dropdown align="end">
+    <Dropdown align="end" className="dropdown">
       <Dropdown.Toggle
         as="span"
-        className="d-inline-block "
+        // className="d-inline-block  "
         style={{ cursor: "pointer", fontSize: "20px" }}
          
       >
         <BsThreeDotsVertical />
       </Dropdown.Toggle>
 
-      <Dropdown.Menu className="dropDownMenu">
+      <Dropdown.Menu className="dropdown-menu">
         <div className="arrow"></div>
         {Object.entries(actions).map(([key, action]) => (
           <Dropdown.Item
             key={key}
-            className={`list_item ${action.className || ""}`}
+            className={`dropdown-item ${action.className || ""}`}
             onClick={action.onClick}
           >
             {action.icon}

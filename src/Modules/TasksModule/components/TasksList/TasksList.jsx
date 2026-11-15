@@ -1,49 +1,107 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
-import Table from 'react-bootstrap/Table';
-import useTasks from '../../../../hooks/useTasks';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Col, Container, Modal, Row } from 'react-bootstrap';
 import { LuChevronsUpDown } from "react-icons/lu";
-import DropdownButton from '../../../../components/DropdownButton/DropdownButton';
 import { FaEdit, FaEye } from 'react-icons/fa';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { DndContext } from "@dnd-kit/core";
+
+import useTasks from '../../../../hooks/useTasks';
+import DropdownButton from '../../../../components/DropdownButton/DropdownButton';
 import Confirmation from '../../../../components/Confirmation/Confirmation';
-import { BeatLoader } from 'react-spinners';
 import Search from '../../../../components/Search/Search';
 import DataTable from 'react-data-table-component';
+<<<<<<< HEAD
 import { AuthContext } from '../../../../context/AuthContext';
 import styles from "./TasksList.module.css"
 
 
+=======
+import { BeatLoader } from 'react-spinners';
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 
+import { AuthContext } from '../../../../context/AuthContext';
+import TaskColumn from "../TaskColumn/TaskColumn";
+import styles from "./TasksList.module.css";
 
 export default function TasksList() {
-  let navigate = useNavigate();
-  let {tasks,loading,error,fetchTasks,deleteTask,fetchUserTasks}= useTasks()
-  let [showModal, setShowModal] = useState(false);
-  let [selectedId, setSelectedId] = useState(null);
-  let [selectedName, setSelectedName] = useState(null);
+  const navigate = useNavigate();
+  const { tasks,changeStatus, loading, page, setPage, total, pageSize, setPageSize, fetchTasks, fetchUserTasks, deleteTask, updateTask } = useTasks();
+  const { userData } = useContext(AuthContext);
+
+  const [showModal, setShowModal] = useState(false);
+  const [selectedId, setSelectedId] = useState(null);
+  const [selectedName, setSelectedName] = useState(null);
+  const [showView, setShowView] = useState(false);
+  const [viewTask, setViewTask] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [boardTasks, setBoardTasks] = useState([]);
+
+  const column = [
+    
+        { name: <>Title<LuChevronsUpDown /></>, selector: row => row.title, sortable: true },
+        {
+        name: <>Status <LuChevronsUpDown /></>,
+        cell: row => (
+        <span
+        className={`badge ${
+          row.status === "ToDo"
+            ? "bg-notActive"
+            : row.status === "InProgress"
+            ? "bg-progress"
+            : "bg-active"
+        } text-white px-3 py-2 fsize`}
+      >
+        {row.status}
+      </span>
+    ),
+    sortable: true,
+  },
+        { name: <>User<LuChevronsUpDown /></>, selector: row => row.employee.userName, sortable: true },
+        { name: <>Project<LuChevronsUpDown /></>, selector: row => row.project.title, sortable: true },
+        { name: <>Date<LuChevronsUpDown /></>, selector: row => row.creationDate ? new Date(row.creationDate).toLocaleDateString() : '-', sortable: true },
+        {
+          name: 'Action',
+          cell: row => (
+            <DropdownButton
+              actions={{
+                view: { label: "View", icon: <FaEye color="#009247" />, onClick: () => handleView(row) },
+                edit: { label: "Edit", icon: <FaEdit color="#009247" />, onClick: () => navigate(`/dashboard/tasks-data/${row.id}`) },
+                delete: { label: "Delete", icon: <RiDeleteBin6Line color="red" />, onClick: () => openConfirmationModal(row.id, row.title), class: "text-danger" }
+              }}
+            />
+          ),
+        }
+      ]
+
+
   const STATUS_ORDER = ["ToDo", "InProgress", "Done"];
+  const role = userData?.userGroup;
 
-   // view modal
-    const [showView, setShowView] = useState(false);
-    const [viewTask, setViewTask] = useState(null);
-    const handleCloseView = () => setShowView(false);
+  useEffect(() => {
+    const loadTasks = async()=>{
+         if (!role) return;
+          if (role === "Manager")await fetchTasks();
+          else await fetchUserTasks();
+    }
+   loadTasks()
+  }, [role, page, pageSize]);
 
-     const {userData} = useContext(AuthContext)
+ 
+    useEffect(() => {
+      if (role !=="Manager") setBoardTasks(tasks);
 
-     let role =  userData?.userGroup;
-     console.log(role,"role")
+    }, [tasks]);
 
-  const openConfirmationModal = (id,name) => {
+  const openConfirmationModal = (id, name) => {
     setSelectedId(id);
-    setSelectedName(name)
+    setSelectedName(name);
     setShowModal(true);
-  }
+  };
   const closeDeleteModal = () => {
     setShowModal(false);
     setSelectedId(null);
+<<<<<<< HEAD
     setSelectedName(null)
   }
  const handleView = (task) => {
@@ -52,17 +110,44 @@ export default function TasksList() {
   setShowView(true);
 };
 
+=======
+    setSelectedName(null);
+  };
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 
+  const handleView = (task) => {
+    setViewTask(task);
+    setShowView(true);
+  };
+  const handleCloseView = () => setShowView(false);
+ const groupedTasks = boardTasks.reduce((acc, task) => {
+    const status = task.status;
+    if (!acc[status]) acc[status] = [];
+    acc[status].push(task);
+    return acc;
+  }, {});
+ const handleDragEnd = async (event) => {
+  const { active, over } = event;
+  if (!over) return;
 
-useEffect(() => {
-  if (!role) return;
+  const taskId = active.id;
+  const newStatus = over.id;
 
-  if (role === "Manager") {
-    fetchTasks();
-  } else {
-    fetchUserTasks();
+  // Optimistic UI
+  setBoardTasks(prev =>
+    prev.map(task =>
+      task.id === taskId
+        ? { ...task, status: newStatus }
+        : task
+    )
+  );
 
+  try {
+    await changeStatus(taskId, { status: newStatus });
+  } catch (err) {
+    console.error(err);
   }
+<<<<<<< HEAD
 }, [role]);
 
 // Group tasks
@@ -78,15 +163,18 @@ useEffect(() => {
 // end group tasks
   if(loading) return <div className='d-flex  align-items-center justify-content-center vh-100'> <BeatLoader size={30} color='#288131' margin={10}  /></div>
   // filter tasks
+=======
+};
+//search 
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 const filteredTasks = searchTerm
   ? tasks.filter(task =>
-      task?.title?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      task?.status?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      task?.employee?.userName.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      task?.project?.title.toLowerCase().includes(searchTerm.toLowerCase())
+      task.title.toLowerCase().includes(searchTerm.toLowerCase())
+     
     )
   : tasks;
 
+<<<<<<< HEAD
 
 
   const columns = [
@@ -163,20 +251,22 @@ const filteredTasks = searchTerm
 }
 
 ];
+=======
+  if (loading) return <div className='d-flex align-items-center justify-content-center vh-100'><BeatLoader size={30} color='#288131' margin={10} /></div>;
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 
   return (
     <>
       <header className='bgOverlayDark container-fluid m-0 px-2 py-3'>
         <div className="container d-flex justify-content-between align-items-center">
-          {
-              role==="Manager" ?
-              <>
-                 <h1 className='title'>Tasks</h1>
-                  <button className='Auth-btn' onClick={()=>navigate("/dashboard/tasks-data")}>  + Add New Task</button>
-              </>:
-                 <h1 className='title'>Tasks Board</h1>
-
+          {role === "Manager" ?
+            <>
+              <h1 className='title'>Tasks</h1>
+              <button className='Auth-btn' onClick={() => navigate("/dashboard/tasks-data")}>+ Add New Task</button>
+            </> :
+            <h1 className='title'>Tasks Board</h1>
           }
+<<<<<<< HEAD
 
         </div>
 
@@ -236,23 +326,19 @@ const filteredTasks = searchTerm
           </td>
         </tr>
       ))
+=======
+        </div>
+      </header>
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 
-      :<tr><td>No tasks available</td></tr>}
-      </tbody>
-    </table> */}
-    {/* <Search
-        value={query}
-        onChange={setQuery}
-        placeholder="Search users..."
-      /> */
-      }
-      {/* start admin  */}
-      {role==="Manager"? <>
-            <Search placeholder='search task' onSearch={setSearchTerm}/>
+      {role === "Manager" ? (
+        <>
+          <Search placeholder='search task' onSearch={setSearchTerm} />
           <DataTable
-            columns={columns}
+            columns={column}
             data={filteredTasks}
             pagination
+<<<<<<< HEAD
             paginationPerPage={8}
             responsive
             striped
@@ -264,21 +350,38 @@ const filteredTasks = searchTerm
                 {STATUS_ORDER.map((status) => (
                   <Col sm={12} md={6} lg={4} key={status}>
                     <h3 className={styles.boxHeader}>{status}</h3>
+=======
+            paginationServer
+            paginationTotalRows={total}
+            paginationDefaultPage={page}
+            paginationPerPage={pageSize}
+            onChangePage={setPage}
+            onChangeRowsPerPage={(size) => { setPageSize(size); setPage(page); }}
+            progressPending={loading}
+          />
+        </>
+      ) : (
+        <DndContext onDragEnd={handleDragEnd}>
+          <Container>
+            <Row className='g-5 my-2'>
+              {STATUS_ORDER.map(status => (
+                <TaskColumn key={status} status={status} tasks={groupedTasks[status] || []} />
+              ))}
+            </Row>
+          </Container>
+        </DndContext>
+      )}
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 
-                    <div className={styles.boxTasks}>
-                      {(groupedTasks[status] || []).map(task => (
-                        <div
-                          className={styles.taskElement}
-                          key={task.id}
-                        >
-                          {task.title}
-                        </div>
-                      ))}
-                    </div>
-                  </Col>
-                ))}
-              </Row>
+      <Confirmation
+        show={showModal}
+        deletedElement=""
+        onClose={() => setShowModal(false)}
+        onConfirm={() => { deleteTask(selectedId); closeDeleteModal(); }}
+        task={selectedName}
+      />
 
+<<<<<<< HEAD
 
     </Container>
           }
@@ -301,19 +404,37 @@ const filteredTasks = searchTerm
     />
 
       <Modal show={showView} onHide={handleCloseView}>
+=======
+      <Modal show={showView} onHide={handleCloseView} className='view_modal'>
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
         <Modal.Header closeButton>
-          <Modal.Title >Task Details</Modal.Title>
+          <Modal.Title className='model_style'>Task Details</Modal.Title>
         </Modal.Header>
-          <h6 className='p-2'>Task title:{viewTask?.title}</h6>
-          <h6 className='p-2'>Task Status:{viewTask?.status}</h6>
-          <h6 className='p-2'>Task User :{viewTask?.employee.id}</h6>
-          <h6 className='p-2'>Task project :{viewTask?.project.id}</h6>
-        <Modal.Footer>
+        <Modal.Body>
+          <h6 className='p-2'>Task title: {viewTask?.title}</h6>
+          <h6> Task Status: 
+            <span  className={`p-2 d-inline-block rounded-pill mx-2 ${
+                viewTask?.status === "ToDo"
+                  ? "bg-notActive"
+                  : viewTask?.status === "InProgress"
+                  ? "bg-progress"
+                  : "bg-active"
+              }`}>
+                  {viewTask?.status}
+            </span>
+             
+          </h6>
 
 
-        </Modal.Footer>
+          <h6 className='p-2'>Task User: {viewTask?.employee.userName}</h6>
+          <h6 className='p-2'>Task Project: {viewTask?.project.title}</h6>
+        </Modal.Body>
       </Modal>
+<<<<<<< HEAD
+=======
+     
+>>>>>>> ec32be5dec7d428dced58410401c1d76b5826570
 
     </>
-  )
+  );
 }
